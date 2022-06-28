@@ -1,6 +1,7 @@
 library(TAF)
 library(FLR4MFCL)
 library(gplots)
+library(diags4MFCL)  # plot.depletion
 
 # read 2020 diagnostic model
 diag20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.rep")
@@ -62,4 +63,5 @@ reverse <- function(selected.model.names, all.model.names=selected.model.names){
 
 pdf("pdf/replicate_fig14b_penguin.pdf")
 plot.depletion(stepwise, palette.func=reverse)
+abline(h=0.5)
 dev.off()
