@@ -1,6 +1,8 @@
 library(TAF)
 library(FLR4MFCL)
 library(gplots)
+library(diags4MFCL)  # plot.depletion
+library(ggplot2)
 
 read.plot.rep <- function(folder)
 {
@@ -57,5 +59,8 @@ reverse <- function(selected.model.names, all.model.names=selected.model.names){
 
 mkdir("pdf")
 pdf("pdf/replicate_fig14b_matt.pdf")
-plot.depletion(stepwise, palette.func=reverse)
+plot.depletion(stepwise, palette.func=reverse) +
+  scale_y_continuous(breaks = seq(0, 1, 0.1)) +
+  theme(panel.grid.major.y=element_line(color="gray", size=0.5)) 
+
 dev.off()
