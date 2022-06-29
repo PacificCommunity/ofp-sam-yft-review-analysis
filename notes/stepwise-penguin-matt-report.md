@@ -1,0 +1,6 @@
+           | penguin | matt    | hopeful | selstep | report
+Diag20     | 0.56    | 0.56    |         |         | 0.56
+CondAge    | 0.52996 | 0.55214 | 0.52996 | 0.55214 | 0.56
+JPTP       | 0.55    | 0.52    |         |         | 0.52
+SelUngroup | 0.53    | 0.52    |         |         | 0.47
+IdxNoEff   | 0.42    | 0.42    |         |         | 0.42
