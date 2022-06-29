@@ -26,6 +26,8 @@ Diag20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.
 
 path.hopeful <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/Hopeful"
 path.selstep <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/SelStep"
+path.altdiags <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/AltDiags"
+
 
 IdxNoEff <- read.plot.rep(file.path(path.hopeful, "Step8NoEff"))
 SelUngroup <- read.MFCLRep(file.path(path.hopeful, "Step9aaNoAge0Ungroup/plot-12.par.rep"))
@@ -34,7 +36,7 @@ Age10LW <- read.plot.rep(file.path(path.hopeful, "Step14LW"))
 CondAge <- read.plot.rep(file.path(path.selstep, "Step15CondAgeLen"))
 MatLength <- read.plot.rep(file.path(path.selstep, "Step16MatLength"))
 NoSpnFrac <- read.plot.rep(file.path(path.selstep, "Step17NoSpawnFrac"))
-Size60 <- Diag20
+Size60 <- read.plot.rep(file.path(path.altdiags, "CondVBSize60"))
 
 stepwise <- list(IdxNoEff=IdxNoEff,
                 SelUngroup=SelUngroup,
