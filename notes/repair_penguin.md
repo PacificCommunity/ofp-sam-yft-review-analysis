@@ -5,8 +5,8 @@ The second stepwise plot (Fig. 14b) in the report has 9 model runs. We will copy
 those 9 model runs to Penguin:
 
 Model run  | Origin
----------- | -----------------
-IdxNoEff   | hopeful
+---------- | ------------------
+IdxNoEff   | Hopeful/Step8NoEff
 SelUngroup | hopeful
 JPTP       | selstep
 Age10LW    | hopeful + selstep
