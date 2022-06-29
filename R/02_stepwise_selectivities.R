@@ -2,6 +2,8 @@ library(TAF)
 library(FLR4MFCL)
 library(gplots)
 
+mkdir("pdf")
+
 # read 2020 diagnostic model
 diag20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.rep")
 

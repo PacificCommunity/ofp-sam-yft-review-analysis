@@ -2,6 +2,8 @@ library(TAF)
 library(FLR4MFCL)
 library(gplots)
 
+mkdir("png")
+
 # read 2017 diagnostic model
 diag17 <- read.MFCLRep("z:/yft/2017/assessment/RefCase/plot-14.par.rep")
 
