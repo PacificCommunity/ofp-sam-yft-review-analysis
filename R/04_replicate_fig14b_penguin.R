@@ -9,13 +9,14 @@ diag20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.
 
 path <- "z:/yft/2020/assessment/ModelRuns/Stepwise"
 
-model <- dir(path)
-model <- grep("Step(8|9|10|11|12|13|14|15|16|17)", model, value=TRUE)
-model <- grep("Step16", model, invert=TRUE, value=TRUE)  # does not have End.tar.gz
-model <- grep("Step9(a|b|c)", model, invert=TRUE, value=TRUE)  # keep Step9SelChange
-model <- grep("Step(10|11)", model, invert=TRUE, value=TRUE)  # remove ForceMix, Mix2
-model <- grep("Step(13)", model, invert=TRUE, value=TRUE)  # step 14 includes Age10
-model <- file.path(path, model)
+IdxNoEff <- read.plot.rep(file.path(path, "Step8NoEff"))
+SelUngroup <- read.MFCLRep(file.path(path, "Step9aaNoAge0Ungroup/plot-10.par.rep"))
+JPTP <- read.plot.rep(file.path(path, "Step12JPTP"))
+Age10LW <- read.plot.rep(file.path(path, "Step14LW"))
+CondAge <- read.plot.rep(file.path(path, "Step15CondAgeLen"))
+# MatLength <- read.plot.rep(file.path(path, "Step16MatLength"))
+NoSpnFrac <- read.plot.rep(file.path(path, "Step17NoSpawnFrac"))
+
 
 read.plot.rep <- function(folder)
 {
@@ -32,9 +33,6 @@ read.plot.rep <- function(folder)
   obj
 }
 
-# obj <- read.plot.rep(model[1])
-penguin.runs <- lapply(model, read.plot.rep)
-names(penguin.runs) <- basename(model)
 step16 <- read.MFCLRep(file.path("d:/Vincent_Matthew_Backup/YFT/2020",
                                  "assessment/ModelRuns/Hopeful",
                                  "Step16MaturityLength/plot-12.par.rep"))

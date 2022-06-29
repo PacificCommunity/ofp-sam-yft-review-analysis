@@ -28,9 +28,9 @@ path.hopeful <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/Hopeful
 path.selstep <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/SelStep"
 
 IdxNoEff <- read.plot.rep(file.path(path.hopeful, "Step8NoEff"))
-SelUngroup <- read.plot.rep(file.path(path.hopeful, "Step9SelChange"))
+SelUngroup <- read.MFCLRep(file.path(path.hopeful, "Step9aaNoAge0Ungroup/plot-12.par.rep"))
 JPTP <- read.plot.rep(file.path(path.selstep, "Step12JPTP"))
-Age10LW <- read.plot.rep(file.path(path.selstep, "Step14LW"))
+Age10LW <- read.plot.rep(file.path(path.hopeful, "Step14LW"))
 CondAge <- read.plot.rep(file.path(path.selstep, "Step15CondAgeLen"))
 MatLength <- read.plot.rep(file.path(path.selstep, "Step16MatLength"))
 NoSpnFrac <- read.plot.rep(file.path(path.selstep, "Step17NoSpawnFrac"))
@@ -62,5 +62,4 @@ pdf("pdf/replicate_fig14b_matt.pdf")
 plot.depletion(stepwise, palette.func=reverse) +
   scale_y_continuous(breaks = seq(0, 1, 0.1)) +
   theme(panel.grid.major.y=element_line(color="gray", size=0.5)) 
-
 dev.off()
