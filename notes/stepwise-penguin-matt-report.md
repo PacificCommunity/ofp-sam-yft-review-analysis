@@ -1,4 +1,4 @@
-           | penguin | matt    | hopeful | selstep | report
+Model run  | penguin | matt    | hopeful | selstep | report
 ---------- | ------- | ------- | ------- | ------- | ------
 Diag20     | 0.56    | 0.56    |         |         | 0.56
 CondAge    | 0.52996 | 0.55214 | 0.52996 | 0.55214 | 0.56
