@@ -37,5 +37,11 @@ file.copy("d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/AltDiags/Cond
           recursive = TRUE,
           copy.date = TRUE)
 
-file.remove("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/DiagnosticPlots") # Permission denied!
-file.remove("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/Figures") # Permission denied!
+# file.remove("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/DiagnosticPlots") # Permission denied!
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/DiagnosticPlots", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/Figures", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/Hessian", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/Impact", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/JohnLProf", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/Kobe", recursive=TRUE)
+unlink("Z:/yft/2020/assessment/ModelRuns/Stepwise/CondVBSize60/SavePhase11NoMChange", recursive=TRUE)
