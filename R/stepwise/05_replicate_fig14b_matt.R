@@ -6,20 +6,19 @@ source("utilities.R")  # read.plot.rep, reverse
 
 mkdir("pdf")
 
+penguin <- "z:/yft/2020_review/analysis/stepwise"
 Diag20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.rep")
 
-path.hopeful <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/Hopeful"
-path.selstep <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/SelStep"
-path.altdiags <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/AltDiags"
+IdxNoEff <- read.plot.rep(file.path(penguin, "09_IdxNoeff"))
+SelUngroup <- read.MFCLRep(file.path(penguin, "10_SelUngroup/plot-12.par.rep"))
+JPTP <- read.plot.rep(file.path(penguin, "11_JPTP"))
+Age10LW <- read.plot.rep(file.path(penguin, "12_Age10LW_HopefulReport"))
+CondAge <- read.plot.rep(file.path(penguin, "13_CondAge"))
+MatLength <- read.plot.rep(file.path(penguin, "14_MatLength"))
+NoSpnFrac <- read.plot.rep(file.path(penguin, "15_NoSpnFrac"))
+Size60 <- read.plot.rep(file.path(penguin, "16_Size60"))
+Diag20 <- read.MFCLRep(file.path(penguin, "17_Diag20/plot-14.par.rep"))
 
-IdxNoEff <- read.plot.rep(file.path(path.hopeful, "Step8NoEff"))
-SelUngroup <- read.MFCLRep(file.path(path.hopeful, "Step9aaNoAge0Ungroup/plot-12.par.rep"))
-JPTP <- read.plot.rep(file.path(path.selstep, "Step12JPTP"))
-Age10LW <- read.plot.rep(file.path(path.hopeful, "Step14LW"))
-CondAge <- read.plot.rep(file.path(path.selstep, "Step15CondAgeLen"))
-MatLength <- read.plot.rep(file.path(path.selstep, "Step16MatLength"))
-NoSpnFrac <- read.plot.rep(file.path(path.selstep, "Step17NoSpawnFrac"))
-Size60 <- read.plot.rep(file.path(path.altdiags, "CondVBSize60"))
 
 stepwise <- list(IdxNoEff=IdxNoEff,
                 SelUngroup=SelUngroup,
