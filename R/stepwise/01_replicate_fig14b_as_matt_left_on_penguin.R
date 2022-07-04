@@ -29,8 +29,8 @@ stepwise <- list(IdxNoEff=IdxNoEff,
                 Size60=Size60,
                 Diag20=Diag20)
 
-pdf("pdf/replicate_fig14b_penguin.pdf")
+pdf("pdf/replicate_fig14b_matt.pdf", width=9.5, height=9.5)
 plot.depletion(stepwise, palette.func=reverse) +
-  scale_y_continuous(breaks = seq(0, 1, 0.1)) +
-  theme(panel.grid.major.y=element_line(color="gray", size=0.5))
+  theme(panel.grid.major.y=element_line(color="gray", size=0.5),
+        panel.grid.minor.y=element_line(color="gray", size=0.5))
 dev.off()
