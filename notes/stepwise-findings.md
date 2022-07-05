@@ -28,14 +28,12 @@ release had the largest effect on this combined step.
 
 - Addition of otolith data through conditional age-at-length.
 
-- Removal of deviates from the growth curve for the first 8 age classes.
+- Removal of deviates from the von Bertalanffy curve for the first 8 age
+  classes. In earlier steps, the mean lengths of the first 8 age classes were
+  estimated independently from length frequencies.
 
 - (Appears that von Bertalanffy k, L1, L2, and sigmas are estimated using parest
   flag 12-14, although parest flag 32 = 6/7 suggests they are not estimated...)
-
-- (Mean lengths of all age classes follow von Bertalanffy. In earlier steps, the
-  mean lengths of the first 8 age classes were estimated independently from
-  length frequencies.)
 
 - (Default value for maximum F in the catch equations was changed from 0.7 to
   5.0 [phase 1])
