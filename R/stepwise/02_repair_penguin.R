@@ -51,3 +51,13 @@ dir.create(file.path(path.destination, "17_Diag20"))
 files <- dir(path.diagnostic, full.names=TRUE)
 files <- files[!dir.exists(files)]
 cp(files, file.path(path.destination, "17_Diag20"))
+
+## Repair anomaly between condor_doitall.yft and doitall.condor
+## In all other stepwise model runs, condor_doitall.yft and doitall.condor are the same
+## Setting fish flag 75 to 1 has the effect of fixing zero selectivity for the youngest fish
+## According to the assessment report, only Diag20 should use this setting
+## In all other stepwise model runs, including Age10LW, this flag should be set to 0
+doitall.condor <- readLines("Z:/yft/2020_review/analysis/stepwise/12_Age10LW/doitall.condor")
+doitall.condor[153:164] <- gsub("1$", "0", doitall.condor[153:164])  # change from 1 to 0
+writeLines(doitall.condor, "Z:/yft/2020_review/analysis/stepwise/12_Age10LW/doitall.condor")
+dos2unix("Z:/yft/2020_review/analysis/stepwise/12_Age10LW/doitall.condor")
