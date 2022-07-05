@@ -16,13 +16,20 @@
 6. From the 2017 diagnostic, run one-off steps:
    * 2017 diagnostic + selectivities
    * 2017 diagnostic + otoliths
-   * 2017 diagnostic + jttp
+   * 2017 diagnostic + tags
+   * 2017 diagnostic + age10
 
 7. From the 2017 diagnostic, run combinations:
-   * selectivities + otoliths + jttp
+   * selectivities + otoliths + tags
 
 8. From the 2017 diagnostic, run new selectivity options:
-   * intermediate steps between diagnostic and ungroupedsel
+   * intermediate steps, e.g., between diagnostic and selectivities
    * think of alternative ways to model the selectivities
 
-9. Ask how to change regional structure
+9. Tease apart the CondAge stepwise model run:
+   * otoliths
+   * catchability constant between seasons
+   * catchability constant between years
+   * maturity not converted to age
+
+10. Ask how to change regional structure
