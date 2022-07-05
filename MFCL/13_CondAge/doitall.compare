@@ -200,54 +200,54 @@ $MFCL yft.frq 00.par 01.par -file - <<PHASE1
 -41 29 33      -41 60 33
 #------------------------------------------------------------------------------
 # Tag dynamics settings
-1     33  90        # maximum tag reporting rate for all fisheries is 0.9
-2     96  12        # pool tags after 12 quarters at liberty
-2     198 1         # activate release group reporting rates
--999  43  0         # group all tags for variance estimation
--999  44  0         # estimate tag variance for all fisheries if =1
--9999 1   2         # sets no. mixing periods for all tag release groups to 2
+1     33  90      # maximum tag reporting rate for all fisheries is 0.9
+2     96  12      # pool tags after 12 quarters at liberty
+2     198 1       # activate release group reporting rates
+-999  43  0       # group all tags for variance estimation
+-999  44  0       # estimate tag variance for all fisheries if =1
+-9999 1   2       # sets no. mixing periods for all tag release groups to 2
 # grouping of fisheries for tag return data
--1  32  1
--2  32  2
--3  32  3
--4  32  4
--5  32  5
--6  32  6
--7  32  7
--8  32  8
--9  32  9
--10 32  10
--11 32  11
--12 32  12
--13 32  13
--14 32  13
--15 32  14
--16 32  14
--17 32  15
--18 32  15
--19 32  16
--20 32  17
--21 32  18
--22 32  19
--23 32  15
--24 32  15
--25 32  20
--26 32  20
--27 32  21
--28 32  22
--29 32  23
--30 32  24
--31 32  24
--32 32  25
--33 32  25
--34 32  25
--35 32  25
--36 32  25
--37 32  25
--38 32  25
--39 32  25
--40 32  25
--41 32  25
+-1  32 1
+-2  32 2
+-3  32 3
+-4  32 4
+-5  32 5
+-6  32 6
+-7  32 7
+-8  32 8
+-9  32 9
+-10 32 10
+-11 32 11
+-12 32 12
+-13 32 13
+-14 32 13
+-15 32 14
+-16 32 14
+-17 32 15
+-18 32 15
+-19 32 16
+-20 32 17
+-21 32 18
+-22 32 19
+-23 32 15
+-24 32 15
+-25 32 20
+-26 32 20
+-27 32 21
+-28 32 22
+-29 32 23
+-30 32 24
+-31 32 24
+-32 32 25
+-33 32 25
+-34 32 25
+-35 32 25
+-36 32 25
+-37 32 25
+-38 32 25
+-39 32 25
+-40 32 25
+-41 32 25
 #------------------------------------------------------------------------------
 # Effort deviation settings
 ## fflag 13: penalty weight for effort devs prior (default=10). If n is negative,
@@ -281,8 +281,10 @@ fi
 #  ---------
 if [ ! -f 02.par ]; then
 $MFCL yft.frq 01.par 02.par -file - <<PHASE2
--999 45 100000     # increase penalty on catch from default of 10000 for extraction fishery
--33  45 10000      # Set to default for index fisheries
+1    1  1000     # set max. number of function evaluations per phase to 1000
+1    50 0        # set convergence criterion to 1
+2    35 10       # Set effdev bounds to +- 10 (need to do AFTER phase 1)
+-33  45 10000    # Set to default for index fisheries
 -34  45 10000
 -35  45 10000
 -36  45 10000
@@ -291,10 +293,8 @@ $MFCL yft.frq 01.par 02.par -file - <<PHASE2
 -39  45 10000
 -40  45 10000
 -41  45 10000
-2    35 10         # Set effdev bounds to +- 10 (need to do AFTER phase 1)
--999 14 10      # Penalties to stop F blowing out
-1    1 1000         # set max. number of function evaluations per phase to 1000
-1    50 0         # set convergence criterion to 1
+-999 14 10       # Penalties to stop F blowing out
+-999 45 100000   # increase penalty on catch from default of 10000 for extraction fishery
 PHASE2
 fi
 #  ---------
@@ -302,19 +302,19 @@ fi
 #  ---------
 if [ ! -f 03.par ]; then
 $MFCL yft.frq 02.par 03.par -file - <<PHASE3
-2 70 1             # activate time series of reg recruitment parameters and turn on
-2 71 1             # estimation of temporal changes in recruitment distribution
-2 110 10           # set penalty weight to 10/10 default = 0.1
-2 178 1            # constraint on regional recruitments
--33  45 50000      # increase penalty on catch for index fisheries
--34  45 50000
--35  45 50000
--36  45 50000
--37  45 50000
--38  45 50000
--39  45 50000
--40  45 50000
--41  45 50000
+2   70  1          # activate time series of reg recruitment parameters and turn on
+2   71  1          # estimation of temporal changes in recruitment distribution
+2   110 10         # set penalty weight to 10/10 default = 0.1
+2   178 1          # constraint on regional recruitments
+-33 45  50000      # increase penalty on catch for index fisheries
+-34 45  50000
+-35 45  50000
+-36 45  50000
+-37 45  50000
+-38 45  50000
+-39 45  50000
+-40 45  50000
+-41 45  50000
 PHASE3
 fi
 #  ---------
@@ -322,7 +322,7 @@ fi
 #  ---------
 if [ ! -f 04.par ]; then
 $MFCL yft.frq 03.par 04.par -file - <<PHASE4
-2 68 1          # estimate movement coefficients
+2    68 1           # estimate movement coefficients
 -33  45 100000      # increase penalty on catch for index fisheries
 -34  45 100000
 -35  45 100000
@@ -355,10 +355,10 @@ fi
 #  ---------
 if [ ! -f 06.par ]; then
 $MFCL yft.frq 05.par 06.par -file - <<PHASE6
-1 240 1         #Activate model fit to observed age-length data
-1 12 1          # and mean length of age
-1 13 1          # estimate mean length of largest age class
-1 14 1          # estimate von Bertalanffy K
+1 12  1         # fit to observed mean length at age
+1 13  1         # estimate mean length of largest age class
+1 14  1         # estimate von Bertalanffy K
+1 240 1         # fit to observed age-length data
 PHASE6
 fi
 #  ---------
@@ -418,8 +418,8 @@ fi
 #  ---------
 if [ ! -f 10.par ]; then
 $MFCL yft.frq 09.par 10.par -file - <<PHASE10
-2 145 -1       # use SRR parameters - low penalty for deviation
-2 188 0                  #Convert the maturity at length to age using the weighted spline
+2 145 -1   # use SRR parameters - low penalty for deviation
+2 188 0    # Don't convert the maturity at length to age using the weighted spline
 1 1 30000
 1 50 -2
 PHASE10

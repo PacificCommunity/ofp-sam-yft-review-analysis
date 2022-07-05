@@ -30,4 +30,24 @@ release had the largest effect on this combined step.
 
 - Removal of deviates from the growth curve for the first 8 age classes.
 
-- (Allow all growth parameters to be fixed during the control phase.)
+- (Appears that von Bertalanffy k, L1, L2, and sigmas are estimated using parest
+  flag 12-14, although parest flag 32 = 6/7 suggests they are not estimated...)
+
+- (Mean lengths of all age classes follow von Bertalanffy. In earlier steps, the
+  mean lengths of the first 8 age classes were estimated independently from
+  length frequencies.)
+
+- (Default value for maximum F in the catch equations was changed from 0.7 to
+  5.0 [phase 1])
+
+- (4 nodes for cubic spline for fishery 28 [phase 1])
+
+- (Possibly changing the variance/overdispersion for tags [phase 1])
+
+- (Catchability is the same for all seasons [fish flag 27]. In earlier steps, it
+  was estimated using a sinusoidal function.)
+
+- (Catchability is the same for all years [fish flag 10]. In earlier steps,
+  catchability was estimated as time-varying.)
+
+- (Maturity at length is no longer converted to age [age flag 188].)
