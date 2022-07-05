@@ -2,9 +2,7 @@
 
 1. Plot both 2017 and 2020 diagnostic, as a starting point for stepwise analysis
 
-2. Review our stepwise findings
-   * is it still otoliths, JPTP, and selectivity?
-   * share with colleagues
+2. Share stepwise findings with colleagues
 
 3. Create a doitall that runs the 2020 diagnostic
    * find R analyses required
