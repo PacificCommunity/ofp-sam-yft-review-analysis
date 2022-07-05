@@ -6,15 +6,15 @@ export ADTMP1=.
 #  PHASE 0 - create initial par file
 #  ------------------------
 if [ ! -f 00.par ]; then
- $MFCL yft.frq yft.ini 00.par -makepar
+$MFCL yft.frq yft.ini 00.par -makepar
 fi
 #  ------------------------
 #  PHASE 1 - initial par
 #  ------------------------
 if [ ! -f 01.par ]; then
- $MFCL yft.frq 00.par 01.par -file - <<PHASE1
-# Using default quasi-Newton minimizer
-  1 351 0 1 192 0
+$MFCL yft.frq 00.par 01.par -file - <<PHASE1
+#------------------------------
+1 351 0 1 192 0    # Using default quasi-Newton minimizer
 #------------------------------
 1 32 7             # This is a change from 2014 that allows all growth parameters to be fixed during the contol phase
 #------------------------------
@@ -32,11 +32,11 @@ if [ ! -f 01.par ]; then
 2 177 1            # use old totpop scaling method
 #------------------------------------------------------------------------------
 # Likelihood component settings
--999 49 20         # divide LL LF sample sizes by 20 (default)
--999 50 20         # divide LL WF sample sizes by 20 (default=10)
 1 111 4            # sets likelihood function for tags to negative binomial
 1 139 3            # sets likelihood function for WF data to normal
 1 141 3            # sets likelihood function for LF data to normal
+-999 49 20         # divide LL LF sample sizes by 20 (default)
+-999 50 20         # divide LL WF sample sizes by 20 (default=10)
 # For longline ALL and Index fisheries reduce the sample size in half so we aren't double counting the sample sizes
 -1  49 40    -1  50 40
 -2  49 40    -2  50 40
@@ -156,49 +156,48 @@ if [ ! -f 01.par ]; then
 -31 75 0
 #------------------------------------------------------------------------------
 # Catchability settings
-#
 # grouping of fisheries with common catchability
--1  29  1          -1  60  1
--2  29  2          -2  60  2
--3  29  3          -3  60  3
--4  29  4          -4  60  4
--5  29  5          -5  60  5
--6  29  6          -6  60  6
--7  29  7          -7  60  7
--8  29  8          -8  60  8
--9  29  9          -9  60  9
--10 29 10          -10 60 10
--11 29 11          -11 60 11
--12 29 12          -12 60 12
--13 29 13          -13 60 13
--14 29 14          -14 60 14
--15 29 15          -15 60 15
--16 29 16          -16 60 16
--17 29 17          -17 60 17
--18 29 18          -18 60 18
--19 29 19          -19 60 19
--20 29 20          -20 60 20
--21 29 21          -21 60 21
--22 29 22          -22 60 22
--23 29 23          -23 60 23
--24 29 24          -24 60 24
--25 29 25          -25 60 25
--26 29 26          -26 60 26
--27 29 27          -27 60 27
--28 29 28          -28 60 28
--29 29 29          -29 60 29
--30 29 30          -30 60 30
--31 29 31          -31 60 31
--32 29 32          -32 60 32
--33 29 33          -33 60 33
--34 29 33          -34 60 33
--35 29 33          -35 60 33
--36 29 33          -36 60 33
--37 29 33          -37 60 33
--38 29 33          -38 60 33
--39 29 33          -39 60 33
--40 29 33          -40 60 33
--41 29 33          -41 60 33
+-1  29  1      -1  60  1
+-2  29  2      -2  60  2
+-3  29  3      -3  60  3
+-4  29  4      -4  60  4
+-5  29  5      -5  60  5
+-6  29  6      -6  60  6
+-7  29  7      -7  60  7
+-8  29  8      -8  60  8
+-9  29  9      -9  60  9
+-10 29 10      -10 60 10
+-11 29 11      -11 60 11
+-12 29 12      -12 60 12
+-13 29 13      -13 60 13
+-14 29 14      -14 60 14
+-15 29 15      -15 60 15
+-16 29 16      -16 60 16
+-17 29 17      -17 60 17
+-18 29 18      -18 60 18
+-19 29 19      -19 60 19
+-20 29 20      -20 60 20
+-21 29 21      -21 60 21
+-22 29 22      -22 60 22
+-23 29 23      -23 60 23
+-24 29 24      -24 60 24
+-25 29 25      -25 60 25
+-26 29 26      -26 60 26
+-27 29 27      -27 60 27
+-28 29 28      -28 60 28
+-29 29 29      -29 60 29
+-30 29 30      -30 60 30
+-31 29 31      -31 60 31
+-32 29 32      -32 60 32
+-33 29 33      -33 60 33
+-34 29 33      -34 60 33
+-35 29 33      -35 60 33
+-36 29 33      -36 60 33
+-37 29 33      -37 60 33
+-38 29 33      -38 60 33
+-39 29 33      -39 60 33
+-40 29 33      -40 60 33
+-41 29 33      -41 60 33
 #------------------------------------------------------------------------------
 # Tag dynamics settings
 1     33  90        # maximum tag reporting rate for all fisheries is 0.9
@@ -292,10 +291,10 @@ $MFCL yft.frq 01.par 02.par -file - <<PHASE2
 -39  45 10000
 -40  45 10000
 -41  45 10000
- 2 35 10         # Set effdev bounds to +- 10 (need to do AFTER phase 1)
- -999 14 10      # Penalties to stop F blowing out
- 1 1 1000         # set max. number of function evaluations per phase to 1000
- 1 50 0         # set convergence criterion to 1
+2    35 10         # Set effdev bounds to +- 10 (need to do AFTER phase 1)
+-999 14 10      # Penalties to stop F blowing out
+1    1 1000         # set max. number of function evaluations per phase to 1000
+1    50 0         # set convergence criterion to 1
 PHASE2
 fi
 #  ---------
