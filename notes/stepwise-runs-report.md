@@ -1,6 +1,6 @@
 # Review Topics
 
-<img src="original/png/StepBioAlt.png" width="480">&nbsp;&nbsp;&nbsp;&nbsp;<img src="original/png/StepDepAlt.png" width="480">
+<img src="2020_report/original/StepBioAlt.png" width="480">&nbsp;&nbsp;&nbsp;&nbsp;<img src="2020_report_original/StepDepAlt.png" width="480">
 
 Step       | Report | Penguin | Effect on SBSBF0 | Effect on SB  | Review focus
 ---------- | ------ | ------- | ---------------- | ------------- | ---------------------------
