@@ -1,12 +1,12 @@
 # Summary of Challenges Encountered During the YFT Review Analysis
 
-Diagnostic model
-Condor
-Plot script
-10a-12a manual steps
-Matt's personal drive
-R packages
-Stepwise model runs, reconstructing and analyzing
+- Diagnostic model
+- Condor
+- Plot script
+- 10a-12a manual steps
+- Matt's personal drive
+- R packages
+- Stepwise model runs, reconstructing and analyzing
 
 --------------------------------------------------------------------------------
 
