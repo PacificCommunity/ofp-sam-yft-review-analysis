@@ -15,7 +15,7 @@ Age10LW <- read.plot.rep(file.path(penguin, "12_Age10LW"))
 CondAge <- read.plot.rep(file.path(penguin, "13_CondAge"))
 MatLength <- read.plot.rep(file.path(penguin, "14_MatLength"))
 NoSpnFrac <- read.plot.rep(file.path(penguin, "15_NoSpnFrac"))
-Size60 <- read.plot.rep(file.path(penguin, "16_Size60"))
+Size60 <- read.MFCLRep(file.path(penguin, "16_Size60/plot-10.par.rep"))
 Diag20 <- read.MFCLRep(file.path(penguin, "17_Diag20/plot-14.par.rep"))
 
 stepwise <- list(IdxNoEff=IdxNoEff,
