@@ -28,7 +28,7 @@ stepwise <- list(IdxNoEff=IdxNoEff,
                 Size60=Size60,
                 Diag20=Diag20)
 
-pdf("pdf/fig14b_after_repair.pdf", width=9.5, height=9.5)
+pdf("pdf/fig14b_like_report.pdf", width=9.5, height=9.5)
 plot.depletion(stepwise, palette.func=reverse) +
   theme(panel.grid.major.y=element_line(color="gray", size=0.5),
         panel.grid.minor.y=element_line(color="gray", size=0.5))
