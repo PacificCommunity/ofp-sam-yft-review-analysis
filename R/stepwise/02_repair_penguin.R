@@ -3,6 +3,7 @@ library(TAF)
 path.hopeful <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/Hopeful"
 path.selstep <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/SelStep"
 path.altdiags <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/AltDiags"
+path.seltestsdiag <- "d:/Vincent_Matthew_Backup/YFT/2020/assessment/ModelRuns/SelTestsDiag"
 path.diagnostic <- "z:/yft/2020/assessment/ModelRuns/Diagnostic"
 path.destination <- "z:/yft/2020_review/analysis/stepwise"
 
@@ -39,12 +40,8 @@ cp(file.path(path.selstep, "Step17NoSpawnFrac"),path.destination)
 file.rename(file.path(path.destination, "Step17NoSpawnFrac"), file.path(path.destination, "15_NoSpnFrac"))
 
 ## 16_Size60
-# cp(file.path(path.altdiags, "CondVBSize60"), path.destination)
-# file.rename(file.path(path.destination, "CondVBSize60"), file.path(path.destination, "16_Size60"))
-dir.create(file.path(path.destination, "16_Size60"))
-files <- dir(file.path(path.altdiags, "CondVBSize60"), full.names=TRUE)
-files <- files[!dir.exists(files)]
-cp(files, file.path(path.destination, "16_Size60"))
+cp(file.path(path.seltestsdiag, "NoAge1Fix0"),path.destination)
+file.rename(file.path(path.destination, "NoAge1Fix0"), file.path(path.destination, "16_Size60"))
 
 ## 17_Diag20
 dir.create(file.path(path.destination, "17_Diag20"))
