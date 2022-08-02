@@ -14,7 +14,7 @@ Age10LW        | SelStep/Step14LW
 CondAge        | SelStep/Step15CondAgeLen
 MatLength      | SelStep/Step16MatLength
 NoSpnFrac      | SelStep/Step17NoSpawnFrac
-Size60         | AltDiags/CondVBSize60
+Size60         | SelTestsDiag/NoAge1Fix0
 Diag20         | diagnostic
 
 Age10LW (Age10LW_Report) in the report appears to come from Hopeful. We think Age10LW should come from SelStep instead. Both versions are now copied to Penguin. 
