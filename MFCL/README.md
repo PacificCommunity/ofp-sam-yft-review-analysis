@@ -3,8 +3,8 @@
 ## Reproducing the diagnostic
 
 Run          | Description                                                  | Result | Runtime
------------- + ------------------------------------------------------------ + ------ | -------
-1-10-12-fast | Same as yft-2020-grid 1-10-12 but excluding slow Condor node | -      | -
+------------ | ------------------------------------------------------------ | ------ | --------------------------
+1-10-12-fast | Same as yft-2020-grid 1-10-12 but excluding slow Condor node | -      | Started 17:31 (2022-08-23)
 
 ---
 
