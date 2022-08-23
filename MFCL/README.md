@@ -1,4 +1,6 @@
-# Reproducing the diagnostic model run from the YFT 2020 assessment
+# MFCL Runs
+
+## Reproducing the diagnostic
 
 Run          | Description                                                  | Result | Runtime
 ------------ + ------------------------------------------------------------ + ------ | -------
