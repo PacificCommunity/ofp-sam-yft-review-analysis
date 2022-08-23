@@ -19,7 +19,7 @@ At the top of that script is a vector of models. By adjusting this, more models 
 
 Each model folder should have the following files:
 
-`length.fit` (for the catch size distribution plots), `frq`, `rep`, `par`, `obs*` and `pred*` (for the catchability plots, where * is 1 to 31, or thereabouts)
+`length.fit` (for the catch size distribution plots), `frq`, `rep`, `par`, `obsX` and `predX` (for the catchability plots, where X is 1 to 31, or thereabouts)
 
 ## File location
 
