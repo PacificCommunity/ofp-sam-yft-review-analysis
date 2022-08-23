@@ -1,1 +1,1 @@
-Something intelligent about the stepwise progression.
+Stepwise model development.
