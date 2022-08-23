@@ -8,7 +8,7 @@ Run          | Description                                                  | Re
 
 ---
 
-### To run a model on Condor:
+## Run a model on Condor
 
 **Connect to the Condor server**
 ```
@@ -26,10 +26,22 @@ condor_q
 condor_status
 ```
 
-**Check DAG update**
+## Minimalistic workflow
 
-If the Condor run is organized in Condor DAG format, we can see output files
-appearing inside the model folder
+**Steps**
+1. When we run condor_submit on the Condor server, its sends condor_wrapper.sh and Start.tar.gz to the Condor node
+2. Then the Condor node runs condor_wrapper.sh, which unzips the tar ball and runs the doitall
+3. When finished, the Condor node will zip all files into End.tar.gz
+
+**Create Start.tar.gz**
+```
+create_start.sh
+```
+This zips all files into Start.tar.gz, to be submitted to Condor.
+
+**Check update**
+```
+When finished, some system files (err, log, out) will appear inside the model folder, along with End.tar.gz
 ```
 ll
 ```
