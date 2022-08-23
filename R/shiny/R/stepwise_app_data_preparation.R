@@ -51,7 +51,7 @@ model_description <- data.frame(
 # e.g. M1 does not have it - skipped in the relevant section below
 needed_files <- c("skj.tag", "length.fit", "temporary_tag_report", "skj2.frq", "test_plot_output")
 for (model in models){
-  model_files <- list.files(paste0("C:/Work/MFCL/ofp-sam-skj22/stepwise2022/", model))
+  model_files <- list.files(paste0(basedir, model))
 
   # Also check for a par and rep
   parfiles <- model_files[grep(".par$", model_files)]
