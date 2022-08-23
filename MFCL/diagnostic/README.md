@@ -8,6 +8,12 @@ Run          | Description                                                  | Re
 
 ### To run a model on Condor:
 
+First connect to the Condor server
+```
+ssh nouofpcalc02.corp.spc.int
+```
+
+Then navigate to a model folder and run
 ```
 condor_submit condor.sub
 ```
