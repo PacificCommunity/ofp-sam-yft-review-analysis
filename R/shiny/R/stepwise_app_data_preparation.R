@@ -108,11 +108,7 @@ for (model in models){
   lf <- list.files(paste(basedir, model, sep="/"))
   parfiles <- lf[grep(".par$", lf)]
   # Find the biggest par file
-  biggest_par <- as.character(max(as.numeric(substr(parfiles, 1, 2))))
-  if(length(biggest_par) == 1){
-    biggest_par <- paste0("0", biggest_par)
-  }
-  biggest_par <- paste0(biggest_par, ".par")
+  biggest_par <- max(parfiles)
   reg <- read.MFCLRegion(paste(basedir, model, biggest_par, sep="/"))
   dcap <- diff_coffs_age_period(reg)
   move_coef[[eval(model)]] <- as.data.table(dcap)
@@ -130,7 +126,6 @@ setnames(move_coef, old=c("age", "to", "from"), new=c("Age", "To", "From"))
 move_coef <- merge(move_coef, model_description)
 
 # This could probably be reduced because the movement is not age-structured (so far)
-
 save(move_coef, file="../app/data/move_coef.Rdata")
 
 #------------------------------------------------------------------
@@ -149,7 +144,7 @@ mat_length_dat <- list()
 cpue_dat <- list()
 status_tab_dat <- list()
 
-index_fisheries <- 32:39
+index_fisheries <- 33:41
 
 for (model in models){
   cat("Model: ", model, "\n")
@@ -158,10 +153,7 @@ for (model in models){
   lf <- list.files(paste(basedir, model, sep="/"))
   parfiles <- lf[grep(".par$", lf)]
   # Find the biggest par file
-  biggest_par <- as.character(max(as.numeric(substr(parfiles,1,2))))
-  if(length(biggest_par)==1){
-    biggest_par <- paste0("0",biggest_par)
-  }
+  biggest_par <- max(substr(parfiles, 1, 2))
   repfile <- paste0("plot-", biggest_par, ".par.rep")
   # Load the rep
   rep <- read.MFCLRep(paste(basedir, model, repfile, sep="/"))
