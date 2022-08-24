@@ -52,11 +52,9 @@ model_description <- data.frame(
 # temporary_tag_report
 
 # Only catch conditioned models have the obsX and predX files,
-# e.g. M1 does not have it - skipped in the relevant section below
 needed_files <- c("yft.tag", "length.fit", "temporary_tag_report", "yft.frq", "test_plot_output")
 for (model in models){
   model_files <- list.files(paste0(basedir, model))
-
   # Also check for a par and rep
   parfiles <- model_files[grep(".par$", model_files)]
   if(length(parfiles) == 0){
@@ -95,88 +93,6 @@ lfits_dat <- merge(lfits_dat, model_description, by="model")
 
 # Save it in the app data directory
 save(lfits_dat, file="../app/data/lfits_dat.Rdata")
-
-#------------------------------------------------------------------
-# Data for catchability plots.
-# This involves reading and the compiling the many obsX and predX files.
-# We need to load a frq file to figure out when each fishery is operating.
-# However, some models have frq files in a weird (windows?) format that doesn't load.
-# For these an extra frq2 file has been included.
-
-cat("Catchability stuff\n")
-catchability <- lapply(models, function(model){
-  cat("Model: ", model, "\n")
-  files <- list.files(paste(basedir, model, sep="/"))
-  # If there is a frq2 load that one, otherwise crash and complain
-  frq <- read.MFCLFrq(paste(basedir, "M2", "skj2.frq", sep="/"))
-  rfrq <- realisations(frq)
-  rfrq$season <- (rfrq$month-1)/12 + 1/24
-  rfrq$ts <- rfrq$year + rfrq$season
-
-  # Get a list of all obsX and predX files
-  # Use little hat ^ to match the beginning of the string
-  obsfiles <- files[grep("^obs", files)]
-  predfiles <- files[grep("^pred", files)]
-
-  # What to do if missing these files?
-  if(length(obsfiles) == 0 | length(predfiles) == 0){
-    cat("No obsX or predX files\n")
-    return()
-  }
-  # Only include those with a numeric (some sneaky tag ones in there)
-  obsfiles <- obsfiles[grep("([0-9]+).*$", obsfiles)]
-  predfiles <- predfiles[grep("([0-9]+).*$", predfiles)]
-  file_number <- 1:length(obsfiles)
-  # Process each file, assumed to be numbered by fishery
-  obspredtemp <- lapply(file_number, function(x){
-    cat("Model: ", model, " File number: ", x, "\n")
-    # Files are not always by fishery number due to character ordering
-    fishery_number <- as.numeric(unlist(strsplit(obsfiles[x], "obs"))[2])
-    obsfilename <- obsfiles[x]
-    obstemp <- read.table(paste(basedir, model, obsfilename, sep="/"), sep="", col.names=c("ts", "obs_log_q"))
-    # Hack - because some fisheries have no effort
-    # Make sure you drop the effort == -1
-    rfrqtemp <- subset(rfrq, fishery == fishery_number & effort != -1.0)
-    # If there is no effort data in the frq, then skip those obs and pred files
-    # as they seem to contain some data for 4 time steps
-    if(dim(rfrqtemp)[1] == 0){
-      return(data.frame())
-    }
-    # Make sure order is by time step
-    rfrqtemp <- rfrqtemp[order(rfrqtemp$fishery, rfrqtemp$ts),]
-    predfilename <- predfiles[x]
-    predtemp <- read.table(paste(basedir, model, predfilename, sep="/"), sep="", col.names=c("ts", "pred_log_q"))
-    out <- cbind(obstemp, pred_log_q = predtemp$pred_log_q)
-    out$fishery <- fishery_number
-    out <- out[order(out$ts),]
-    out$ts <- rfrqtemp$ts
-    out$year <- rfrqtemp$year
-    out$season <- rfrqtemp$season
-    return(out)
-  }) # End of file lapply
-  obspredtemp <- do.call("rbind", obspredtemp)
-  obspredtemp$model <- model
-  return(obspredtemp)
-})
-# Bind it into a data.table
-catchability <- rbindlist(catchability)
-catchability <- merge(catchability, fishery_map)
-catchability <- merge(catchability, model_description, by="model")
-catchability[, c("obs_q", "pred_q") := .(exp(obs_log_q), exp(pred_log_q))]
-
-# Make another data object without the seasonality by simply averaging over years - a bad idea?
-catchability_annual <- catchability[, .(obs_q = mean(obs_log_q), pred_q = mean(pred_log_q)),
-                                    by=.(year, fishery, fishery_name, model, model_description, region)]
-
-# Look at difference - better for evaluating fit?
-# Don't do this for the annual data
-catchability[, diff := .(obs_q - pred_q)]
-# Scale by total catchability by fishery and model
-catchability[, scale_diff := diff / mean(obs_q, na.rm=TRUE),
-             by=.(model, fishery)]
-
-# Save the catchability objects
-save(catchability, catchability_annual, file="../app/data/catchability_data.Rdata")
 
 #------------------------------------------------------------------
 # Movement
