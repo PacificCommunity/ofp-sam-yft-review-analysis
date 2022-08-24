@@ -11,45 +11,49 @@ library(FLR4MFCL)
 library(data.table)
 
 # Model folder
-basedir <- "C:/Work/MFCL/ofp-sam-skj22/stepwise2022/"
+basedir <- "z:/yft/2020_review/analysis/stepwise/"
+
+# Output folder
+dir.create("../app/data", showWarnings=FALSE)
 
 # Generate the fishery map
 source("fishery_map.R")
 # Load the fishery map - assumed to be the same for all models
 load("../app/data/fishery_map.Rdata")
 
-models <- paste0("M", c(1, 2, 3, 4, 5, 6, "7new", 8, "9x"))
+models <- dir(basedir)
+models <- models[models!="12_Age10LW_HopefulReport"]  # exclude this one
 
 # Model description
 model_description <- data.frame(
   model=models,
   model_description=c(
-    "2019 Diagnostic case using the new MFCL 2.0.8.4",
-    "Convert M1 to catch conditioning",
-    "M2 + VAST PL surveys (ungrouped) + PS index for region 5 and 6 ungrouped. Eff_fm is estimated",
-    "M3 + PL surveys grouped (regions 1, 2, 3, 4, 7 & 8) + PS surveys 5 & 6 ungrouped",
-    "M4 + Orthogonal Polynomial Recruitment (OPR)",
-    "M4 + New movement option",
-    "M4 + Dirichilet multinomial-no RE + growth estimation",
-    "M7new + new movement + 2yrs equilib ini pop Model will be run from scratch, and the diagnostic will be reviewed using a new shiny app (similar to Hierophant)",
-    "M5 + M7"
+    "before important model changes are made",
+    "ungroup fleet selectivities between regions",
+    "add JPTP tagging data, change mixing period to 2 quarters",
+    "increase max age from 7 to 10 years",
+    "add otolith data, deterministic von Bertalanffy for all ages",
+    "calculate maturity at age internally in the assessment model given the growth curve",
+    "spawning fraction removed from the calculation of reproductive potential ogive",
+    "use size composition downweighting divisor of 60",
+    "set selectivity at < 30 cm to zero for purse seine and pole-and-line"
   ))
 
 #------------------------------------------------------------------
 # Data checker
 # Each model folder needs to have the following files:
 # length.fit
-# skj2.frq
+# yft.frq
 # obsX (X = 1:nfisheries)
 # predX (X = 1:nfisheries)
-# skj.tag
+# yft.tag
 # *.par
 # *.rep
 # temporary_tag_report
 
 # Only catch conditioned models have the obsX and predX files,
 # e.g. M1 does not have it - skipped in the relevant section below
-needed_files <- c("skj.tag", "length.fit", "temporary_tag_report", "skj2.frq", "test_plot_output")
+needed_files <- c("yft.tag", "length.fit", "temporary_tag_report", "yft.frq", "test_plot_output")
 for (model in models){
   model_files <- list.files(paste0(basedir, model))
 
@@ -64,7 +68,6 @@ for (model in models){
     cat("Missing rep file in model", model, ". Dropping model.\n")
     models <- models[!(models %in% model)]
   }
-
   if(!all(needed_files %in% model_files)){
     missing_file <- needed_files[!(needed_files %in% model_files)]
     cat("Missing files in model", model, ":", missing_file, ". Dropping model.\n")
@@ -83,7 +86,7 @@ lfits_dat <- lapply(models, function(x){
   cat("Processing model: ", x, "\n")
   filename <- paste(basedir, x, "length.fit", sep="/")
   read_length_fit_file(filename=filename, model_name=x)}
-)
+  )
 lfits_dat <- rbindlist(lfits_dat)
 # Bring in the fishery map
 lfits_dat <- merge(lfits_dat, fishery_map)
