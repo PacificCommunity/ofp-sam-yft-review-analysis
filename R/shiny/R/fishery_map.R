@@ -103,7 +103,7 @@ fishery_map$group[c(17, 18, 23, 32)] <- "DOM"								# Z or H
 # Only 32 shown as the index fisheries (33-41) do not capture tags
 
 fishery_map$tag_recapture_group <- fishery_map$fishery
-fishery_map$tag_recapture_group[1:32] <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
+fishery_map$tag_recapture_group <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 
 										                       13, 13,
                                            14, 14,
                                            15, 15,
@@ -112,7 +112,8 @@ fishery_map$tag_recapture_group[1:32] <- c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
 										                       20, 20,
 										                       21, 22, 23,
 										                       24, 24,
-										                       25)
+										                       25,
+										                       rep(25,9))  # surveys, not used
 # Good to add a name too
 fishery_map$tag_recapture_name <- fishery_map$fishery_name
 # Except where recapture group != recapture name
