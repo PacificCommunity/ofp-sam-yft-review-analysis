@@ -61,7 +61,7 @@ Modifed with list of "achievable" tasks before SC17: YFT Review Initial work pla
 
 - Z:\yft\2020_review\presentations\yft_review_2021_03_12_work_plan_ndd.pptx
 
-W-th comments from Paul and John
+With comments from Paul and John
 
 - Z:\yft\2020_review\documents\background_documents\YFT 2020 follow-up WP-comments_JH.docx
 
