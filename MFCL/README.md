@@ -50,7 +50,7 @@ ll
 
 **Create Start.tar.gz**
 ```
-../../diagnostic/1-10-12-fast/createStart.sh
+../../diagnostic/1-10-12-fast/create_start.sh
 ```
 
 ** Submit DAG **
