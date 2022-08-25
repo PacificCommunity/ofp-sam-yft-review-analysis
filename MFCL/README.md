@@ -45,3 +45,15 @@ When finished, some system files (err, log, out) will appear inside the model fo
 ```
 ll
 ```
+
+## DAG workflow
+
+**Create Start.tar.gz**
+```
+../../diagnostic/1-10-12-fast/createStart.sh
+```
+
+** Submit DAG **
+```
+condor_submit_dag condor.dag
+```
