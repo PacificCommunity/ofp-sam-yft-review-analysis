@@ -12,6 +12,8 @@ library(data.table)
 
 # Model folder
 basedir <- "z:/yft/2020_review/analysis/stepwise/"
+tagfile <- "yft.tag"
+frqfile <- "yft.frq"
 
 # Output folder
 dir.create("../app/data", showWarnings=FALSE)
@@ -43,16 +45,14 @@ model_description <- data.frame(
 # Data checker
 # Each model folder needs to have the following files:
 # length.fit
-# yft.frq
-# obsX (X = 1:nfisheries)
-# predX (X = 1:nfisheries)
-# yft.tag
+# *.frq
+# *.tag
 # *.par
 # *.rep
 # temporary_tag_report
+# (only catch conditioned models have the obsX and predX files)
 
-# Only catch conditioned models have the obsX and predX files,
-needed_files <- c("yft.tag", "length.fit", "temporary_tag_report", "yft.frq", "test_plot_output")
+needed_files <- c(tagfile, "length.fit", "temporary_tag_report", frqfile, "test_plot_output")
 for (model in models){
   model_files <- list.files(paste0(basedir, model))
   # Also check for a par and rep
@@ -300,25 +300,11 @@ for (model in models){
   lf <- list.files(paste(basedir, model, sep="/"))
   parfiles <- lf[grep(".par$", lf)]
   # Find the biggest par file
-  biggest_par <- as.character(max(as.numeric(substr(parfiles,1,2))))
-  if(length(biggest_par) == 1){
-    biggest_par <- paste0("0", biggest_par)
-  }
-  biggest_par <- paste0(biggest_par, ".par")
+  biggest_par <- max(parfiles)
   par <- read.MFCLPar(paste(basedir, model, biggest_par, sep="/"))
-
   # Get LL summary
   ll_summary <- summary(ll)
-
-  # Original method that requires renaming columns
-  # lldf <- matrix(ll_summary$likelihood, nrow=1, dimnames=list(NULL, ll_summary$component))
-  # lldf <- as.data.frame(lldf)
-  # Add max gradient
-  # lldf$max_grad <- max_grad(par)
-  # Number of parameters
-  # lldf$npars <- n_pars(par)
-
-  # Or build data.table with correct names here
+  # Build data.table with correct names
   lldf <- data.table(
     "BH steepness" = subset(ll_summary, component=="bhsteep")$likelihood,
     "Effort devs" = subset(ll_summary, component=="effort_dev")$likelihood,
@@ -345,25 +331,17 @@ cat("Tagging stuff\n")
 tagrep_dat <- list()
 for (model in models){
   cat("Model: ", model, "\n")
-  # srr_dat[[model]] <- pdat
-
-  # Needs a par file
   # ID the par file
   lf <- list.files(paste(basedir, model, sep="/"))
   parfiles <- lf[grep(".par$", lf)]
   # Find the biggest par file
-  biggest_par <- as.character(max(as.numeric(substr(parfiles, 1, 2))))
-  if(length(biggest_par) == 1){
-    biggest_par <- paste0("0", biggest_par)
-  }
-  biggest_par <- paste0(biggest_par,".par")
+  biggest_par <- max(parfiles)
   par <- read.MFCLPar(paste(basedir, model, biggest_par, sep="/"))
-  # rep <- read.MFCLRep(paste(basedir, model, "plot-07.par.rep", sep="/"))
 
   # Tag releases from the *.tag file
   # The recaptures slot contains the observed recaptures but not used here
   # We use temporary_tag_report file which has the predicted and observed recaptures
-  tagobs <- read.MFCLTag(paste(basedir, model, "/skj.tag", sep=""))
+  tagobs <- read.MFCLTag(paste(basedir, model, "/", tagfile, sep=""))
   tag_releases <- data.table(releases(tagobs))
   # Summarise release numbers by release event, i.e. sum the length distributions
   tag_releases <- tag_releases[, .(rel.obs = sum(lendist, na.rm=TRUE)),
@@ -400,7 +378,6 @@ for (model in models){
   tagrep[, rel.ts.after.mix := rel.ts + mixing_period_years]
 
   # Drop observations that are within the mixing period
-  # Do we do this for all plots - probably
   tagrep <- tagrep[!(recap.ts < rel.ts.after.mix),]
 
   # Summarise the three plots - or do it at end - might need to do it at the end as number of models increases
