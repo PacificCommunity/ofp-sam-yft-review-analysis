@@ -33,8 +33,8 @@ model_description <- data.frame(
     "add JPTP tagging data, change mixing period to 2 quarters",
     "increase max age from 7 to 10 years",
     "add otolith data, deterministic von Bertalanffy for all ages",
-    "calculate maturity at age internally in the assessment model given the growth curve",
-    "spawning fraction removed from the calculation of reproductive potential ogive",
+    "maturity at length converted to age using smooth splines",
+    "spawning fraction removed from the calculation of reproductive potential",
     "use size composition downweighting divisor of 60",
     "set selectivity at < 30 cm to zero for purse seine and pole-and-line"
   ))
