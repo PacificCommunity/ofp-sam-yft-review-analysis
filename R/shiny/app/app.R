@@ -674,30 +674,29 @@ server <- function(input, output) {
     return(get_movement_chorddiag(age = 1, season = 4))
   }) # End of plot movement chorrddiag Season 1
 
-  ## # Plot catchability diff
-  ## output$plot_movement_bar <- renderPlot({
-  ##   models <- input$model_select
-  ##   if(length(models) < 1){
-  ##    return()
-  ##   }
-  ##   #pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
-  ##   pdat <- subset(move_coef, Age==1 & model %in% models)
-  ##   pdat$From <- paste0("From ", pdat$From)
-  ##   pdat$To <- paste0("To ", pdat$To)
+  ## # Plot movement bar chart
+  output$plot_movement_bar <- renderPlot({
+    models <- input$model_select
+    if(length(models) < 1){
+     return()
+    }
+    pdat <- subset(move_coef, Age==1 & model %in% models)
+    pdat$From <- paste0("From ", pdat$From)
+    pdat$To <- paste0("To ", pdat$To)
 
 
-  ##   if(nrow(pdat) == 0){
-  ##     return()
-  ##   }
-  ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-  ##   p <- ggplot(pdat, aes(x=Season, y=value))
-  ##   p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
-  ##   p <- p + scale_fill_manual("Model", values=model_cols)
-  ##   p <- p + facet_grid(To~From)
-  ##   p <- p + theme_bw()
-  ##   p <- p + xlab("Season") + ylab("Movement coefficient")
-  ##   return(p)
-  ## }) # End of plot catchability diff
+    if(nrow(pdat) == 0){
+      return()
+    }
+    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+    p <- ggplot(pdat, aes(x=Season, y=value))
+    p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
+    p <- p + scale_fill_manual("Model", values=model_cols)
+    p <- p + facet_grid(To~From)
+    p <- p + theme_bw()
+    p <- p + xlab("Season") + ylab("Movement coefficient")
+    return(p)
+  }) # End of plot movement bar chart
 
   output$plot_srr <- renderPlot({
     models <- input$model_select
