@@ -10,12 +10,6 @@ library(ggplot2)
 library(markdown)
 library(DT)
 
-# Only needed for the chord plots - can be dropped if not useful
-# remotes::install_github("mattflor/chorddiag")
-# install.packages("igraph")
-# install.packages("networkD3")
-library("chorddiag")
-
 #---------------------------------------------------------------------------
 
 spc_about <- function(){
@@ -200,33 +194,6 @@ ui <- dashboardPage(
           box(title="Movement - bar chart", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_movement_bar", height="800px"))
         ), # End of movement bar chart
-
-        fluidRow(
-          box(title="Movement - chord diagram", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            p("Only one model at a time (untick the others). Assumes movement is the same across ages."),
-            textOutput("movement_model"),
-            fluidRow(
-              column(width = 6,
-                p("Season 1"),
-                chorddiagOutput("plot_movement_chorddiag1", height="400px")
-              ),
-              column(width = 6,
-                p("Season 2"),
-                chorddiagOutput("plot_movement_chorddiag2", height="400px")
-              )
-            ),
-            fluidRow(
-              column(width = 6,
-                p("Season 3"),
-                chorddiagOutput("plot_movement_chorddiag3", height="400px")
-              ),
-              column(width = 6,
-                p("Season 4"),
-                chorddiagOutput("plot_movement_chorddiag4", height="400px")
-              )
-            )
-          )
-        ), # End of movement chorddiag
         fluidRow(
           box(title="SRR", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_srr", height="500px"))
@@ -357,7 +324,7 @@ server <- function(input, output) {
     ncol <- 2  # should match that in the main plot function
     fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
     return(max(height_per_fishery*1.5, (height_per_fishery * ceiling(length(fisheries) / ncol))))
-  }) # End of plot catchs size distribution
+  }) # End of plot catch size distribution
 
   ## # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
   ## # Plot catchability time series
@@ -446,11 +413,6 @@ server <- function(input, output) {
   ##   p <- p + xlab("Year") + ylab("Obs. - pred. catchability (scaled)")
   ##   return(p)
   ## }) # End of plot catchability diff
-
-  output$movement_model <- renderText({
-    output <- paste0("Model ", input$model_select[1]) # Has to match the model in the get_movement_chorddiag() function
-    return(output)
-  })
 
   output$plot_tag_returns_time <- renderPlot({
     models <- input$model_select
@@ -641,38 +603,6 @@ server <- function(input, output) {
     p <- p + theme_bw()
     return(p)
   })
-
-  get_movement_chorddiag <- function(age = 1, season = 1){
-    # Need a better model selection
-    models <- input$model_select[1]
-    if(length(models) < 1){
-     return()
-    }
-    # Assume that Age and Season are constant
-    ddat <- dcast(move_coef, From ~ To, subset=.(model==models & Age == age & Season == season), value.var = "value")
-    pdat <- as.matrix(ddat, rownames="From")
-    pdat <- round(pdat, 3)
-    return(chorddiag(pdat, tickInterval = 0.05, margin=30, groupnameFontsize = 12))
-  }
-
-  # plot_movement_chorddiag
-  output$plot_movement_chorddiag1 <- renderChorddiag({
-    return(get_movement_chorddiag(age = 1, season = 1))
-  }) # End of plot movement chorrddiag Season 1
-
-  output$plot_movement_chorddiag2 <- renderChorddiag({
-    return(get_movement_chorddiag(age = 1, season = 2))
-  }) # End of plot movement chorrdiag Season 2
-
-  # plot_movement_chorddiag
-  output$plot_movement_chorddiag3 <- renderChorddiag({
-    return(get_movement_chorddiag(age = 1, season = 3))
-  }) # End of plot movement chorrddiag Season 1
-
-  # plot_movement_chorddiag
-  output$plot_movement_chorddiag4 <- renderChorddiag({
-    return(get_movement_chorddiag(age = 1, season = 4))
-  }) # End of plot movement chorrddiag Season 1
 
   ## # Plot movement bar chart
   output$plot_movement_bar <- renderPlot({
