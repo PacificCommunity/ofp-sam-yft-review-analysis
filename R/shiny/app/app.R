@@ -463,9 +463,6 @@ server <- function(input, output) {
 
   output$plot_cpue_time <- renderPlot({
     models <- input$model_select
-    # Drop models M1 and M2 from model list of chosen models as no index fisheries
-    drop_models <- c("M1", "M2")
-    models <- models[!models %in% drop_models]
     if(length(models) < 1){
      return()
     }
@@ -490,9 +487,6 @@ server <- function(input, output) {
 
   output$plot_cpue_residuals_time <- renderPlot({
     models <- input$model_select
-    # Drop models M1 and M2 from model list of chosen models as no index fisheries
-    drop_models <- c("M1", "M2")
-    models <- models[!models %in% drop_models]
     if(length(models) < 1){
      return()
     }
