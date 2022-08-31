@@ -51,7 +51,8 @@ ll_tab_data_files <- load("data/ll_tab_data.Rdata")
 ll_tab_dat[, `Max. gradient` := .(sprintf("%7.2e", `Max. gradient`))]
 ll_tab_dat[, `BH steepness` := .(sprintf("%3.2e", `BH steepness`))]
 ll_tab_dat[, `Effort devs` := .(sprintf("%3.2e", `Effort devs`))]
-ll_tab_dat[, `Catchability devs` := .(sprintf("%3.2e", `Catchability devs`))]
+## ll_tab_dat[, `Catchability devs` := .(sprintf("%3.2e", `Catchability devs`))]
+ll_tab_dat$"Catchability devs" <- NULL
 ll_tab_dat[, `Length comp.` := .(sprintf("%3.2e", `Length comp.`))]
 ll_tab_dat[, `Tag data` := .(sprintf("%3.2e", `Tag data`))]
 ll_tab_dat[, `Total` := .(sprintf("%3.2e", `Total`))]
