@@ -36,7 +36,7 @@ load("data/fishery_map.Rdata")
 
 # Load the data - generated using the stepwise_app_data_preparation.R script
 # Data for catchability plots
-load("data/catchability_data.Rdata")
+# load("data/catchability_data.Rdata")
 # Data for catch size distribution plots
 load("data/lfits_dat.Rdata")
 # Movement data
@@ -134,25 +134,25 @@ ui <- dashboardPage(
             plotOutput("plot_catch_size_dist", height="auto"))
         ), # End catch size distribution
 
-        # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
-        fluidRow(
-          box(title="Catchability: time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            p("Effort : F regressions. Dots are the partial Fs estimated by the Newton Raphson to explain the catch exactly. Lines are the Fs predicted on the basis of the effort data."),
-            radioButtons(inputId="catchability_seasonal", label="Seasonal or annualised",
-              choices=list(Seasonal="seasonal", Annualised="annual"), selected="seasonal", inline=TRUE),
-            plotOutput("plot_catchability_time_series", height="auto"))
-        ), # End of catchability time series
+        ## # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
+        ## fluidRow(
+        ##   box(title="Catchability: time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##     p("Effort : F regressions. Dots are the partial Fs estimated by the Newton Raphson to explain the catch exactly. Lines are the Fs predicted on the basis of the effort data."),
+        ##     radioButtons(inputId="catchability_seasonal", label="Seasonal or annualised",
+        ##       choices=list(Seasonal="seasonal", Annualised="annual"), selected="seasonal", inline=TRUE),
+        ##     plotOutput("plot_catchability_time_series", height="auto"))
+        ## ), # End of catchability time series
 
-        fluidRow(
-          box(title="Catchability: scaled difference with a smoother", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            p("Effort : F regressions. Dots are the scaled difference between the partial Fs estimated by the Newton Raphson to explain the catch exactly and the Fs predicted on the basis of the effort data. The line is a smoother."),
-            plotOutput("plot_catchability_diff", height="auto"))
-        ), # End of catchability diff
+        ## fluidRow(
+        ##   box(title="Catchability: scaled difference with a smoother", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##     p("Effort : F regressions. Dots are the scaled difference between the partial Fs estimated by the Newton Raphson to explain the catch exactly and the Fs predicted on the basis of the effort data. The line is a smoother."),
+        ##     plotOutput("plot_catchability_diff", height="auto"))
+        ## ), # End of catchability diff
 
-        fluidRow(
-          box(title="Catchability: scaled difference with a smoother - variant", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            plotOutput("plot_catchability_diff2", height="800px"))
-        ), # End of catchability diff
+        ## fluidRow(
+        ##   box(title="Catchability: scaled difference with a smoother - variant", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##     plotOutput("plot_catchability_diff2", height="800px"))
+        ## ), # End of catchability diff
 
         fluidRow(
           box(title="Tag returns: time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
@@ -358,93 +358,93 @@ server <- function(input, output) {
     return(max(height_per_fishery*1.5, (height_per_fishery * ceiling(length(fisheries) / ncol))))
   }) # End of plot catchs size distribution
 
-  # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
-  # Plot catchability time series
-  output$plot_catchability_time_series <- renderPlot({
-    models <- input$model_select
-    fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    if(length(models) < 1 | length(fisheries) < 1){
-     return()
-    }
-    # Are we plotting seasonal or annualised data
-    if(input$catchability_seasonal == "seasonal"){
-      pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
-      xval <- "ts"
-    }
-    if(input$catchability_seasonal == "annual"){
-      pdat <- subset(catchability_annual, fishery %in% fisheries & model %in% models)
-      xval <- "year"
-    }
-    if(nrow(pdat) == 0){
-      return()
-    }
-    # Plot
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes_string(x=xval))
-    p <- p + geom_point(aes(y=obs_q), colour=obs_col, size=3)
-    p <- p + geom_line(aes(y=pred_q, colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_grid(fishery_name ~ model, scales="free")
-    p <- p + theme_bw()
-    p <- p + xlab("Year") + ylab("Catchability")
-    return(p)
-  },
-  height=function(){
-    fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    return(max(height_per_fishery*1.5, (height_per_fishery * length(fisheries))))
-  }) # End of plot catchability time series
+  ## # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
+  ## # Plot catchability time series
+  ## output$plot_catchability_time_series <- renderPlot({
+  ##   models <- input$model_select
+  ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
+  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##    return()
+  ##   }
+  ##   # Are we plotting seasonal or annualised data
+  ##   if(input$catchability_seasonal == "seasonal"){
+  ##     pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
+  ##     xval <- "ts"
+  ##   }
+  ##   if(input$catchability_seasonal == "annual"){
+  ##     pdat <- subset(catchability_annual, fishery %in% fisheries & model %in% models)
+  ##     xval <- "year"
+  ##   }
+  ##   if(nrow(pdat) == 0){
+  ##     return()
+  ##   }
+  ##   # Plot
+  ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+  ##   p <- ggplot(pdat, aes_string(x=xval))
+  ##   p <- p + geom_point(aes(y=obs_q), colour=obs_col, size=3)
+  ##   p <- p + geom_line(aes(y=pred_q, colour=model), size=1.25)
+  ##   p <- p + scale_colour_manual("Model", values=model_cols)
+  ##   p <- p + facet_grid(fishery_name ~ model, scales="free")
+  ##   p <- p + theme_bw()
+  ##   p <- p + xlab("Year") + ylab("Catchability")
+  ##   return(p)
+  ## },
+  ## height=function(){
+  ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
+  ##   return(max(height_per_fishery*1.5, (height_per_fishery * length(fisheries))))
+  ## }) # End of plot catchability time series
 
-  # Plot catchability diff
-  output$plot_catchability_diff <- renderPlot({
-    models <- input$model_select
-    fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    if(length(models) < 1 | length(fisheries) < 1){
-     return()
-    }
-    pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
-    if(nrow(pdat) == 0){
-      return()
-    }
-    # Plot
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes(x=ts, y=scale_diff))
-    p <- p + geom_point(na.rm=TRUE, size=3, colour=obs_col)
-    # Add a smoother
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_grid(fishery_name ~ model, scales="free")
-    p <- p + theme_bw()
-    p <- p + xlab("Year") + ylab("Obs. - pred. catchability (scaled)")
-    return(p)
-  },
-  height=function(){
-    fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    return(max(height_per_fishery*1.5, (height_per_fishery * length(fisheries))))
-  }) # End of plot catchability diff
+  ## # Plot catchability diff
+  ## output$plot_catchability_diff <- renderPlot({
+  ##   models <- input$model_select
+  ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
+  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##    return()
+  ##   }
+  ##   pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
+  ##   if(nrow(pdat) == 0){
+  ##     return()
+  ##   }
+  ##   # Plot
+  ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+  ##   p <- ggplot(pdat, aes(x=ts, y=scale_diff))
+  ##   p <- p + geom_point(na.rm=TRUE, size=3, colour=obs_col)
+  ##   # Add a smoother
+  ##   p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+  ##   p <- p + scale_colour_manual("Model", values=model_cols)
+  ##   p <- p + facet_grid(fishery_name ~ model, scales="free")
+  ##   p <- p + theme_bw()
+  ##   p <- p + xlab("Year") + ylab("Obs. - pred. catchability (scaled)")
+  ##   return(p)
+  ## },
+  ## height=function(){
+  ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
+  ##   return(max(height_per_fishery*1.5, (height_per_fishery * length(fisheries))))
+  ## }) # End of plot catchability diff
 
-  # Variant
-  # Plot catchability diff
-  output$plot_catchability_diff2 <- renderPlot({
-    models <- input$model_select
-    fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    if(length(models) < 1 | length(fisheries) < 1){
-     return()
-    }
-    pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
-    if(nrow(pdat) == 0){
-      return()
-    }
-    # Plot
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes(x=ts, y=scale_diff))
-    # Add a smoother
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_wrap(~fishery_name, scales="free")
-    p <- p + theme_bw()
-    p <- p + xlab("Year") + ylab("Obs. - pred. catchability (scaled)")
-    return(p)
-  }) # End of plot catchability diff
+  ## # Variant
+  ## # Plot catchability diff
+  ## output$plot_catchability_diff2 <- renderPlot({
+  ##   models <- input$model_select
+  ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
+  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##    return()
+  ##   }
+  ##   pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
+  ##   if(nrow(pdat) == 0){
+  ##     return()
+  ##   }
+  ##   # Plot
+  ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+  ##   p <- ggplot(pdat, aes(x=ts, y=scale_diff))
+  ##   # Add a smoother
+  ##   p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+  ##   p <- p + scale_colour_manual("Model", values=model_cols)
+  ##   p <- p + facet_wrap(~fishery_name, scales="free")
+  ##   p <- p + theme_bw()
+  ##   p <- p + xlab("Year") + ylab("Obs. - pred. catchability (scaled)")
+  ##   return(p)
+  ## }) # End of plot catchability diff
 
   output$movement_model <- renderText({
     output <- paste0("Model ", input$model_select[1]) # Has to match the model in the get_movement_chorddiag() function
@@ -673,30 +673,30 @@ server <- function(input, output) {
     return(get_movement_chorddiag(age = 1, season = 4))
   }) # End of plot movement chorrddiag Season 1
 
-  # Plot catchability diff
-  output$plot_movement_bar <- renderPlot({
-    models <- input$model_select
-    if(length(models) < 1){
-     return()
-    }
-    #pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
-    pdat <- subset(move_coef, Age==1 & model %in% models)
-    pdat$From <- paste0("From ", pdat$From)
-    pdat$To <- paste0("To ", pdat$To)
+  ## # Plot catchability diff
+  ## output$plot_movement_bar <- renderPlot({
+  ##   models <- input$model_select
+  ##   if(length(models) < 1){
+  ##    return()
+  ##   }
+  ##   #pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
+  ##   pdat <- subset(move_coef, Age==1 & model %in% models)
+  ##   pdat$From <- paste0("From ", pdat$From)
+  ##   pdat$To <- paste0("To ", pdat$To)
 
 
-    if(nrow(pdat) == 0){
-      return()
-    }
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes(x=Season, y=value))
-    p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
-    p <- p + scale_fill_manual("Model", values=model_cols)
-    p <- p + facet_grid(To~From)
-    p <- p + theme_bw()
-    p <- p + xlab("Season") + ylab("Movement coefficient")
-    return(p)
-  }) # End of plot catchability diff
+  ##   if(nrow(pdat) == 0){
+  ##     return()
+  ##   }
+  ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+  ##   p <- ggplot(pdat, aes(x=Season, y=value))
+  ##   p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
+  ##   p <- p + scale_fill_manual("Model", values=model_cols)
+  ##   p <- p + facet_grid(To~From)
+  ##   p <- p + theme_bw()
+  ##   p <- p + xlab("Season") + ylab("Movement coefficient")
+  ##   return(p)
+  ## }) # End of plot catchability diff
 
   output$plot_srr <- renderPlot({
     models <- input$model_select
