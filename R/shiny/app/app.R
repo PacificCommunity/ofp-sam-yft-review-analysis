@@ -54,9 +54,9 @@ ll_tab_dat[, `Length comp.` := .(sprintf("%3.2e", `Length comp.`))]
 ll_tab_dat[, `Tag data` := .(sprintf("%3.2e", `Tag data`))]
 ll_tab_dat[, `Total` := .(sprintf("%3.2e", `Total`))]
 # Format the status table
-status_tab_dat[,`Final SB/SBF0latest` := .(signif(`Final SB/SBF0latest`,3))]
-status_tab_dat[,`SB/SBF0 (2012)` := .(signif(`SB/SBF0 (2012)`, 3))]
-status_tab_dat[,`FMSY` := .(signif(`FMSY`, 3))]
+status_tab_dat[, `Final SB/SBF0latest` := .(signif(`Final SB/SBF0latest`,3))]
+status_tab_dat[, `SB/SBF0 (2012)` := .(signif(`SB/SBF0 (2012)`, 3))]
+status_tab_dat[, `FMSY` := .(signif(`FMSY`, 3))]
 
 #---------------------------------------------------------------------------
 # App options
@@ -74,26 +74,26 @@ fishgrp_names <- unique(fishery_map$group)
 #https://stackoverflow.com/questions/31440564/adding-a-company-logo-to-shinydashboard-header
 
 ui <- dashboardPage(
-  header=dashboardHeader(title = "YFT review 2022"),
-  sidebar=dashboardSidebar(
+  header = dashboardHeader(title="YFT review 2022"),
+  sidebar = dashboardSidebar(
     br(),
     br(),
     sidebarMenu(id="sidebarmenu",
       # Add any required menus submenu inside menuItem
-      menuItem("Introduction", tabName="introduction", icon = icon("wine-bottle")),
-      menuItem("Fitting diagnostics", tabName="diagnostics", icon = icon("wine-glass-alt")),
-      menuItem("Fits to data", tabName="fittodata", icon = icon("cocktail")),
-      menuItem("Model outputs", tabName="modeloutput", icon = icon("beer")),
-      menuItem("Stock status", tabName="stockstatus", icon = icon("glass-whiskey")),
-      menuItem("About", tabName="about", icon = icon("glass-martini-alt"))
+      menuItem("Introduction", tabName="introduction", icon=icon("wine-bottle")),
+      menuItem("Fitting diagnostics", tabName="diagnostics", icon=icon("wine-glass-alt")),
+      menuItem("Fits to data", tabName="fittodata", icon=icon("cocktail")),
+      menuItem("Model outputs", tabName="modeloutput", icon=icon("beer")),
+      menuItem("Stock status", tabName="stockstatus", icon=icon("glass-whiskey")),
+      menuItem("About", tabName="about", icon=icon("glass-martini-alt"))
     ), # Close sidebarMenu
 
     # Only show these on the plotting tabs - not Introduction and About tabs
     conditionalPanel(condition="input.sidebarmenu == 'diagnostics' || input.sidebarmenu == 'fittodata' || input.sidebarmenu == 'modeloutput' || input.sidebarmenu == 'stockstatus'",
       # Model selection - select multiple
-      checkboxGroupInput(inputId="model_select", label = ("Select models"), choiceNames = all_models, choiceValues= all_models, selected = default_models),
+      checkboxGroupInput(inputId="model_select", label="Select models", choiceNames=all_models, choiceValues=all_models, selected=default_models),
       # Fishery grouping selection - only single
-      radioButtons(inputId = "fishery_group", label="Fishery / Tag recapture groups",choiceNames=fishgrp_names, choiceValues=fishgrp_names, selected= default_fishery)
+      radioButtons(inputId="fishery_group", label="Fishery / Tag recapture groups", choiceNames=fishgrp_names, choiceValues=fishgrp_names, selected=default_fishery)
     ),
     br(),
     br(),
@@ -113,28 +113,28 @@ ui <- dashboardPage(
     tabItems(
 
       # ****** Introduction **********
-      tabItem(tabName = "introduction", h2("Introduction"),
+      tabItem(tabName="introduction", h2("Introduction"),
         # Add table of models
         fluidRow(column(12, includeMarkdown("introtext/introduction.md"))),
         fluidRow(column(12, includeMarkdown("introtext/models.md")))
       ), # End of introduction tab
 
       # ****** Fitting diagnostics **********
-      tabItem(tabName = "diagnostics", h2("Fitting diagnostics"),
-        fluidRow(box(title="Likelihood components and gradients", collapsed=start_collapsed, solidHeader = TRUE, collapsible=TRUE, status="primary", width=12, DTOutput("llhood_table")))
+      tabItem(tabName="diagnostics", h2("Fitting diagnostics"),
+        fluidRow(box(title="Likelihood components and gradients", collapsed=start_collapsed, solidHeader=TRUE, collapsible=TRUE, status="primary", width=12, DTOutput("llhood_table")))
       ), # End of diagnostics tab item
 
       # ****** Fit to data **********
-      tabItem(tabName = "fittodata", h2("Fits to data sources"),
+      tabItem(tabName="fittodata", h2("Fits to data sources"),
         fluidRow(
-          box(title="Catch size distribution", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Catch size distribution", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             p("Bars are the observations. Lines are the model predictions."),
             plotOutput("plot_catch_size_dist", height="auto"))
         ), # End catch size distribution
 
         ## # Email from JH 21/04/22. These plots are the effort:fm regressions I believe. So they are not really "observed" and "predicted" in the usual sense as both are modelled quantities. I think the blue dots (observed) are actually the partial fishing mortalities estimated by the Newton Raphson to explain the catch exactly, and the red lines (predictions) are the F's predicted on the basis of the effort data. So maybe that could be reflected in the description at the top.
         ## fluidRow(
-        ##   box(title="Catchability: time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##   box(title="Catchability: time series", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
         ##     p("Effort : F regressions. Dots are the partial Fs estimated by the Newton Raphson to explain the catch exactly. Lines are the Fs predicted on the basis of the effort data."),
         ##     radioButtons(inputId="catchability_seasonal", label="Seasonal or annualised",
         ##       choices=list(Seasonal="seasonal", Annualised="annual"), selected="seasonal", inline=TRUE),
@@ -142,130 +142,130 @@ ui <- dashboardPage(
         ## ), # End of catchability time series
 
         ## fluidRow(
-        ##   box(title="Catchability: scaled difference with a smoother", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##   box(title="Catchability: scaled difference with a smoother", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
         ##     p("Effort : F regressions. Dots are the scaled difference between the partial Fs estimated by the Newton Raphson to explain the catch exactly and the Fs predicted on the basis of the effort data. The line is a smoother."),
         ##     plotOutput("plot_catchability_diff", height="auto"))
         ## ), # End of catchability diff
 
         ## fluidRow(
-        ##   box(title="Catchability: scaled difference with a smoother - variant", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+        ##   box(title="Catchability: scaled difference with a smoother - variant", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
         ##     plotOutput("plot_catchability_diff2", height="800px"))
         ## ), # End of catchability diff
 
         fluidRow(
-          box(title="Tag returns: time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Tag returns: time series", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             p("Dots are the observations. Lines are the model predictions."),
             plotOutput("plot_tag_returns_time", height="800px"))
         ), # End of tag returns - time series
 
         fluidRow(
-          box(title="Tag returns: residuals time series", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Tag returns: residuals time series", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_tag_returns_residuals_time", height="800px"))
         ), # End of tag returns residuals - time series
 
         fluidRow(
-          box(title="CPUE: time series (index fisheries only)", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="CPUE: time series (index fisheries only)", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             p("Dots are the observed CPUE. Lines are the predicted CPUE."),
             plotOutput("plot_cpue_time", height="800px"))
         ), # End of cpue - time series
 
         fluidRow(
-          box(title="CPUE: residuals time series (index fisheries only)", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="CPUE: residuals time series (index fisheries only)", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_cpue_residuals_time", height="800px"))
         ), # End of cpue residuals - time series
 
         fluidRow(
-          box(title="Tag attrition", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Tag attrition", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             p("Dots are the observations. Lines are the model predictions."),
             # Selector for grouping
-            radioButtons(inputId = "tag_attrition", label="Tag attrition grouping",choiceNames=c("Combined", "Region", "Program"), choiceValues=c("combined", "region", "program"), selected="combined", inline=TRUE),
+            radioButtons(inputId="tag_attrition", label="Tag attrition grouping", choiceNames=c("Combined", "Region", "Program"), choiceValues=c("combined", "region", "program"), selected="combined", inline=TRUE),
             plotOutput("plot_tag_attrition", height="600px"))
 
         ), # End of tag attrition
 
         fluidRow(
-          box(title="Tag attrition: residuals", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            radioButtons(inputId = "tag_attrition_residuals", label="Tag attrition grouping",choiceNames=c("Combined", "Region", "Program"), choiceValues=c("combined", "region", "program"), selected="combined", inline=TRUE),
+          box(title="Tag attrition: residuals", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+            radioButtons(inputId="tag_attrition_residuals", label="Tag attrition grouping", choiceNames=c("Combined", "Region", "Program"), choiceValues=c("combined", "region", "program"), selected="combined", inline=TRUE),
             plotOutput("plot_tag_attrition_residuals", height="600px"))
         ) # End of tag returns - time series
 
       ), # End of fittodata tab item
 
       # ****** Model Ouputs**********
-      tabItem(tabName = "modeloutput", h2("Model outputs"),
+      tabItem(tabName="modeloutput", h2("Model outputs"),
         fluidRow(
-          box(title="Movement - bar chart", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Movement - bar chart", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_movement_bar", height="800px"))
         ), # End of movement bar chart
         fluidRow(
-          box(title="SRR", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="SRR", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_srr", height="500px"))
         ), # End of SRR chart
         fluidRow(
-          box(title="Total recruitment distribution", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Total recruitment distribution", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_rec_dist", height="500px"))
         ), # End of recruitment distribution chart
         fluidRow(
-          box(title="Recruitment deviates", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Recruitment deviates", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
               # Include option to show points?
             plotOutput("plot_rec_devs", height="500px"))
         ), # End of recruitment distribution chart
         fluidRow(
-          box(title="Selectivity", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Selectivity", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Scale selector
-            radioButtons(inputId = "age_select_sel", label="By age or length",choiceNames=c("Age", "Length"), choiceValues=c("age", "length"), selected="age", inline=TRUE),
+            radioButtons(inputId="age_select_sel", label="By age or length",choiceNames=c("Age", "Length"), choiceValues=c("age", "length"), selected="age", inline=TRUE),
             plotOutput("plot_selectivity", height="500px"))
         ), # End of selectivity
         fluidRow(
-          box(title="Natural mortality", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Natural mortality", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_natmort", height="500px"))
         ), # End of selectivity
         fluidRow(
-          box(title="Growth", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Growth", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_growth", height="500px"))
         ), # End of growth
         fluidRow(
-          box(title="Maturity", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Maturity", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Scale selector
-            radioButtons(inputId = "age_select_mat", label="By age or length",choiceNames=c("Age", "Length"), choiceValues=c("age", "length"), selected="age", inline=TRUE),
+            radioButtons(inputId="age_select_mat", label="By age or length",choiceNames=c("Age", "Length"), choiceValues=c("age", "length"), selected="age", inline=TRUE),
             plotOutput("plot_maturity", height="500px"))
         ) # End of growth
 
       ), # End of modeloutput
       # ****** Stock status **********
-      tabItem(tabName = "stockstatus", h2("Stock status"),
+      tabItem(tabName="stockstatus", h2("Stock status"),
         fluidRow(
-          box(title="Recruitment", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Recruitment", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Area selector
-            column(6, radioButtons(inputId = "area_select_recruitment", label="Region selector",choiceNames=c("Separate", "Combined"), choiceValues=c("separate","combined"), selected="combined", inline=TRUE)),
+            column(6, radioButtons(inputId="area_select_recruitment", label="Region selector",choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
             # Scale selector
-            column(6, radioButtons(inputId = "scale_select_recruitment", label="Different scales?",choiceNames=c("Yes", "No"), choiceValues=c(TRUE, FALSE), selected=TRUE, inline=TRUE)),
+            column(6, radioButtons(inputId="scale_select_recruitment", label="Different scales?",choiceNames=c("Yes", "No"), choiceValues=c(TRUE, FALSE), selected=TRUE, inline=TRUE)),
             plotOutput("plot_rec", height="500px"))
         ), # End recruitment time series
 
         fluidRow(
-          box(title="SB/SBF=0", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="SB/SBF=0", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Area selector
-            radioButtons(inputId = "area_select_sbsbf0", label="Region selector",choiceNames=c("Separate", "Combined"), choiceValues=c("separate","combined"), selected="combined", inline=TRUE),
+            radioButtons(inputId="area_select_sbsbf0", label="Region selector",choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE),
             plotOutput("plot_sbsbf0", height="500px"))
         ), # End of SB/SBF=0 time series
 
         fluidRow(
-          box(title="Adult biomass", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Adult biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Area selector
-            column(6, radioButtons(inputId = "area_select_sb", label="Region selector",choiceNames=c("Separate", "Combined"), choiceValues=c("separate","combined"), selected="combined", inline=TRUE)),
+            column(6, radioButtons(inputId="area_select_sb", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
             # Scale selector
-            column(6, radioButtons(inputId = "scale_select_sb", label="Different scales?",choiceNames=c("Yes", "No"), choiceValues=c(TRUE, FALSE), selected=TRUE, inline=TRUE)),
+            column(6, radioButtons(inputId="scale_select_sb", label="Different scales?", choiceNames=c("Yes", "No"), choiceValues=c(TRUE, FALSE), selected=TRUE, inline=TRUE)),
             plotOutput("plot_sb", height="500px"))
         ), # End of SB time series
 
         fluidRow(
-          box(title="Stock status summary", solidHeader = TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12, DTOutput("status_table"))),
+          box(title="Stock status summary", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12, DTOutput("status_table"))),
 
       ), # End of Stock Status tab
 
       # About tab - might just include in the introduction
-      tabItem(tabName = "about", h2("About SPC"),
+      tabItem(tabName="about", h2("About SPC"),
           fluidRow(column(12,spc_about()))
       ) # End of about tab
 
@@ -291,7 +291,6 @@ server <- function(input, output) {
   nice_blue <- "steelblue1"
   obs_col <- "steelblue1" # Colours for observed data
   nice_red <- "tomato3"
-
 
   # Catch size distribution plot
   output$plot_catch_size_dist <- renderPlot({
@@ -381,7 +380,7 @@ server <- function(input, output) {
   ##   p <- ggplot(pdat, aes(x=ts, y=scale_diff))
   ##   p <- p + geom_point(na.rm=TRUE, size=3, colour=obs_col)
   ##   # Add a smoother
-  ##   p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+  ##   p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE, size=1.25)
   ##   p <- p + scale_colour_manual("Model", values=model_cols)
   ##   p <- p + facet_grid(fishery_name ~ model, scales="free")
   ##   p <- p + theme_bw()
@@ -409,7 +408,7 @@ server <- function(input, output) {
   ##   model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
   ##   p <- ggplot(pdat, aes(x=ts, y=scale_diff))
   ##   # Add a smoother
-  ##   p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+  ##   p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE, size=1.25)
   ##   p <- p + scale_colour_manual("Model", values=model_cols)
   ##   p <- p + facet_wrap(~fishery_name, scales="free")
   ##   p <- p + theme_bw()
@@ -455,7 +454,7 @@ server <- function(input, output) {
     # Assume that the observed are the same across the models
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=recap.ts, y=diff))
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE)
+    p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE)
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + facet_wrap(~tag_recapture_name, scales="free")
     p <- p + geom_hline(aes(yintercept=0.0), linetype=2)
@@ -503,7 +502,7 @@ server <- function(input, output) {
     # Observed is not the same across models
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=ts, y=scale_diff))
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE)
+    p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE)
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + facet_wrap(~fishery_name, scales="free")
     p <- p + geom_hline(aes(yintercept=0.0), linetype=2)
@@ -548,7 +547,7 @@ server <- function(input, output) {
     }
     p <- p + xlab("Periods at liberty (quarters)")
     p <- p + ylab("Number of tag returns")
-    p <- p + ylim(c(0,NA))
+    p <- p + ylim(c(0, NA))
     p <- p + theme_bw()
     return(p)
   })
@@ -569,7 +568,7 @@ server <- function(input, output) {
     if(facet == "region"){
       grouping_names <- c("model", "period_at_liberty", "region")
     }
-    pdat <- tag_attrition[model %in% models, .(recap.obs=sum(recap.obs, na.rm=TRUE), recap.pred=sum(recap.pred, na.rm=TRUE), diff=sum(diff, na.rm=TRUE)) ,by=mget(grouping_names)]
+    pdat <- tag_attrition[model %in% models, .(recap.obs=sum(recap.obs, na.rm=TRUE), recap.pred=sum(recap.pred, na.rm=TRUE), diff=sum(diff, na.rm=TRUE)), by=mget(grouping_names)]
     # To scale the difference don't group by period at liberty - keep other choices
     grouping_names <- grouping_names[grouping_names!="period_at_liberty"]
     # This is for the residuals plot - the next one
@@ -586,7 +585,7 @@ server <- function(input, output) {
 
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=period_at_liberty, y=diff))
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+    p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE, size=1.25)
     p <- p + scale_color_manual("Model",values=model_cols)
     p <- p + geom_hline(aes(yintercept=0.0), linetype=2)
     if(facet == "program"){
@@ -611,7 +610,6 @@ server <- function(input, output) {
     pdat$From <- paste0("From ", pdat$From)
     pdat$To <- paste0("To ", pdat$To)
 
-
     if(nrow(pdat) == 0){
       return()
     }
@@ -631,18 +629,18 @@ server <- function(input, output) {
       return()
     }
     # Process the SRR data into summarised form
-    pdat <- srr_dat[,.(sb=sum(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model,year,season)]
+    pdat <- srr_dat[,.(sb=sum(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model, year, season)]
     # Assume that annualised relationship i.e. flagval(par, 2, 182) == 1
     # flagval(par, 2, 182)$value # 1 - annualised SRR fit
     # The Beverton-Holt stock-recruitment relationship is fitted to total "annualised" recruitments and average annual biomass
-    pdat = pdat[,.(sb=mean(sb,na.rm=TRUE),rec=sum(rec,na.rm=TRUE)),by=.(model,year)]
+    pdat <- pdat[,.(sb=mean(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model, year)]
     pdat <- pdat[model %in% models]
 
     sb_units <- 1000
     rec_units <- 1000000
     # Label formatting
-    xlab <- paste0("Adult biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE),"s)")
-    ylab <- paste0("Recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
+    xlab <- paste0("Adult biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
+    ylab <- paste0("Recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE), "s)")
     sbmax <- max(pdat$sb) * 1.2 #/ sb_units
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
 
@@ -650,7 +648,7 @@ server <- function(input, output) {
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=sb/sb_units, y=rec/rec_units))
     # The points
-    p <- p + geom_point(aes(fill=model, colour=model),shape=21,size=3)
+    p <- p + geom_point(aes(fill=model, colour=model), shape=21, size=3)
     # The fitted model
     p <- p + geom_line(data=fdat, aes(x=sb/sb_units, y=rec/rec_units, colour=model), size=1.25)
     p <- p + scale_fill_manual("Model", values=model_cols)
@@ -668,14 +666,14 @@ server <- function(input, output) {
     }
 
     # Average recruitment over time series by region and quarter
-    av_rec <- srr_dat[,.(av_rec = mean(rec)), by=.(model, season, area)]
+    av_rec <- srr_dat[,.(av_rec=mean(rec)), by=.(model, season, area)]
     # Total average recruitment of whole time series
-    total_rec <- av_rec[,.(total_rec = sum(av_rec)), by=.(model)]
+    total_rec <- av_rec[,.(total_rec=sum(av_rec)), by=.(model)]
     pdat <- merge(av_rec, total_rec)
     pdat[, c("prop_rec", "season") := .(av_rec/total_rec, as.character(season))]
     pdat <- pdat[model %in% models]
     # Sanity check
-    # pdat[,.(sum = sum(prop_rec)), by=.(model)]
+    # pdat[,.(sum=sum(prop_rec)), by=.(model)]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
 
     pdat[,area := paste0("Area ", area)]
@@ -684,7 +682,7 @@ server <- function(input, output) {
     p <- ggplot(pdat, aes(x=season, y=prop_rec))
     p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
     p <- p + scale_fill_manual("Model", values=model_cols)
-    p <- p + facet_wrap(~area, ncol = 4)
+    p <- p + facet_wrap(~area, ncol=4)
     p <- p + xlab("Season") + ylab("Proportion of total recruitment")
     p <- p + theme_bw()
     return(p)
@@ -698,13 +696,13 @@ server <- function(input, output) {
     pdat <- rec_dev_dat[model %in% models]
     pdat[,c("area", "season") := .(paste0("Area ", area), paste0("Season ", season))]
 
-    x_axis_breaks <- seq(from = 1980, to = 2020, by = 20)
+    x_axis_breaks <- seq(from=1980, to=2020, by=20)
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
 
     p <- ggplot(pdat, aes(x=year, y=value))
     # p <- ggplot(rec_dev_dat[model %in% c("M6")], aes(x=year, y=value))
     p <- p + geom_point(aes(fill=model, colour=model), alpha=0.5, size=3)
-    p <- p + geom_smooth(aes(colour=model), method = 'loess', formula = 'y~x', na.rm=TRUE, se=FALSE, size=1.25)
+    p <- p + geom_smooth(aes(colour=model), method='loess', formula='y~x', na.rm=TRUE, se=FALSE, size=1.25)
     p <- p + scale_fill_manual("Model", values=model_cols)
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + facet_grid(season~area)
@@ -734,14 +732,14 @@ server <- function(input, output) {
 
     # Need to sum recruitment over areas - could do in advance if slow
     pdat <- srr_dat[model %in% models, -"sb"]
-    total_rec <- pdat[, .(area = "All", rec=sum(rec)), by=.(model, year, season)]
+    total_rec <- pdat[, .(area="All", rec=sum(rec)), by=.(model, year, season)]
     pdat <- rbindlist(list(pdat, total_rec))
     pdat <- pdat[area %in% areas]
 
     pdat[, ts := year + (season-1) / 4 + 1/8]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     rec_units <- 1000000
-    ylab <- paste0("Total recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
+    ylab <- paste0("Total recruitment (N; ", format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE), "s)")
     p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
     p <- p + geom_line(aes(colour=model), size=1.25)
     p <- p + scale_colour_manual("Model", values=model_cols)
@@ -775,7 +773,6 @@ server <- function(input, output) {
     return(p)
   })
 
-
   output$plot_sb <- renderPlot({
     models <- input$model_select
     area_select <- input$area_select_sb
@@ -794,7 +791,7 @@ server <- function(input, output) {
     }
 
     sb_units <- 1000
-    ylab <- paste0("Adult biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE),"s)")
+    ylab <- paste0("Adult biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
@@ -854,15 +851,15 @@ server <- function(input, output) {
     pdat <- sel_dat[model %in% models]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=age))
-    p <- p + geom_ribbon(aes(ymax= length_upper, ymin = length_lower, fill = model), alpha=0.25)
-    p <- p + geom_line(aes(y = length, colour=model), size=1.25)
+    p <- p + geom_ribbon(aes(ymax=length_upper, ymin=length_lower, fill=model), alpha=0.25)
+    p <- p + geom_line(aes(y=length, colour=model), size=1.25)
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + scale_fill_manual("Model", values=model_cols)
     p <- p + xlab("Age class") + ylab("Length (cm)")
     p <- p + theme_bw()
     # Tighten the axes
-    p <- p + scale_y_continuous(limits = c(0, NA), expand = c(0, 0))
-    p <- p + scale_x_continuous(expand = c(0, 0))
+    p <- p + scale_y_continuous(limits=c(0, NA), expand=c(0, 0))
+    p <- p + scale_x_continuous(expand=c(0, 0))
     return(p)
   })
 
@@ -896,7 +893,7 @@ server <- function(input, output) {
     # dom option drops the search and other stuff
     ll_tab_dat <- datatable(ll_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
     if(length(input$model_select) > 0){
-      ll_tab_dat <- ll_tab_dat %>% formatStyle('Model', target = 'row', backgroundColor = styleEqual(input$model_select,'yellow'))
+      ll_tab_dat <- ll_tab_dat %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
     }
     return(ll_tab_dat)
   })
@@ -906,7 +903,7 @@ server <- function(input, output) {
     # dom option drops the search and other stuff
     reftab <- datatable(status_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
     if(length(input$model_select) > 0){
-      reftab <- reftab %>% formatStyle('Model', target = 'row', backgroundColor = styleEqual(input$model_select,'yellow'))
+      reftab <- reftab %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
     }
     return(reftab)
   })
