@@ -302,7 +302,6 @@ server <- function(input, output) {
       return()
     }
     pdat <- lfits_dat[fishery %in% fisheries & model %in% models]
-    m2dat <- lfits_dat[fishery %in% fisheries & model == "M2"]
 
     if(nrow(pdat) == 0){
       return()
@@ -312,7 +311,7 @@ server <- function(input, output) {
     # ***** Check this ******
     # Assume that the observed (the bars) is the same for all models
     # ***********************
-    p <- ggplot(m2dat, aes(x=length))
+    p <- ggplot(pdat[model==last(model)], aes(x=length))
     # Observed as barchart
     p <- p + geom_bar(aes(y=obs), fill=obs_col, colour="black", stat="identity", width=bar_width)
     # Predicted as red line
