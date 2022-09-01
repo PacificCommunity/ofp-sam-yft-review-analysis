@@ -10,6 +10,9 @@ library(ggplot2)
 library(markdown)
 library(DT)
 
+default_models <- c("09_IdxNoeff", "17_Diag20")
+default_fishery <- "PS ASS"
+
 #---------------------------------------------------------------------------
 
 spc_about <- function(){
@@ -88,9 +91,9 @@ ui <- dashboardPage(
     # Only show these on the plotting tabs - not Introduction and About tabs
     conditionalPanel(condition="input.sidebarmenu == 'diagnostics' || input.sidebarmenu == 'fittodata' || input.sidebarmenu == 'modeloutput' || input.sidebarmenu == 'stockstatus'",
       # Model selection - select multiple
-      checkboxGroupInput(inputId="model_select", label = ("Select models"), choiceNames = all_models, choiceValues= all_models, selected = c("M2", "M7new")),
+      checkboxGroupInput(inputId="model_select", label = ("Select models"), choiceNames = all_models, choiceValues= all_models, selected = default_models),
       # Fishery grouping selection - only single
-      radioButtons(inputId = "fishery_group", label="Fishery / Tag recapture groups",choiceNames=fishgrp_names, choiceValues=fishgrp_names, selected="PS ASS")
+      radioButtons(inputId = "fishery_group", label="Fishery / Tag recapture groups",choiceNames=fishgrp_names, choiceValues=fishgrp_names, selected= default_fishery)
     ),
     br(),
     br(),
