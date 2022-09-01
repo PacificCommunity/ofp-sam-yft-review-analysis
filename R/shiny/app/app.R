@@ -464,7 +464,7 @@ server <- function(input, output) {
   output$plot_cpue_time <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
     # Already subset out index fisheries in the data creation step
     pdat <- cpue_dat[model %in% models]
@@ -488,7 +488,7 @@ server <- function(input, output) {
   output$plot_cpue_residuals_time <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
     # Already subset out index fisheries in the data creation step
     pdat <- cpue_dat[model %in% models]
@@ -516,20 +516,20 @@ server <- function(input, output) {
     }
     facet <- input$tag_attrition
     # Grouping by user choice
-    if (facet == "combined"){
+    if(facet == "combined"){
       grouping_names <- c("model", "period_at_liberty")
     }
-    if (facet == "program"){
+    if(facet == "program"){
       grouping_names <- c("model", "period_at_liberty", "program")
     }
-    if (facet == "region"){
+    if(facet == "region"){
       grouping_names <- c("model", "period_at_liberty", "region")
     }
     pdat <- tag_attrition[model %in% models, .(recap.obs=sum(recap.obs, na.rm=TRUE), recap.pred=sum(recap.pred, na.rm=TRUE), diff=sum(diff, na.rm=TRUE)) ,by=mget(grouping_names)]
-    if (facet %in% c("combined", "region")){
+    if(facet %in% c("combined", "region")){
       pdat[,"program" := "All programs"]
     }
-    if (facet %in% c("combined", "program")){
+    if(facet %in% c("combined", "program")){
       pdat[,"region" := "All recapture regions"]
     }
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -557,13 +557,13 @@ server <- function(input, output) {
     }
     facet <- input$tag_attrition_residuals
     # Grouping by user choice
-    if (facet == "combined"){
+    if(facet == "combined"){
       grouping_names <- c("model", "period_at_liberty")
     }
-    if (facet == "program"){
+    if(facet == "program"){
       grouping_names <- c("model", "period_at_liberty", "program")
     }
-    if (facet == "region"){
+    if(facet == "region"){
       grouping_names <- c("model", "period_at_liberty", "region")
     }
     pdat <- tag_attrition[model %in% models, .(recap.obs=sum(recap.obs, na.rm=TRUE), recap.pred=sum(recap.pred, na.rm=TRUE), diff=sum(diff, na.rm=TRUE)) ,by=mget(grouping_names)]
@@ -574,10 +574,10 @@ server <- function(input, output) {
     pdat <- merge(pdat, mean_recaptured)
     pdat[, diff := diff / mean_obs_recap]
 
-    if (facet %in% c("combined", "region")){
+    if(facet %in% c("combined", "region")){
       pdat[,"program" := "All programs"]
     }
-    if (facet %in% c("combined", "program")){
+    if(facet %in% c("combined", "program")){
       pdat[,"region" := "All recapture regions"]
     }
 
@@ -602,7 +602,7 @@ server <- function(input, output) {
   output$plot_movement_bar <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
     pdat <- subset(move_coef, Age==1 & model %in% models)
     pdat$From <- paste0("From ", pdat$From)
@@ -625,7 +625,7 @@ server <- function(input, output) {
   output$plot_srr <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
     # Process the SRR data into summarised form
     pdat <- srr_dat[,.(sb=sum(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model,year,season)]
@@ -639,7 +639,7 @@ server <- function(input, output) {
     rec_units <- 1000000
     # Label formatting
     xlab <- paste0("Adult biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE),"s)")
-    ylab <-  paste0("Recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
+    ylab <- paste0("Recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
     sbmax <- max(pdat$sb) * 1.2 #/ sb_units
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
 
@@ -661,7 +661,7 @@ server <- function(input, output) {
   output$plot_rec_dist <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
 
     # Average recruitment over time series by region and quarter
@@ -690,7 +690,7 @@ server <- function(input, output) {
   output$plot_rec_devs <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
-     return()
+      return()
     }
     pdat <- rec_dev_dat[model %in% models]
     pdat[,c("area", "season") := .(paste0("Area ", area), paste0("Season ", season))]
@@ -725,7 +725,7 @@ server <- function(input, output) {
     }
 
     scale_choice <- "fixed"
-    if (input$scale_select_sb){
+    if(input$scale_select_sb){
       scale_choice="free"
     }
 
@@ -738,7 +738,7 @@ server <- function(input, output) {
     pdat[, ts := year + (season-1) / 4 + 1/8]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     rec_units <- 1000000
-    ylab <-  paste0("Total recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
+    ylab <- paste0("Total recruitment (N; ",format(rec_units,big.mark=",", trim=TRUE,scientific=FALSE),"s)")
     p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
     p <- p + geom_line(aes(colour=model), size=1.25)
     p <- p + scale_colour_manual("Model", values=model_cols)
@@ -786,7 +786,7 @@ server <- function(input, output) {
     }
 
     scale_choice <- "fixed"
-    if (input$scale_select_sb){
+    if(input$scale_select_sb){
       scale_choice="free"
     }
 
@@ -869,10 +869,10 @@ server <- function(input, output) {
       return()
     }
     age_or_length <- input$age_select_mat
-    if (age_or_length == "age"){
+    if(age_or_length == "age"){
       pdat <- mat_age_dat[model %in% models]
     }
-    if (age_or_length == "length"){
+    if(age_or_length == "length"){
       pdat <- mat_length_dat[model %in% models]
     }
     xlab <- "Age class"
