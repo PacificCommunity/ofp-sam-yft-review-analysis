@@ -81,7 +81,7 @@ for (model in models){
 # This involves going through the length.fit files and processing the data
 # The function to read and process the data is here:
 
-cat("Catch distribution stuff\n")
+cat("Catch size distribution stuff\n")
 lfits_dat <- lapply(models, function(x){
   cat("Processing model: ", x, "\n")
   filename <- paste(basedir, x, "length.fit", sep="/")
