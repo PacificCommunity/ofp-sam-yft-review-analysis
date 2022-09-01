@@ -32,7 +32,7 @@ spc_about <- function(){
 # Get the fishery map - generated in ../R/fisheries_map.R
 load("data/fishery_map.Rdata")
 
-# Load the data - generated using the stepwise_app_data_preparation.R script
+# Load the data - generated using the app_data_preparation.R script
 # Data for catchability plots
 # load("data/catchability_data.Rdata")
 # Data for catch size distribution plots
