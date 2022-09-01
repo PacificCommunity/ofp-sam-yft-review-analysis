@@ -10,6 +10,9 @@
 library(FLR4MFCL)
 library(data.table)
 
+# Helper functions
+source("read_length_fit_file.R")
+
 # Model folder
 basedir <- "z:/yft/2020_review/analysis/stepwise/"
 tagfile <- "yft.tag"
@@ -77,7 +80,6 @@ for (model in models){
 # Data for catch size distribution plots
 # This involves going through the length.fit files and processing the data
 # The function to read and process the data is here:
-source("read_length_fit_file.R")
 
 cat("Catch distribution stuff\n")
 lfits_dat <- lapply(models, function(x){
