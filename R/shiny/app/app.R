@@ -295,8 +295,8 @@ server <- function(input, output) {
     # Which models and fisheries
     models <- input$model_select
     fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    if(length(models) < 1 | length(fisheries) < 1){
-     return()
+    if(length(models) < 1 || length(fisheries) < 1){
+      return()
     }
     pdat <- lfits_dat[fishery %in% fisheries & model %in% models]
     m2dat <- lfits_dat[fishery %in% fisheries & model == "M2"]
@@ -331,7 +331,7 @@ server <- function(input, output) {
   ## output$plot_catchability_time_series <- renderPlot({
   ##   models <- input$model_select
   ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##   if(length(models) < 1 || length(fisheries) < 1){
   ##    return()
   ##   }
   ##   # Are we plotting seasonal or annualised data
@@ -366,7 +366,7 @@ server <- function(input, output) {
   ## output$plot_catchability_diff <- renderPlot({
   ##   models <- input$model_select
   ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##   if(length(models) < 1 || length(fisheries) < 1){
   ##    return()
   ##   }
   ##   pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
@@ -395,7 +395,7 @@ server <- function(input, output) {
   ## output$plot_catchability_diff2 <- renderPlot({
   ##   models <- input$model_select
   ##   fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-  ##   if(length(models) < 1 | length(fisheries) < 1){
+  ##   if(length(models) < 1 || length(fisheries) < 1){
   ##    return()
   ##   }
   ##   pdat <- subset(catchability, fishery %in% fisheries & model %in% models)
@@ -417,8 +417,8 @@ server <- function(input, output) {
   output$plot_tag_returns_time <- renderPlot({
     models <- input$model_select
     tag_groups <- fishery_map[fishery_map$group %in% input$fishery_group, "tag_recapture_group"]
-    if(length(models) < 1 | length(tag_groups) < 1){
-     return()
+    if(length(models) < 1 || length(tag_groups) < 1){
+      return()
     }
     pdat <- tag_returns_time[tag_recapture_group %in% tag_groups & model %in% models]
     if(nrow(pdat) == 0){
@@ -441,7 +441,7 @@ server <- function(input, output) {
     models <- input$model_select
     fishery_groups <- input$fishery_group
     tag_groups <- fishery_map[fishery_map$group %in% fishery_groups, "tag_recapture_group"]
-    if(length(models) < 1 | length(tag_groups) < 1){
+    if(length(models) < 1 || length(tag_groups) < 1){
       return()
     }
     pdat <- tag_returns_time[tag_recapture_group %in% tag_groups & model %in% models]
@@ -720,7 +720,7 @@ server <- function(input, output) {
       areas <- "All"
     }
 
-    if(length(areas) < 1 | length(models) < 1){
+    if(length(areas) < 1 || length(models) < 1){
       return()
     }
 
@@ -756,8 +756,8 @@ server <- function(input, output) {
       areas <- "All"
     }
 
-    if(length(areas) < 1 | length(models) < 1){
-     return()
+    if(length(areas) < 1 || length(models) < 1){
+      return()
     }
     pdat <- biomass_dat[model %in% models & area %in% areas, ]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -781,8 +781,8 @@ server <- function(input, output) {
       areas <- "All"
     }
 
-    if(length(areas) < 1 | length(models) < 1){
-     return()
+    if(length(areas) < 1 || length(models) < 1){
+      return()
     }
 
     scale_choice <- "fixed"
@@ -808,8 +808,8 @@ server <- function(input, output) {
     models <- input$model_select
     age_or_length <- input$age_select_sel
     fisheries <- fishery_map[fishery_map$group %in% input$fishery_group, "fishery"]
-    if(length(models) < 1 | length(fisheries) < 1){
-     return()
+    if(length(models) < 1 || length(fisheries) < 1){
+      return()
     }
     xlab <- "Age class"
     if(age_or_length == "length"){
