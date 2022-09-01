@@ -1,4 +1,4 @@
-## The models
+## Models
 
 * `09_IdxNoeff`- before important model changes are made
 * `10_SelUngroup` - ungroup fleet selectivities between regions
