@@ -101,7 +101,7 @@ ui <- dashboardPage(
     tags$footer(
       div(style="text-align:center",
         tags$p("version 0.0.1 The Cosmic Barrilete"),
-        tags$p("Copyright 2022 OFP SPC MSE Team.")
+        tags$p("Copyright 2022 OFP SPC MSE Team")
       )
     )
   ), # End of sidebar
