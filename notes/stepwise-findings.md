@@ -11,8 +11,8 @@ depletion were:
 
 ### 2 Tags (**JPTP**)
 
-- Forcing the mixing period of the tag recaptures to be 2 quarters for each tag
-release had the largest effect on this combined step.
+- Forcing the mixing period of the tag recaptures to be 182 days for each tag
+  release had the largest effect on this combined step.
 
 - Inclusion of tags without recapture locations in the purse seine fisheries.
 
