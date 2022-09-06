@@ -10,12 +10,14 @@ library(TAF)
 #        type="l", as.table=TRUE, main="Fished biomass")
 
 # rep07 <- read.MFCLRep("d:/x/temp2/BaseYFT/plot.final.rep")
-rep09 <- read.MFCLRep("d:/x/temp2/YFTBase09/final-final.rep")
-rep11 <- read.MFCLRep("d:/x/temp2/2011_YFT_basecase/plot-final.par.rep")
+# rep09 <- read.MFCLRep("d:/x/temp2/YFTBase09/final-final.rep")
+# rep11 <- read.MFCLRep("d:/x/temp2/2011_YFT_basecase/plot-final.par.rep")
+
+rep09 <- read.MFCLRep("z:/yft/2020_review/analysis/historical_assessments/yft2009/YFTBase09/final-final.rep")
+rep11 <- read.MFCLRep("z:/yft/2020_review/analysis/historical_assessments/yft2011/2011_YFT_basecase/plot-final.par.rep")
 rep14 <- read.MFCLRep("z:/yft/2014/assessment/RefCase/plot-12.par.rep")
 rep17 <- read.MFCLRep("z:/yft/2017/assessment/Model_Runs/For_Web/plot-14.par.rep")
 rep20 <- read.MFCLRep("z:/yft/2020/assessment/ModelRuns/Diagnostic/plot-14.par.rep")
-
 
 # Biomass
 B.09 <- flr2taf(SB(rep09), "B")
