@@ -41,6 +41,10 @@ depletion were:
 - (4 nodes for cubic spline for fishery 28 [phase 1])
 
 - (Possibly changing the variance/overdispersion for tags [phase 1])
+```
+  -999 43 0  # group all tags for variance estimation
+  -999 44 0  # estimate tag variance for all fisheries if = 1
+ ```
 
 - (Catchability is the same for all seasons [fish flag 27]. In earlier steps, it
   was estimated using a sinusoidal function.)
