@@ -229,6 +229,14 @@ ui <- dashboardPage(
             plotOutput("plot_sb", height="500px"))
         ),
         fluidRow(
+          box(title="Unfished biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+            # Area selector
+            column(6, radioButtons(inputId="area_select_sbf0", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
+            # Scale selector
+            column(6, radioButtons(inputId="scale_select_sbf0", label="Different scales?", choiceNames=c("Yes", "No"), choiceValues=c(TRUE, FALSE), selected=TRUE, inline=TRUE)),
+            plotOutput("plot_sbf0", height="500px"))
+        ),
+        fluidRow(
           box(title="Stock status summary", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12, DTOutput("status_table"))
         ),
       ), # End of stockstatus tab
@@ -739,6 +747,34 @@ server <- function(input, output){
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
+    p <- p + geom_line(aes(colour=model), size=1.25)
+    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
+    p <- p + ylim(c(0, NA))
+    p <- p + xlab("Year") + ylab(ylab)
+    p <- p + theme_bw()
+    return(p)
+  })
+
+  output$plot_sbf0 <- renderPlot({
+    models <- input$model_select
+    area_select <- input$area_select_sbf0
+    areas <- c(1:nregions, "All")
+    if(area_select == "combined"){
+      areas <- "All"
+    }
+    if(length(areas) < 1 || length(models) < 1){
+      return()
+    }
+    scale_choice <- "fixed"
+    if(input$scale_select_sbf0){
+      scale_choice="free"
+    }
+    sb_units <- 1000
+    ylab <- paste0("Unfished biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
+    pdat <- biomass_dat[model %in% models & area %in% areas]
+    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+    p <- ggplot(pdat, aes(x=year, y=SBF0/sb_units))
     p <- p + geom_line(aes(colour=model), size=1.25)
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
