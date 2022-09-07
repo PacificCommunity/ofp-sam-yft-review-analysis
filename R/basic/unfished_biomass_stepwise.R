@@ -114,7 +114,7 @@ lines(Dep.14, lwd=2, col=4)
 lines(Dep.15, lwd=2, col=3)
 lines(Dep.16, lwd=2, col=2)
 lines(Dep.17, lwd=2, col=1)
-lines(Dep.18, lwd=2, col=10)
+lines(Dep.18, lwd=1, col=10)
 box()
 
 # Scaled Biomass
@@ -159,11 +159,11 @@ ScaledB0.17 <- data.frame(Year=B0.17$Year, ScaledB0=B0.17$B0/B0.17$B0[1])
 ScaledB0.18 <- data.frame(Year=B0.18$Year, ScaledB0=B0.18$B0/B0.18$B0[1])
 
 
-plot(NA, xlim=c(1950,2020), ylim=c(0,1.4), yaxs="i", xlab="Year", ylab="Scaled SBF=0", main = "Relative Unfished Biomass")
+plot(NA, xlim=c(1950,2020), ylim=c(0,1.1), yaxs="i", xlab="Year", ylab="Scaled SBF=0", main = "Relative Unfished Biomass")
 legend("topright", c("09_IdxNoeff", "10_SelUngroup", "11_JPTP", "12_Age10LW", "13_CondAge", 
                        "14_MatLength", "15_NoSpnFrac", "16_Size60", "17_Diag20", "18_Diag20_CC"), 
        col = c(9,8,7,6,5,4,3,2,1,10), lty = 1, lwd = 2, box.lty = 0, inset= 0.01)
-abline(h=seq(0,1.4,by=0.1), col="gray", lwd=0.5)
+abline(h=seq(0,1.1,by=0.1), col="gray", lwd=0.5)
 lines(ScaledB0.09, lwd=1, col=9)
 lines(ScaledB0.10, lwd=2, col=8)
 lines(ScaledB0.11, lwd=2, col=7)
@@ -232,7 +232,7 @@ lines(div(B0r.14, 2, 1e6), lwd=2, col=4)
 lines(div(B0r.15, 2, 1e6), lwd=2, col=3)
 lines(div(B0r.16, 2, 1e6), lwd=2, col=2)
 lines(div(B0r.17, 2, 1e6), lwd=2, col=1)
-lines(div(B0r.18, 2, 1e6), lwd=1, col=10)
+lines(div(B0r.18, 1, 1e6), lwd=1, col=10)
 box()
 
 
@@ -262,7 +262,7 @@ lines(Depr.14, lwd=2, col=4)
 lines(Depr.15, lwd=2, col=3)
 lines(Depr.16, lwd=2, col=2)
 lines(Depr.17, lwd=2, col=1)
-lines(Depr.18, lwd=2, col=10)
+lines(Depr.18, lwd=1, col=10)
 box()
 
 
