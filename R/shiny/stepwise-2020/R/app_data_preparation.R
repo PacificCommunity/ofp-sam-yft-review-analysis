@@ -187,7 +187,6 @@ for (model in models){
 
   # Get the rec devs
   parfile <- paste0(biggest_par, ".par")
-  #par <- read.MFCLPar(parfile)
   par <- read.MFCLPar(paste(basedir, model, parfile, sep="/"))
   rdat <- as.data.table(region_rec_var(par))[, c("year", "season", "area", "value")]
   rdat[, c("year", "season") := .(as.numeric(year), as.numeric(season))]
@@ -204,8 +203,14 @@ for (model in models){
   sb_all <- as.data.table(SB(rep, combine_areas=TRUE))
   sbdat <- rbindlist(list(sb_region, sb_all))
   setnames(sbdat, "value", "SB")
-  sbdat <- merge(sbdat, sbsbf0dat)
-  sbdat <- sbdat[, c("year","area","SB","SBSBF0")]
+
+  sbf0_region <- as.data.table(SBF0(rep, combine_areas=FALSE))
+  sbf0_all <- as.data.table(SBF0(rep, combine_areas=TRUE))
+  sbf0dat <- rbindlist(list(sbf0_region, sbf0_all))
+  setnames(sbf0dat, "value", "SBF0")
+
+  sbdat <- data.table(sbdat, SBF0=sbf0dat$SBF0, SBSBF0=sbsbf0dat$SBSBF0)
+  sbdat <- sbdat[, c("year","area","SB","SBF0","SBSBF0")]
   sbdat[area=="unique", area := "All"] # change in place - data.table for the win
   sbdat[, year := as.numeric(year)]
   biomass_dat[[model]] <- sbdat
