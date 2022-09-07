@@ -256,6 +256,15 @@ server <- function(input, output){
   obs_col <- "steelblue1" # Colours for observed data
   nice_red <- "tomato3"
 
+  output$llhood_table <- renderDT({
+    # dom option drops the search and other stuff
+    ll_tab_dat <- datatable(ll_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
+    if(length(input$model_select) > 0){
+      ll_tab_dat <- ll_tab_dat %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
+    }
+    return(ll_tab_dat)
+  })
+
   output$plot_catch_size_dist <- renderPlot({
     # Which models and fisheries
     models <- input$model_select
@@ -569,89 +578,6 @@ server <- function(input, output){
     return(p)
   })
 
-  output$plot_rec <- renderPlot({
-    models <- input$model_select
-    area_select <- input$area_select_recruitment
-    areas <- c(1:8, "All")
-    if(area_select == "combined"){
-      areas <- "All"
-    }
-    if(length(areas) < 1 || length(models) < 1){
-      return()
-    }
-    scale_choice <- "fixed"
-    if(input$scale_select_sb){
-      scale_choice="free"
-    }
-    # Need to sum recruitment over areas - could do in advance if slow
-    pdat <- srr_dat[model %in% models, -"sb"]
-    total_rec <- pdat[, .(area="All", rec=sum(rec)), by=.(model, year, season)]
-    pdat <- rbindlist(list(pdat, total_rec))
-    pdat <- pdat[area %in% areas]
-    pdat[, ts := year + (season-1) / 4 + 1/8]
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    rec_units <- 1000000
-    ylab <- paste0("Total recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
-    p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
-    p <- p + geom_line(aes(colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
-    p <- p + xlab("Year") + ylab(ylab)
-    p <- p + theme_bw()
-    return(p)
-  })
-
-  output$plot_sbsbf0 <- renderPlot({
-    models <- input$model_select
-    area_select <- input$area_select_sbsbf0
-    areas <- c(1:8, "All")
-    if(area_select == "combined"){
-      areas <- "All"
-    }
-    if(length(areas) < 1 || length(models) < 1){
-      return()
-    }
-    pdat <- biomass_dat[model %in% models & area %in% areas, ]
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes(x=year, y=SBSBF0))
-    p <- p + geom_line(aes(colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_wrap(~area, nrow=2)
-    p <- p + xlab("Year") + ylab("SB/SBF=0")
-    p <- p + ylim(c(0, 1))
-    p <- p + theme_bw()
-    p <- p + geom_hline(aes(yintercept=0.2), linetype=2)
-    return(p)
-  })
-
-  output$plot_sb <- renderPlot({
-    models <- input$model_select
-    area_select <- input$area_select_sb
-    areas <- c(1:8, "All")
-    if(area_select == "combined"){
-      areas <- "All"
-    }
-    if(length(areas) < 1 || length(models) < 1){
-      return()
-    }
-    scale_choice <- "fixed"
-    if(input$scale_select_sb){
-      scale_choice="free"
-    }
-    sb_units <- 1000
-    ylab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
-    pdat <- biomass_dat[model %in% models & area %in% areas]
-    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
-    p <- p + geom_line(aes(colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
-    p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
-    p <- p + ylim(c(0, NA))
-    p <- p + xlab("Year") + ylab(ylab)
-    p <- p + theme_bw()
-    return(p)
-  })
-
   output$plot_selectivity <- renderPlot({
     models <- input$model_select
     age_or_length <- input$age_select_sel
@@ -737,13 +663,87 @@ server <- function(input, output){
     return(p)
   })
 
-  output$llhood_table <- renderDT({
-    # dom option drops the search and other stuff
-    ll_tab_dat <- datatable(ll_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
-    if(length(input$model_select) > 0){
-      ll_tab_dat <- ll_tab_dat %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
+  output$plot_rec <- renderPlot({
+    models <- input$model_select
+    area_select <- input$area_select_recruitment
+    areas <- c(1:8, "All")
+    if(area_select == "combined"){
+      areas <- "All"
     }
-    return(ll_tab_dat)
+    if(length(areas) < 1 || length(models) < 1){
+      return()
+    }
+    scale_choice <- "fixed"
+    if(input$scale_select_sb){
+      scale_choice="free"
+    }
+    # Need to sum recruitment over areas - could do in advance if slow
+    pdat <- srr_dat[model %in% models, -"sb"]
+    total_rec <- pdat[, .(area="All", rec=sum(rec)), by=.(model, year, season)]
+    pdat <- rbindlist(list(pdat, total_rec))
+    pdat <- pdat[area %in% areas]
+    pdat[, ts := year + (season-1) / 4 + 1/8]
+    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+    rec_units <- 1000000
+    ylab <- paste0("Total recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
+    p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
+    p <- p + geom_line(aes(colour=model), size=1.25)
+    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
+    p <- p + xlab("Year") + ylab(ylab)
+    p <- p + theme_bw()
+    return(p)
+  })
+
+  output$plot_sbsbf0 <- renderPlot({
+    models <- input$model_select
+    area_select <- input$area_select_sbsbf0
+    areas <- c(1:8, "All")
+    if(area_select == "combined"){
+      areas <- "All"
+    }
+    if(length(areas) < 1 || length(models) < 1){
+      return()
+    }
+    pdat <- biomass_dat[model %in% models & area %in% areas, ]
+    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+    p <- ggplot(pdat, aes(x=year, y=SBSBF0))
+    p <- p + geom_line(aes(colour=model), size=1.25)
+    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + facet_wrap(~area, nrow=2)
+    p <- p + xlab("Year") + ylab("SB/SBF=0")
+    p <- p + ylim(c(0, 1))
+    p <- p + theme_bw()
+    p <- p + geom_hline(aes(yintercept=0.2), linetype=2)
+    return(p)
+  })
+
+  output$plot_sb <- renderPlot({
+    models <- input$model_select
+    area_select <- input$area_select_sb
+    areas <- c(1:8, "All")
+    if(area_select == "combined"){
+      areas <- "All"
+    }
+    if(length(areas) < 1 || length(models) < 1){
+      return()
+    }
+    scale_choice <- "fixed"
+    if(input$scale_select_sb){
+      scale_choice="free"
+    }
+    sb_units <- 1000
+    ylab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
+    pdat <- biomass_dat[model %in% models & area %in% areas]
+    model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
+    p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
+    p <- p + geom_line(aes(colour=model), size=1.25)
+    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
+    p <- p + ylim(c(0, NA))
+    p <- p + xlab("Year") + ylab(ylab)
+    p <- p + theme_bw()
+    return(p)
   })
 
   output$status_table <- renderDT({
