@@ -22,7 +22,8 @@ depletion were:
 
 - Increasing the maximum age in the model from 7 years to 10 years.
 
-- Updating *a* and *b* from regression including ages 7 to 10.
+- Updating *a* and *b* with a new batch of length-weight data, particularly fish
+  of small sizes. [check with Simon]
 
 ### 4 Growth (**CondAge**)
 
