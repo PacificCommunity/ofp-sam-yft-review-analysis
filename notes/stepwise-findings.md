@@ -5,11 +5,19 @@ depletion were:
 
 ### 1 Selectivity (**SelUngroup**)
 
+**Flags**
+
 - Separation of selectivity patterns among regions.
 
 - Assigning non-decreasing penalty to one fishery per region.
 
+**Data**
+
+(No changes to data.)
+
 ### 2 Tags (**JPTP**)
+
+**Flags**
 
 - Forcing the mixing period of the tag recaptures to be 182 days for each tag
   release had the largest effect on this combined step.
@@ -18,14 +26,52 @@ depletion were:
 
 - Addition of the Japanese tagging program data.
 
+**Tag file**
+
+- Tag release groups are increased from 87 to 145 because JPTP program tags were
+  added.
+
+- There are more recaptures for RTTP and PTTP programs. This may be due to
+  removal of the forced mixing rule (Mix1 > 91 days, Mix2 > 182).
+
+- Number of effective releases are higher for some length bins in all programs.
+  This may be a change to usability correction for having additional recaptures.
+
+**Ini file**
+
+- With more release groups, the ini file has more lines to assign reporting
+  rates, priors, and penalties for those additional release groups.
+
+**Frq file**
+
+- Number of release groups was updated.
+
 ### 3 Maximum age (**Age10LW**)
+
+**Flags**
 
 - Increasing the maximum age in the model from 7 years to 10 years.
 
 - Updating *a* and *b* with a new batch of length-weight data, particularly fish
   of small sizes. [check with Simon]
 
+**Ini file**
+
+- Number of age classes increased from 28 to 40.
+
+- Maturity-at-age updated for all age classes and extended for the increased
+  number of age classes.
+
+- Natural mortality is slightly decreased from 0.25 to 0.23.
+
+- Age parameters updated for all age classes and extended for the increased
+  number of age classes.
+
+- Length-weight parameters updated.
+
 ### 4 Growth (**CondAge**)
+
+**Flags**
 
 - Addition of otolith data through conditional age-at-length.
 
@@ -37,3 +83,38 @@ depletion were:
   [phase 1]l
 
 - 4 nodes for cubic spline for fishery 28 [phase 1].
+
+**Ini file**
+
+- Updated maturity-at-age.
+
+- Natural mortality updated
+
+- Age parameters updated.
+
+- Length-weight parameters updated.
+
+### 5 Final (Diag20)**
+
+**Flags**
+
+(We have not yet compared the flag settings of Diag20 to previous stepwise model
+settings.)
+
+**Ini file**
+
+- Version number change.
+
+- Reporting rate grouping flags changed.
+
+- Maturity-at-age updated for all age classes and extended for the increased
+  number of age classes.
+
+- Natural mortality is slightly decreased from 0.25 to 0.23.
+
+- Age parameters updated for all age classes and extended for the increased
+  number of age classes.
+
+- VB parameters updated.
+
+- Length-weight parameters updated.
