@@ -66,6 +66,10 @@ start_collapsed <- TRUE
 all_models <- unique(biomass_dat$model)
 fishgrp_names <- unique(fishery_map$group)
 
+# Number of models and regions
+nmodels <- length(all_models)
+nregions <- length(unique(fishery_map$region))
+
 #---------------------------------------------------------------------------
 # The app
 # https://stackoverflow.com/questions/31711307/how-to-change-color-in-shiny-dashboard
@@ -246,7 +250,7 @@ server <- function(input, output){
 
   # Colour palette for the fisheries
   get_model_colours <- function(all_model_names, chosen_model_names){
-    all_cols <- colorRampPalette(brewer.pal(8,"Dark2"))(length(all_model_names))
+    all_cols <- colorRampPalette(brewer.pal(nmodels,"Dark2"))(length(all_model_names))
     names(all_cols) <- all_model_names
     model_cols <- all_cols[as.character(chosen_model_names)]
     return(model_cols)
@@ -258,7 +262,7 @@ server <- function(input, output){
 
   output$llhood_table <- renderDT({
     # dom option drops the search and other stuff
-    ll_tab_dat <- datatable(ll_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
+    ll_tab_dat <- datatable(ll_tab_dat, options=list(pageLength=nmodels, dom='t'), rownames=FALSE)
     if(length(input$model_select) > 0){
       ll_tab_dat <- ll_tab_dat %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
     }
@@ -664,7 +668,7 @@ server <- function(input, output){
   output$plot_rec <- renderPlot({
     models <- input$model_select
     area_select <- input$area_select_recruitment
-    areas <- c(1:8, "All")
+    areas <- c(1:nregions, "All")
     if(area_select == "combined"){
       areas <- "All"
     }
@@ -696,7 +700,7 @@ server <- function(input, output){
   output$plot_sbsbf0 <- renderPlot({
     models <- input$model_select
     area_select <- input$area_select_sbsbf0
-    areas <- c(1:8, "All")
+    areas <- c(1:nregions, "All")
     if(area_select == "combined"){
       areas <- "All"
     }
@@ -719,7 +723,7 @@ server <- function(input, output){
   output$plot_sb <- renderPlot({
     models <- input$model_select
     area_select <- input$area_select_sb
-    areas <- c(1:8, "All")
+    areas <- c(1:nregions, "All")
     if(area_select == "combined"){
       areas <- "All"
     }
@@ -746,7 +750,7 @@ server <- function(input, output){
 
   output$status_table <- renderDT({
     # dom option drops the search and other stuff
-    reftab <- datatable(status_tab_dat, options=list(pageLength=length(all_models), dom='t'), rownames=FALSE)
+    reftab <- datatable(status_tab_dat, options=list(pageLength=nmodels, dom='t'), rownames=FALSE)
     if(length(input$model_select) > 0){
       reftab <- reftab %>% formatStyle('Model', target='row', backgroundColor=styleEqual(input$model_select,'yellow'))
     }
