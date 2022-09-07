@@ -512,7 +512,7 @@ server <- function(input, output){
     sb_units <- 1000
     rec_units <- 1000000
     # Label formatting
-    xlab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
+    xlab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     ylab <- paste0("Recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     sbmax <- max(pdat$sb) * 1.2 #/ sb_units
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
@@ -564,7 +564,6 @@ server <- function(input, output){
     }
     pdat <- rec_dev_dat[model %in% models]
     pdat[,c("area", "season") := .(paste0("Area ", area), paste0("Season ", season))]
-    x_axis_breaks <- seq(from=1980, to=2020, by=20)
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=year, y=value))
     p <- p + geom_point(aes(fill=model, colour=model), alpha=0.5, size=3)
@@ -573,7 +572,6 @@ server <- function(input, output){
     p <- p + scale_colour_manual("Model", values=model_cols)
     p <- p + facet_grid(season~area)
     p <- p + xlab("Year") + ylab("Recruitment deviate")
-    p <- p + scale_x_continuous(breaks=x_axis_breaks)
     p <- p + theme_bw()
     return(p)
   })
@@ -733,7 +731,7 @@ server <- function(input, output){
       scale_choice="free"
     }
     sb_units <- 1000
-    ylab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
+    ylab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
