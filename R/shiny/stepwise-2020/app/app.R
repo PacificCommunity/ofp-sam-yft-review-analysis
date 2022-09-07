@@ -137,12 +137,12 @@ ui <- dashboardPage(
             plotOutput("plot_tag_returns_residuals_time", height="800px"))
         ),
         fluidRow(
-          box(title="CPUE: time series (index fisheries only)", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="CPUE: time series", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             p("Dots are the observed CPUE. Lines are the predicted CPUE."),
             plotOutput("plot_cpue_time", height="800px"))
         ),
         fluidRow(
-          box(title="CPUE: residuals time series (index fisheries only)", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="CPUE: residuals time series", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             plotOutput("plot_cpue_residuals_time", height="800px"))
         ),
         fluidRow(
@@ -163,8 +163,8 @@ ui <- dashboardPage(
       # **** Model outputs ****
       tabItem(tabName="modeloutput", h2("Model outputs"),
         fluidRow(
-          box(title="Movement - bar chart", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
-            plotOutput("plot_movement_bar", height="800px"))
+          box(title="Movement", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+            plotOutput("plot_movement", height="800px"))
         ),
         fluidRow(
           box(title="SRR", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
@@ -211,13 +211,13 @@ ui <- dashboardPage(
             plotOutput("plot_rec", height="500px"))
         ),
         fluidRow(
-          box(title="SB/SBF=0", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Depletion", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Area selector
             radioButtons(inputId="area_select_sbsbf0", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE),
             plotOutput("plot_sbsbf0", height="500px"))
         ),
         fluidRow(
-          box(title="Adult biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
+          box(title="Spawning biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=12,
             # Area selector
             column(6, radioButtons(inputId="area_select_sb", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
             # Scale selector
@@ -467,7 +467,7 @@ server <- function(input, output){
     return(p)
   })
 
-  output$plot_movement_bar <- renderPlot({
+  output$plot_movement <- renderPlot({
     models <- input$model_select
     if(length(models) < 1){
       return()
@@ -503,7 +503,7 @@ server <- function(input, output){
     sb_units <- 1000
     rec_units <- 1000000
     # Label formatting
-    xlab <- paste0("Adult biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
+    xlab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
     ylab <- paste0("Recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     sbmax <- max(pdat$sb) * 1.2 #/ sb_units
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
@@ -639,7 +639,7 @@ server <- function(input, output){
       scale_choice="free"
     }
     sb_units <- 1000
-    ylab <- paste0("Adult biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
+    ylab <- paste0("Spawning biomass (mt; ",format(sb_units, big.mark=",", trim=TRUE,scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     p <- ggplot(pdat, aes(x=year, y=SB/sb_units))
