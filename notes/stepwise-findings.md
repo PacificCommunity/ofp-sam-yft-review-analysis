@@ -94,7 +94,7 @@ depletion were:
 
 - Length-weight parameters updated.
 
-### 5 Final (Diag20)**
+### 5 Final (**Diag20**)
 
 **Flags**
 
