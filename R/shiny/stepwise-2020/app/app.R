@@ -9,7 +9,7 @@ library(data.table)
 library(ggplot2)
 library(markdown)
 library(DT)
-library(RColorBrewer)
+library(gplots)
 
 default_models <- c("09_IdxNoeff", "17_Diag20")
 default_fishery <- "PS ASS"
@@ -258,7 +258,7 @@ server <- function(input, output){
 
   # Colour palette for the fisheries
   get_model_colours <- function(all_model_names, chosen_model_names){
-    all_cols <- colorRampPalette(brewer.pal(nmodels,"Dark2"))(length(all_model_names))
+    all_cols <- rev(c("black", rich.colors(nmodels+1)[-(1:2)]))  # gap between black and blue
     names(all_cols) <- all_model_names
     model_cols <- all_cols[as.character(chosen_model_names)]
     return(model_cols)
