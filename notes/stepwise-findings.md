@@ -31,8 +31,9 @@ depletion were:
 - Tag release groups are increased from 87 to 145 because JPTP program tags were
   added.
 
-- There are more recaptures for RTTP and PTTP programs. This may be due to
-  removal of the forced mixing rule (Mix1 > 91 days, Mix2 > 182).
+- There are more recaptures for RTTP and PTTP programs. This is a change in the
+  2020 assessment, including tags without recapture locations in the purse seine
+  fisheries, as well as tags added after revising the tagger effect analysis.
 
 - Number of effective releases are higher for some length bins in all programs.
   This may be a change to usability correction for having additional recaptures.
