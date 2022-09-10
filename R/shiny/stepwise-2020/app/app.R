@@ -694,11 +694,15 @@ server <- function(input, output){
     pdat <- rbindlist(list(pdat, total_rec))
     pdat <- pdat[area %in% areas]
     pdat[, ts := year + (season-1) / 4 + 1/8]
+    # Show annual recruitment instead of seasonal (could provide a annual/seasonal selector)
+    if(TRUE){
+      pdat <- pdat[, .(rec=sum(rec), ts=year), by=.(model, year, area)]
+    }
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
     ylab <- paste0("Total recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
-    p <- p + geom_line(aes(colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
+    p <- p + scale_fill_manual("Model", values=model_cols)
     p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
     p <- p + xlab("Year") + ylab(ylab)
     p <- p + theme_bw()
