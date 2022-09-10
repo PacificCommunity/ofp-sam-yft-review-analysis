@@ -21,7 +21,7 @@ Diag20 <- read.MFCLRep(file.path(penguin, "17_Diag20/plot-14.par.rep"))
 stepwise <- list(IdxNoEff=IdxNoEff,
                 SelUngroup=SelUngroup,
                 JPTP=JPTP,
-                Age10LW=Age10LW,
+                Age10LW_like_report=Age10LW,
                 CondAge=CondAge,
                 MatLength=MatLength,
                 NoSpnFrac=NoSpnFrac,
