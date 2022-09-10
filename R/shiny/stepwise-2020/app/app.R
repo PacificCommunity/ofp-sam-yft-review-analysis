@@ -13,6 +13,8 @@ library(gplots)
 
 default_models <- c("09_IdxNoeff", "17_Diag20")
 default_fishery <- "PS ASS"
+rec_units <- 1000000
+sb_units <- 1000
 
 #---------------------------------------------------------------------------
 
@@ -521,12 +523,10 @@ server <- function(input, output){
     # The Beverton-Holt stock-recruitment relationship is fitted to total "annualised" recruitments and average annual biomass
     pdat <- pdat[,.(sb=mean(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model, year)]
     pdat <- pdat[model %in% models]
-    sb_units <- 1000
-    rec_units <- 1000000
     # Label formatting
     xlab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     ylab <- paste0("Recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
-    sbmax <- max(pdat$sb) * 1.2 #/ sb_units
+    sbmax <- max(pdat$sb) * 1.2
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
     # Do all lines and points on same plot and colour by model
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -694,7 +694,6 @@ server <- function(input, output){
     pdat <- pdat[area %in% areas]
     pdat[, ts := year + (season-1) / 4 + 1/8]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    rec_units <- 1000000
     ylab <- paste0("Total recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
     p <- p + geom_line(aes(colour=model), size=1.25)
@@ -742,7 +741,6 @@ server <- function(input, output){
     if(input$scale_select_sb){
       scale_choice="free"
     }
-    sb_units <- 1000
     ylab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -770,7 +768,6 @@ server <- function(input, output){
     if(input$scale_select_sbf0){
       scale_choice="free"
     }
-    sb_units <- 1000
     ylab <- paste0("Unfished biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
