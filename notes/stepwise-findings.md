@@ -49,6 +49,13 @@ depletion were:
 
 ### 3 Maximum age (**Age10LW**)
 
+Note: a wrong version of Age10LW exists in several places, where fish flag 75 =
+1 is applied to set the selectivity of the youngest age to zero but that change
+should not occur until in Diag20, as reflected in other stepwise model runs and
+in the assessment report. The correct version of the Age10LW model run is on
+Penguin at `z:/yft/2020_review/analysis/stepwise/12_Age10LW` and can be
+identified from SBSBF0 = 0.46613 in the final year, not 0.51833.
+
 **Flags**
 
 - Increasing the maximum age in the model from 7 years to 10 years.
