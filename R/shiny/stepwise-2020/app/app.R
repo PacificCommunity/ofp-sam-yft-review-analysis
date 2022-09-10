@@ -685,7 +685,7 @@ server <- function(input, output){
       return()
     }
     scale_choice <- "fixed"
-    if(input$scale_select_sb){
+    if(input$scale_select_recruitment){
       scale_choice="free"
     }
     # Need to sum recruitment over areas - could do in advance if slow
