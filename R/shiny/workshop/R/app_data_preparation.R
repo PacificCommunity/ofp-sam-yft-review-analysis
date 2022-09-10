@@ -14,7 +14,7 @@ library(data.table)
 source("read_length_fit_file.R")
 
 # Model folder
-basedir <- "z:/yft/2020_review/analysis/stepwise/"
+basedir <- "z:/yft/2020_review/analysis/review_runs/arni/"
 tagfile <- "yft.tag"
 frqfile <- "yft.frq"
 
@@ -33,15 +33,16 @@ models <- models[models!="12_Age10LW_HopefulReport"]  # exclude this one
 model_description <- data.frame(
   model=models,
   model_description=c(
-    "before important model changes are made",
-    "ungroup fleet selectivities between regions",
-    "add JPTP tagging data, change mixing period to 2 quarters",
-    "increase max age from 7 to 10 years",
-    "add otolith data, deterministic von Bertalanffy for all ages",
-    "maturity at length converted to age using smooth splines",
-    "spawning fraction removed from the calculation of reproductive potential",
-    "use size composition downweighting divisor of 60",
-    "set selectivity at < 30 cm to zero for purse seine and pole-and-line"
+    ## "before important model changes are made",
+    ## "ungroup fleet selectivities between regions",
+    ## "add JPTP tagging data, change mixing period to 2 quarters",
+    ## "increase max age from 7 to 10 years",
+    ## "add otolith data, deterministic von Bertalanffy for all ages",
+    ## "maturity at length converted to age using smooth splines",
+    ## "spawning fraction removed from the calculation of reproductive potential",
+    ## "use size composition downweighting divisor of 60",
+    ## "set selectivity at < 30 cm to zero for purse seine and pole-and-line"
+    models
   ))
 
 #------------------------------------------------------------------
