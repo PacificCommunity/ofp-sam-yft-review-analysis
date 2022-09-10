@@ -23,9 +23,14 @@ file.rename(file.path(path.destination, "Step12JPTP"), file.path(path.destinatio
 cp(file.path(path.hopeful, "Step14LW"), path.destination)
 file.rename(file.path(path.destination, "Step14LW"), file.path(path.destination, "12_Age10LW_HopefulReport"))
 
-## 12_Age10LW
+## 12_Age10LW_Mixed
 cp(file.path(path.selstep, "Step14LW"), path.destination)
-file.rename(file.path(path.destination, "Step14LW"), file.path(path.destination, "12_Age10LW"))
+file.rename(file.path(path.destination, "Step14LW"), file.path(path.destination, "12_Age10LW_Mixed"))
+
+## 12_Age10LW
+mkdir(file.path(path.destination, "12_Age10LW"))
+cp(file.path(path.destination, "12_Age10LW_Mixed/*"), file.path(path.destination, "12_Age10LW"))
+untar(file.path(path.destination, "12_Age10LW/End.tar.gz"), exdir=file.path(path.destination, "12_Age10LW"))
 
 ## 13_CondAge
 cp(file.path(path.selstep, "Step15CondAgeLen"), path.destination)
