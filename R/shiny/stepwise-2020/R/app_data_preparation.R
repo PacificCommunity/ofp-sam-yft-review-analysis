@@ -287,7 +287,7 @@ status_tab_dat <- rbindlist(status_tab_dat, idcol="Model")
 
 # Look at difference - better for evaluating fit?
 # Don't do this for the annual data
-cpue_dat[,diff := .(cpue_obs - cpue_pred)]
+cpue_dat[, diff := .(cpue_obs - cpue_pred)]
 # Scale by total catchability by fishery and model
 cpue_dat[, scale_diff := diff / mean(cpue_obs, na.rm=TRUE),
          by=.(model, fishery)]
@@ -371,7 +371,7 @@ for (model in models){
   # Bring in recapture fishery and region
   fm2 <- fishery_map
   colnames(fm2)[colnames(fm2) == "fishery"] <- "recap.fishery"
-  tagrep <- merge(tagrep, fm2[,c("recap.fishery", "region", "tag_recapture_group", "tag_recapture_name")])
+  tagrep <- merge(tagrep, fm2[, c("recap.fishery", "region", "tag_recapture_group", "tag_recapture_name")])
   tagrep$recap.ts <- tagrep$recap.year + (tagrep$recap.month-1)/12 + 1/24
 
   # Bring in tagging program, and rel.ts from the tag release data (from the skj.tag file)
