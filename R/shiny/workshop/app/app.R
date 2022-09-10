@@ -9,10 +9,12 @@ library(data.table)
 library(ggplot2)
 library(markdown)
 library(DT)
-library(gplots)
+library(RColorBrewer)
 
 default_models <- c("09_IdxNoeff", "17_Diag20")
 default_fishery <- "PS ASS"
+rec_units <- 1000000
+sb_units <- 1000
 
 #---------------------------------------------------------------------------
 
@@ -258,7 +260,8 @@ server <- function(input, output){
 
   # Colour palette for the fisheries
   get_model_colours <- function(all_model_names, chosen_model_names){
-    all_cols <- rev(c("black", rich.colors(nmodels+1)[-(1:2)]))  # gap between black and blue
+    nmodels <- length(all_model_names)
+    all_cols <- c(brewer.pal(n=nmodels-1, "Set1"), "black")
     names(all_cols) <- all_model_names
     model_cols <- all_cols[as.character(chosen_model_names)]
     return(model_cols)
@@ -521,12 +524,10 @@ server <- function(input, output){
     # The Beverton-Holt stock-recruitment relationship is fitted to total "annualised" recruitments and average annual biomass
     pdat <- pdat[,.(sb=mean(sb, na.rm=TRUE), rec=sum(rec, na.rm=TRUE)), by=.(model, year)]
     pdat <- pdat[model %in% models]
-    sb_units <- 1000
-    rec_units <- 1000000
     # Label formatting
     xlab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     ylab <- paste0("Recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
-    sbmax <- max(pdat$sb) * 1.2 #/ sb_units
+    sbmax <- max(pdat$sb) * 1.2
     fdat <- srr_fit_dat[model %in% models & sb <= sbmax]
     # Do all lines and points on same plot and colour by model
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -684,7 +685,7 @@ server <- function(input, output){
       return()
     }
     scale_choice <- "fixed"
-    if(input$scale_select_sb){
+    if(input$scale_select_recruitment){
       scale_choice="free"
     }
     # Need to sum recruitment over areas - could do in advance if slow
@@ -693,12 +694,15 @@ server <- function(input, output){
     pdat <- rbindlist(list(pdat, total_rec))
     pdat <- pdat[area %in% areas]
     pdat[, ts := year + (season-1) / 4 + 1/8]
+    # Show annual recruitment instead of seasonal (could provide a annual/seasonal selector)
+    if(TRUE){
+      pdat <- pdat[, .(rec=sum(rec), ts=year), by=.(model, year, area)]
+    }
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
-    rec_units <- 1000000
     ylab <- paste0("Total recruitment (N; ", format(rec_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     p <- ggplot(pdat, aes(x=ts, y=rec / rec_units))
-    p <- p + geom_line(aes(colour=model), size=1.25)
-    p <- p + scale_colour_manual("Model", values=model_cols)
+    p <- p + geom_bar(aes(fill=model), stat="identity", position="dodge")
+    p <- p + scale_fill_manual("Model", values=model_cols)
     p <- p + facet_wrap(~area, nrow=2, scales=scale_choice)
     p <- p + xlab("Year") + ylab(ylab)
     p <- p + theme_bw()
@@ -742,7 +746,6 @@ server <- function(input, output){
     if(input$scale_select_sb){
       scale_choice="free"
     }
-    sb_units <- 1000
     ylab <- paste0("Spawning biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
@@ -770,7 +773,6 @@ server <- function(input, output){
     if(input$scale_select_sbf0){
       scale_choice="free"
     }
-    sb_units <- 1000
     ylab <- paste0("Unfished biomass (mt; ", format(sb_units, big.mark=",", trim=TRUE, scientific=FALSE), "s)")
     pdat <- biomass_dat[model %in% models & area %in% areas]
     model_cols <- get_model_colours(all_model_names=all_models, chosen_model_names=models)
