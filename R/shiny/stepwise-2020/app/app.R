@@ -261,7 +261,9 @@ server <- function(input, output){
   # Colour palette for the fisheries
   get_model_colours <- function(all_model_names, chosen_model_names){
     nmodels <- length(all_model_names)
-    all_cols <- c(brewer.pal(n=nmodels-1, "Set1"), "black")
+    # Palette matching Figure 14b from YFT 2020 report
+    all_cols <- c("grey65","royalblue3","deepskyblue1","gold","orange1","indianred1","firebrick2","#AC2020","black")
+    ## all_cols <- c(brewer.pal(n=nmodels-1, "Set1"), "black")
     names(all_cols) <- all_model_names
     model_cols <- all_cols[as.character(chosen_model_names)]
     return(model_cols)
