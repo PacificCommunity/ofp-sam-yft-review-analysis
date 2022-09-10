@@ -28,6 +28,7 @@ load("../app/data/fishery_map.Rdata")
 
 models <- dir(basedir)
 models <- models[models!="12_Age10LW_HopefulReport"]  # exclude this one
+models <- models[models!="12_Age10LW_Mixed"]          # exclude this one
 
 # Model description
 model_description <- data.frame(
@@ -298,7 +299,7 @@ save(status_tab_dat, cpue_dat, mat_age_dat, mat_length_dat, biomass_dat, srr_dat
 #-----------------------------------
 
 # Likelihood table
-cat("Likelihood table")
+cat("Likelihood table\n")
 ll_tab_dat <- list()
 for (model in models){
   cat("Model: ", model, "\n")
