@@ -14,7 +14,7 @@ library(data.table)
 source("read_length_fit_file.R")
 
 # Model folder
-basedir <- "z:/yft/2020_review/analysis/review_runs/arni/"
+basedir <- "z:/yft/2020_review/analysis/review_runs/arni_john/"
 tagfile <- "yft.tag"
 frqfile <- "yft.frq"
 
@@ -27,7 +27,6 @@ source("fishery_map.R")
 load("../app/data/fishery_map.Rdata")
 
 models <- dir(basedir)
-models <- models[models!="12_Age10LW_HopefulReport"]  # exclude this one
 
 # Model description
 model_description <- data.frame(
@@ -334,7 +333,6 @@ save(ll_tab_dat, file="../app/data/ll_tab_data.Rdata")
 #-----------------------------------
 # Tag plot data - complicated
 
-# M5, M6 and M7 missing temporary tag report
 cat("Tagging stuff\n")
 tagrep_dat <- list()
 for (model in models){

@@ -334,7 +334,6 @@ save(ll_tab_dat, file="../app/data/ll_tab_data.Rdata")
 #-----------------------------------
 # Tag plot data - complicated
 
-# M5, M6 and M7 missing temporary tag report
 cat("Tagging stuff\n")
 tagrep_dat <- list()
 for (model in models){
