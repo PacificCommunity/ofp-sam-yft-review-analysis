@@ -32,6 +32,11 @@ depletion <- biomass
 depletion$data <- biomass$data / unfished$data
 
 # Plot
+stdplot <- function(x, y, div=1, ...)
+{
+  matplot(x, xtabs(data~year+domain, data=y)/div, type="l", lty=1, xlab="Year",
+          ...)
+}
 year <- sort(unique(biomass$year))
 domain <- sort(unique(biomass$domain))
 colors <- palette()[c(2,7,4,5)]
@@ -39,16 +44,13 @@ lwd <- 2
 mkdir("pdf")
 pdf("pdf/diagnostic_to_4_regions.pdf", width=10, height=5)
 par(mfrow=c(1,3))
-matplot(year, xtabs(data~year+domain, biomass)/1e6,
-        type="l", col=colors, lty=1, lwd=lwd, ylim=lim(biomass$dat/1e6, 1.05),
-        xlab="Year", ylab="Spawning biomass (million t)")
-matplot(year, xtabs(data~year+domain, unfished)/1e6, type="l",
-        col=colors, lty=1, lwd=lwd, ylim=lim(unfished$dat/1e6, 1.05),
-        xlab="Year", ylab="Unfished biomass (million t)")
-matplot(year, xtabs(data~year+domain, depletion),
-        type="l", col=colors, lty=1, lwd=lwd, ylim=0:1,
-        xlab="Year", ylab="SB / SBF=0")
+stdplot(year, biomass, div=1e6, col=colors, lwd=lwd,
+        ylim=lim(biomass$dat/1e6, 1.05), ylab="Spawning biomass (million t)")
+stdplot(year, unfished, div=1e6, col=colors, lwd=lwd,
+        ylim=lim(unfished$dat/1e6, 1.05), ylab="Unfished biomass (million t)")
+stdplot(year, depletion, col=colors, lwd=lwd, ylim=0:1, ylab="SB / SBF=0")
 lines(flr2taf(SBSBF0(Diag20)))
 legend("bottomleft", c(domain,"(All)"), lwd=c(lwd,lwd,lwd,lwd,1),
        col=c(colors,"black"), bty="n")
+
 dev.off()
