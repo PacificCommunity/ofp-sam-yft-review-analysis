@@ -58,6 +58,6 @@ p <- p + scale_y_continuous(expand=c(0, 0))
 p <- p + theme(plot.title=element_text(hjust=0.5, margin=margin(t=20,b=10)))
 
 dir.create("pdf", showWarnings=FALSE)
-pdf("pdf/lf_size20_size60.pdf", width=9, height=9)
+pdf("pdf/size20_size60.pdf", width=9, height=9)
 p
 dev.off()
