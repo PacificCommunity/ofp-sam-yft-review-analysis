@@ -13,13 +13,6 @@ library(data.table)
 # Helper functions
 source("read_length_fit_file.R")
 
-find_biggestpar <- function(folder)
-{
-  
-}
-
-
-
 # Model folder
 basedir <- "z:/yft/2020_review/analysis/review_runs/arni_john/"
 tagfile <- "yft.tag"
@@ -117,8 +110,7 @@ for (model in models){
   lf <- list.files(paste(basedir, model, sep="/"))
   parfiles <- lf[grep(".par$", lf)]
   # Find the biggest par file
-  biggest_par <- find_biggestpar(parfiles)
-  print(biggest_par)
+  biggest_par <- max(parfiles)
   reg <- read.MFCLRegion(paste(basedir, model, biggest_par, sep="/"))
   dcap <- diff_coffs_age_period(reg)
   move_coef[[eval(model)]] <- as.data.table(dcap)
