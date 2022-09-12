@@ -82,7 +82,7 @@ for (model in models){
 # This involves going through the length.fit files and processing the data
 # The function to read and process the data is here:
 
-cat("Catch size distribution stuff\n")
+cat("** Catch size distribution stuff\n")
 lfits_dat <- lapply(models, function(x){
   cat("Processing model: ", x, "\n")
   filename <- paste(basedir, x, "length.fit", sep="/")
@@ -103,7 +103,7 @@ save(lfits_dat, file="../app/data/lfits_dat.Rdata")
 # Par objects are big, so it is easier to read in a bit of the par object (MFCLRegion).
 # Thanks object-oriented programming and overloading!
 
-cat("Movement stuff\n")
+cat("\n** Movement stuff\n")
 move_coef <- list()
 for (model in models){
   cat("Model: ", model, "\n")
@@ -134,7 +134,7 @@ save(move_coef, file="../app/data/move_coef.Rdata")
 #------------------------------------------------------------------
 # General stuff including stock recruitment, SB and SBSBF0 data.
 
-cat("General stuff\n")
+cat("\n** General stuff\n")
 
 srr_dat <- list()
 srr_fit_dat <- list()
@@ -299,7 +299,7 @@ save(status_tab_dat, cpue_dat, mat_age_dat, mat_length_dat, biomass_dat, srr_dat
 #-----------------------------------
 
 # Likelihood table
-cat("Likelihood table\n")
+cat("\n** Likelihood table\n")
 ll_tab_dat <- list()
 for (model in models){
   cat("Model: ", model, "\n")
@@ -334,7 +334,7 @@ save(ll_tab_dat, file="../app/data/ll_tab_data.Rdata")
 #-----------------------------------
 # Tag plot data - complicated
 
-cat("Tagging stuff\n")
+cat("\n** Tagging stuff\n")
 tagrep_dat <- list()
 for (model in models){
   cat("Model: ", model, "\n")
