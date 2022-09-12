@@ -11,11 +11,10 @@ library(FLR4MFCL)
 library(data.table)
 
 # Helper functions
-source("find_biggest.R")
 source("read_length_fit_file.R")
 
 # Model folder
-basedir <- "z:/yft/2020_review/analysis/review_runs/arni_nick/"
+basedir <- "z:/yft/2020_review/analysis/review_runs/arni_john/"
 tagfile <- "yft.tag"
 frqfile <- "yft.frq"
 
@@ -28,9 +27,6 @@ source("fishery_map.R")
 load("../app/data/fishery_map.Rdata")
 
 models <- dir(basedir)
-models <- c("grow_kinks_yft2020",
-            "grow_richards2_yft2020",
-            "remv_smfshszcomp")
 
 # Model description
 model_description <- data.frame(
@@ -110,8 +106,12 @@ cat("Movement stuff\n")
 move_coef <- list()
 for (model in models){
   cat("Model: ", model, "\n")
-  biggest_par <- find_biggest_par(file.path(basedir, model))
-  reg <- read.MFCLRegion(biggest_par)
+  # ID the par file
+  lf <- list.files(paste(basedir, model, sep="/"))
+  parfiles <- lf[grep(".par$", lf)]
+  # Find the biggest par file
+  biggest_par <- max(parfiles)
+  reg <- read.MFCLRegion(paste(basedir, model, biggest_par, sep="/"))
   dcap <- diff_coffs_age_period(reg)
   move_coef[[eval(model)]] <- as.data.table(dcap)
 }
@@ -150,7 +150,14 @@ index_fisheries <- 33:41
 
 for (model in models){
   cat("Model: ", model, "\n")
-  biggest_rep <- find_biggest_par(file.path(basedir, model))
+  # ID the rep
+  # ID the par file
+  lf <- list.files(paste(basedir, model, sep="/"))
+  parfiles <- lf[grep(".par$", lf)]
+  # Find the biggest par file
+  biggest_par <- max(substr(parfiles, 1, 2))
+  repfile <- paste0("plot-", biggest_par, ".par.rep")
+  # Load the rep
   rep <- read.MFCLRep(paste(basedir, model, repfile, sep="/"))
 
   # SRR stuff
