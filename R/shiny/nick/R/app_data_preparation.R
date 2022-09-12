@@ -31,9 +31,6 @@ source("fishery_map.R")
 load("../app/data/fishery_map.Rdata")
 
 models <- dir(basedir)
-models <- c("grow_kinks_yft2020",
-            "grow_richards2_yft2020",
-            "remv_smfshszcomp")
 
 # Model description
 model_description <- data.frame(
