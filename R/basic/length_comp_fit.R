@@ -24,50 +24,40 @@ labels <- gsub("UNA", "UNASSOC", labels)
 labels <- gsub("UNS", "UNASSOC", labels)
 
 # Exclude fisheries that have no length comp data
-nz <- tapply(lf_diag$obs, lf_diag$fishery, max) > 0
+nz <- tapply(lf_size20$obs, lf_size20$fishery, max) > 0
 fisheries <- as.integer(names(nz[nz]))
-lf_diag <- lf_diag[lf_diag$fishery %in% fisheries,]
+lf_size20 <- lf_size20[lf_size20$fishery %in% fisheries,]
+lf_size60 <- lf_size60[lf_size60$fishery %in% fisheries,]
 labels <- labels[fisheries]
 
 # Plot
-plot.overall.composition.fit(lf_diag, unique(lf_diag$fishery), labels) +
-  ggtitle("17_Diag20") + theme(plot.title=element_text(hjust=0.5))
+plot.overall.composition.fit(lf_size20, unique(lf_size20$fishery), labels) +
+  ggtitle("Size20") + theme(plot.title=element_text(hjust=0.5))
+plot.overall.composition.fit(lf_size60, unique(lf_size60$fishery), labels) +
+  ggtitle("Size60") + theme(plot.title=element_text(hjust=0.5))
 
 ################################################################################
 
-# Read length fit
-folder_idxnoeff <- "z:/yft/2020_review/analysis/stepwise/09_IdxNoeff"
-lf_idxnoeff <- length.fit.preparation(file.path(folder_idxnoeff, "length.fit"))
-
-# Exclude fisheries that have no length comp data
-lf_idxnoeff <- lf_idxnoeff[lf_idxnoeff$fishery %in% fisheries,]
-
-# Plot
-plot.overall.composition.fit(lf_idxnoeff, unique(lf_idxnoeff$fishery), labels) +
-  ggtitle("09_IdxNoeff") + theme(plot.title=element_text(hjust=0.5))
-
-################################################################################
-
-fisheries <- unique(lf_diag$fishery)
+fisheries <- unique(lf_size20$fishery)
 fishery_names <- labels
 
 fishery_names_df <- data.frame(fishery=fisheries, fishery_names=fishery_names)
-pdat_diag <- merge(lf_diag, fishery_names_df)
-pdat_idxnoeff <- merge(lf_idxnoeff, fishery_names_df)
-bar_width <- pdat_diag$length[2] - pdat_diag$length[1]
+pdat_size20 <- merge(lf_size20, fishery_names_df)
+pdat_size60 <- merge(lf_size60, fishery_names_df)
+bar_width <- pdat_size20$length[2] - pdat_size20$length[1]
 
-p <- ggplot(pdat_diag, aes(x=length))
+p <- ggplot(pdat_size20, aes(x=length))
 p <- p + geom_bar(aes(y=obs), fill="gray", color="gray", stat="identity", width=bar_width)
-p <- p + geom_line(aes(y=pred), data=pdat_diag, color="red", size=1)
-p <- p + geom_line(aes(y=pred), data=pdat_idxnoeff, color="darkblue", size=1)
+p <- p + geom_line(aes(y=pred), data=pdat_size20, color="red", size=1)
+p <- p + geom_line(aes(y=pred), data=pdat_size60, color="darkblue", size=1)
 p <- p + facet_wrap(~fishery_names, scales="free")
 p <- p + xlab("Length (cm)") + ylab("Count")
-p <- p + ggtitle("09_IdxNoeff (blue)\n17_Diag20 (red)")
+p <- p + ggtitle("Size20 (red)\n17_Size60 (blue)")
 p <- p + theme_few()
 p <- p + scale_y_continuous(expand=c(0, 0))
 p <- p + theme(plot.title=element_text(hjust=0.5, margin=margin(t=20,b=10)))
 
 dir.create("pdf", showWarnings=FALSE)
-pdf("pdf/lf_idxnoeff_diag.pdf", width=9, height=9)
+pdf("pdf/lf_size20_size60.pdf", width=9, height=9)
 p
 dev.off()
