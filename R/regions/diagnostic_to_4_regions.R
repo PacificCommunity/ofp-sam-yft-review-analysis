@@ -1,6 +1,8 @@
 library(FLR4MFCL)
 library(TAF)
 
+source("utilities.R")
+
 # Read diagnostic model
 Diag20 <- read.MFCLRep(file.path("z:/yft/2020_review/analysis/stepwise",
                                  "17_Diag20/plot-14.par.rep"))
@@ -15,15 +17,6 @@ biomass <- type.convert(biomass, as.is=TRUE)
 unfished <- type.convert(unfished, as.is=TRUE)
 
 # Combine regions
-addDomain <- function(x)
-{
-  x$domain <- NA_character_
-  x$domain[x$area %in% c(1,2)]   <- "North"
-  x$domain[x$area %in% c(3,4,8)] <- "Central"
-  x$domain[x$area %in% c(7)] <- "IndoPhil"
-  x$domain[x$area %in% c(5,6,9)] <- "South"
-  x
-}
 biomass <- aggregate(data~year+domain, addDomain(biomass), sum)
 unfished <- aggregate(data~year+domain, addDomain(unfished), sum)
 
@@ -32,18 +25,6 @@ depletion <- biomass
 depletion$data <- biomass$data / unfished$data
 
 # Plot
-stdplot <- function(x, y, div=1, xlim, ylim, xlab, ylab, h=pretty(ylim),
-                    ...)
-{
-  xlim <- if(missing(xlim)) range(x) else xlim
-  ylim <- if(missing(ylim)) range(y$data) else ylim
-  xlab <- if(missing(xlab)) "Year" else xlab
-  ylab <- if(missing(ylab)) "Value" else ylab
-  plot(NA, xlim=xlim, ylim=ylim, xlab=xlab, ylab=ylab, ...)
-  abline(h=h, col="gray")
-  matlines(x, xtabs(data~year+domain, data=y)/div, lty=1, ...)
-  box()
-}
 year <- sort(unique(biomass$year))
 domain <- sort(unique(biomass$domain))
 colors <- palette()[c(2,7,4,5)]
