@@ -13,7 +13,6 @@ unfished  <- as.data.frame(SBF0(Diag20, combine_areas=FALSE))[columns]
 # Store year and area as integers
 biomass <- type.convert(biomass, as.is=TRUE)
 unfished <- type.convert(unfished, as.is=TRUE)
-year <- sort(unique(biomass$year))
 
 # Combine regions
 addDomain <- function(x)
@@ -33,6 +32,8 @@ depletion <- biomass
 depletion$data <- biomass$data / unfished$data
 
 # Plot
+year <- sort(unique(biomass$year))
+domain <- sort(unique(biomass$domain))
 colors <- palette()[c(2,7,4,5)]
 lwd <- 2
 mkdir("pdf")
@@ -47,4 +48,7 @@ matplot(year, xtabs(data~year+domain, unfished)/1e6, type="l",
 matplot(year, xtabs(data~year+domain, depletion),
         type="l", col=colors, lty=1, lwd=lwd, ylim=0:1,
         xlab="Year", ylab="SB / SBF=0")
+lines(flr2taf(SBSBF0(Diag20)))
+legend("bottomleft", c(domain,"(All)"), lwd=c(lwd,lwd,lwd,lwd,1),
+       col=c(colors,"black"), bty="n")
 dev.off()
