@@ -218,13 +218,13 @@ ui <- dashboardPage(
             plotOutput("plot_rec", height="500px"))
         ),
         fluidRow(
-          box(title="Depletion", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=7,
+          box(title="Depletion", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=8,
             # Area selector
             radioButtons(inputId="area_select_sbsbf0", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE),
             plotOutput("plot_sbsbf0", height="500px"))
         ),
         fluidRow(
-          box(title="Spawning biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=7,
+          box(title="Spawning biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=8,
             # Area selector
             column(6, radioButtons(inputId="area_select_sb", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
             # Scale selector
@@ -232,7 +232,7 @@ ui <- dashboardPage(
             plotOutput("plot_sb", height="500px"))
         ),
         fluidRow(
-          box(title="Unfished biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=7,
+          box(title="Unfished biomass", solidHeader=TRUE, collapsible=TRUE, collapsed=start_collapsed, status="primary", width=8,
             # Area selector
             column(6, radioButtons(inputId="area_select_sbf0", label="Region selector", choiceNames=c("Separate", "Combined"), choiceValues=c("separate", "combined"), selected="combined", inline=TRUE)),
             # Scale selector
