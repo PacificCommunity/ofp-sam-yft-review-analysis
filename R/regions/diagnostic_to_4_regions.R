@@ -36,18 +36,15 @@ depletion$data <- biomass$data / unfished$data
 years <- sort(unique(depletion$year))
 
 mkdir("pdf")
-pdf("pdf/diagnostic_to_4_regions.pdf", width=12, height=6)
-par(mfrow=c(1,3))
+pdf("pdf/diagnostic_to_4_regions.pdf", width=12, height=12)
+par(mfrow=c(2,3))
 barplot(data/1e6~domain+year, biomass, col=2:5, legend=TRUE,
         xlab="Year", ylab="Spawning biomass (million t)")
 barplot(data/1e6~domain+year, unfished, col=2:5, legend=TRUE,
         xlab="Year", ylab="Unfished biomass (million t)")
 matplot(years, xtabs(data~year+domain, depletion), type="l", col=2:5,
         lty=1, lwd=2, ylim=0:1, xlab="Year", ylab="SB / SBF=0")
-dev.off()
 
-pdf("pdf/diagnostic_to_4_regions_alt.pdf", width=12, height=6)
-par(mfrow=c(1,3))
 matplot(years, xtabs(data~year+domain, biomass)/1e6, type="l", col=2:5, lty=1,
         lwd=2, ylim=lim(biomass$dat/1e6, 1.05), xlab="Year",
         ylab="Spawning biomass (million t)")
