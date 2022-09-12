@@ -14,9 +14,12 @@ library(data.table)
 source("read_length_fit_file.R")
 
 # Model folder
-basedir <- "z:/yft/2020_review/analysis/review_runs/arni_john/"
+basedir <- "z:/yft/2020_review/analysis/review_runs/arni_nick/"
 tagfile <- "yft.tag"
 frqfile <- "yft.frq"
+
+# Fisheries
+index_fisheries <- 33:41
 
 # Output folder
 dir.create("../app/data", showWarnings=FALSE)
@@ -106,12 +109,8 @@ cat("Movement stuff\n")
 move_coef <- list()
 for (model in models){
   cat("Model: ", model, "\n")
-  # ID the par file
-  lf <- list.files(paste(basedir, model, sep="/"))
-  parfiles <- lf[grep(".par$", lf)]
-  # Find the biggest par file
-  biggest_par <- max(parfiles)
-  reg <- read.MFCLRegion(paste(basedir, model, biggest_par, sep="/"))
+  biggest_par <- find_biggest_par(file.path(basedir, model))
+  reg <- read.MFCLRegion(biggest_par)
   dcap <- diff_coffs_age_period(reg)
   move_coef[[eval(model)]] <- as.data.table(dcap)
 }
@@ -146,19 +145,10 @@ mat_length_dat <- list()
 cpue_dat <- list()
 status_tab_dat <- list()
 
-index_fisheries <- 33:41
-
 for (model in models){
   cat("Model: ", model, "\n")
-  # ID the rep
-  # ID the par file
-  lf <- list.files(paste(basedir, model, sep="/"))
-  parfiles <- lf[grep(".par$", lf)]
-  # Find the biggest par file
-  biggest_par <- max(substr(parfiles, 1, 2))
-  repfile <- paste0("plot-", biggest_par, ".par.rep")
-  # Load the rep
-  rep <- read.MFCLRep(paste(basedir, model, repfile, sep="/"))
+  biggest_rep <- find_biggest_rep(file.path(basedir, model))
+  rep <- read.MFCLRep(biggest_rep)
 
   # SRR stuff
   adult_biomass <- as.data.table(adultBiomass(rep))[, c("year", "season", "area", "value")]
@@ -186,8 +176,8 @@ for (model in models){
   srr_fit_dat[[model]] <- bhdat
 
   # Get the rec devs
-  parfile <- paste0(biggest_par, ".par")
-  par <- read.MFCLPar(paste(basedir, model, parfile, sep="/"))
+  biggest_par <- find_biggest_par(file.path(basedir, model))
+  par <- read.MFCLPar(biggest_par)
   rdat <- as.data.table(region_rec_var(par))[, c("year", "season", "area", "value")]
   rdat[, c("year", "season") := .(as.numeric(year), as.numeric(season))]
   rdat[, "ts" := .(year + (season-1)/4 + 1/8)]
@@ -304,11 +294,8 @@ for (model in models){
   cat("Model: ", model, "\n")
   # Load the likelihood and par files
   ll <- read.MFCLLikelihood(paste(basedir, model, "test_plot_output", sep="/"))
-  lf <- list.files(paste(basedir, model, sep="/"))
-  parfiles <- lf[grep(".par$", lf)]
-  # Find the biggest par file
-  biggest_par <- max(parfiles)
-  par <- read.MFCLPar(paste(basedir, model, biggest_par, sep="/"))
+  biggest_par <- find_biggest_par(file.path(basedir, model))
+  par <- read.MFCLPar(biggest_par)
   # Get LL summary
   ll_summary <- summary(ll)
   # Build data.table with correct names
@@ -337,12 +324,8 @@ cat("Tagging stuff\n")
 tagrep_dat <- list()
 for (model in models){
   cat("Model: ", model, "\n")
-  # ID the par file
-  lf <- list.files(paste(basedir, model, sep="/"))
-  parfiles <- lf[grep(".par$", lf)]
-  # Find the biggest par file
-  biggest_par <- max(parfiles)
-  par <- read.MFCLPar(paste(basedir, model, biggest_par, sep="/"))
+  biggest_par <- find_biggest_par(file.path(basedir, model))
+  par <- read.MFCLPar(biggest_par)
 
   # Tag releases from the *.tag file
   # The recaptures slot contains the observed recaptures but not used here
@@ -399,7 +382,7 @@ tag_returns_time <- tagrep_dat[, .(recap.pred = sum(recap.pred, na.rm=TRUE), rec
 # To ensure plotting is OK we need each fishery to have a full complement of time series
 padts <- expand.grid(recap.ts = seq(from=min(tag_returns_time$recap.ts), to=max(tag_returns_time$recap.ts), by=1/no_seasons),
                      tag_recapture_name = sort(unique(tag_returns_time$tag_recapture_name)),
-                     model=sort(unique(tag_returns_time$model)))
+                     model = sort(unique(tag_returns_time$model)))
 padts <- merge(padts, fishery_map[c("tag_recapture_group", "tag_recapture_name")])
 tag_returns_time <- merge(tag_returns_time, padts, all=TRUE)
 # Any NAs need to set to 0
