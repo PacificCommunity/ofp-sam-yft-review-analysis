@@ -11,10 +11,11 @@ library(FLR4MFCL)
 library(data.table)
 
 # Helper functions
+source("find_biggest.R")
 source("read_length_fit_file.R")
 
 # Model folder
-basedir <- "z:/yft/2020_review/analysis/review_runs/arni_nick/"
+basedir <- "z:/yft/2020_review/analysis/review_runs/arni_john/"
 tagfile <- "yft.tag"
 frqfile <- "yft.frq"
 
