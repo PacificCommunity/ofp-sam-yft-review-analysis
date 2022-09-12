@@ -2,27 +2,32 @@ library(diags4MFCL)
 library(ggplot2)
 library(ggthemes)
 
-# Read length fit and labels
-folder_diag <- "z:/yft/2020_review/analysis/stepwise/17_Diag20"
-lf_diag <- length.fit.preparation(file.path(folder_diag, "length.fit"))
-labels <- readLines(file.path(folder_diag, "labels.tmp"))
+diag_folder <- "z:/yft/2020/assessment/ModelRuns/Diagnostic"
+grid_folder <- "z:/yft/2020/assessment/ModelRuns/Grid"
+size20_folder <- file.path(grid_folder, "CondLen_M0.2_Size20_H0.8_Mix2")
+size60_folder <- file.path(grid_folder, "CondLen_M0.2_Size60_H0.8_Mix2")
 
+# Read length fits
+lf_size20 <- length.fit.preparation(file.path(size20_folder, "length.fit"))
+lf_size60 <- length.fit.preparation(file.path(size60_folder, "length.fit"))
+
+# Read labels
+labels <- readLines(file.path(diag_folder, "labels.tmp"))
 # Exclude labels without initial number, then remove number
 labels <- grep("^[0-9]", labels, value=TRUE)
 labels <- gsub("^[0-9]*\\. ", "", labels)
-
-# Exclude fisheries that have no length comp data
-nz <- tapply(lf_diag$obs, lf_diag$fishery, max) > 0
-fisheries <- as.integer(names(nz[nz]))
-lf_diag <- lf_diag[lf_diag$fishery %in% fisheries,]
-labels <- labels[fisheries]
-
 # Modify labels to match assessment report
 labels <- gsub("MISC", "Dom", labels)
 labels <- gsub("PHID", "IDPH", labels)
 labels <- gsub("ASS", "ASSOC", labels)
 labels <- gsub("UNA", "UNASSOC", labels)
 labels <- gsub("UNS", "UNASSOC", labels)
+
+# Exclude fisheries that have no length comp data
+nz <- tapply(lf_diag$obs, lf_diag$fishery, max) > 0
+fisheries <- as.integer(names(nz[nz]))
+lf_diag <- lf_diag[lf_diag$fishery %in% fisheries,]
+labels <- labels[fisheries]
 
 # Plot
 plot.overall.composition.fit(lf_diag, unique(lf_diag$fishery), labels) +
