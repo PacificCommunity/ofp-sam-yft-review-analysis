@@ -10,3 +10,5 @@ obs <- aggregate(cpue_obs~year+area, cpue, mean)  # average over seasons
 obs <- aggregate(cpue_obs~area, cpue, mean)  # average over years
 
 round(obs, 1)
+
+obs$log_obs <- log(obs$cpue_obs)
