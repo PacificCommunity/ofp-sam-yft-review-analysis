@@ -2,7 +2,7 @@ library(FLR4MFCL)
 
 geomean <- function(x) exp(mean(log(x)))
 
-folder <- "z:/yft/2020_review/analysis/stepwise/17_Diag20"
+folder <- "//penguin/assessments/yft/2020_review/analysis/stepwise/17_Diag20"
 diag.frq <- read.MFCLFrq(file.path(folder, "yft.frq"))
 
 cpue <- freq(diag.frq)

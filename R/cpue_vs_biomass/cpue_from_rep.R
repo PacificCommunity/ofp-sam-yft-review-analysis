@@ -2,7 +2,7 @@ library(FLR4MFCL)
 
 geomean <- function(x) exp(mean(log(x)))
 
-folder <- "z:/yft/2020_review/analysis/stepwise/17_Diag20"
+folder <- "//penguin//assessments/yft/2020_review/analysis/stepwise/17_Diag20"
 diag.rep <- read.MFCLRep(file.path(folder, "plot-14.par.rep"))
 
 cpue <- as.data.frame(cpue_obs(diag.rep))
