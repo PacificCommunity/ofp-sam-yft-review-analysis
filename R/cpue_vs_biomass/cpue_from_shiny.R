@@ -2,8 +2,8 @@ load("../shiny/stepwise-2020/app/data/other_data.Rdata")
 
 geomean <- function(x) exp(mean(log(x)))
 
-cpue <- type.convert(cpue_dat, as.is=TRUE)
-cpue$area <- cpue$fishery - 32L
+cpue <- cpue_dat
+cpue$area <- cpue$fishery - 32
 cpue <- cpue[cpue$model == "17_Diag20",]
 cpue$obs <- cpue$cpue_obs
 ## 2412 rows = 67 years x 4 seasons x 9 areas

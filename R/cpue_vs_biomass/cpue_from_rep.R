@@ -8,7 +8,7 @@ diag.rep <- read.MFCLRep(file.path(folder, "plot-14.par.rep"))
 cpue <- as.data.frame(cpue_obs(diag.rep))
 cpue <- type.convert(cpue, as.is=TRUE)
 cpue <- cpue[cpue$unit %in% 33:41,]
-cpue$area <- cpue$unit - 32L
+cpue$area <- cpue$unit - 32
 cpue$obs <- exp(cpue$data)
 ## 2412 rows = 67 years x 4 seasons x 9 areas
 
