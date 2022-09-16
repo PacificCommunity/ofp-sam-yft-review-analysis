@@ -38,3 +38,8 @@ m(par.mest)  # 0.202
 
 M_coefficient <- data.frame(Diag=m(par.diag), Mest=m(par.mest))
 write.csv(M_coefficient, "M_coefficient.csv", row.names=FALSE, quote=FALSE)
+
+################################################################################
+
+f <- flags(par.mest)
+f[f$flagtype==2 & f$flag %in% c(5, 33, 73, 77:80, 82:84, 109, 121, 130:133), ]
