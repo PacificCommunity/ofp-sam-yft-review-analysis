@@ -33,3 +33,11 @@ names(mean_log_obs)[2] <- "mean_log_obs"
 
 frq <- data.frame(mean_obs, geomean_obs[2], mean_log_obs[2])
 frq
+
+################################################################################
+
+pdf("cpue_from_frq.pdf")
+xyplot(obs~I(year+month/12)|as.character(area), cpue,
+       ylim=c(0,NA), layout=c(3,3), as.table=TRUE, scales="free",
+       xlab="Year", ylab="CPUE", main="frq")
+dev.off()

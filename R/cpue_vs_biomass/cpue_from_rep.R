@@ -24,3 +24,11 @@ names(mean_log_obs)[2] <- "mean_log_obs"
 
 rep <- data.frame(mean_obs, geomean_obs[2], mean_log_obs[2])
 rep
+
+################################################################################
+
+pdf("cpue_from_rep.pdf")
+xyplot(log(obs)~I(year+season/4-1/8)|as.character(area), cpue,
+       ylim=c(0,NA), layout=c(3,3), as.table=TRUE, scales="free",
+       xlab="Year", ylab="CPUE", main="rep")
+dev.off()
