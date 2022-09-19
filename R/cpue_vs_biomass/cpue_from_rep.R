@@ -9,7 +9,7 @@ cpue <- as.data.frame(cpue_obs(diag.rep))
 cpue <- type.convert(cpue, as.is=TRUE)
 cpue <- cpue[cpue$unit %in% 33:41,]
 cpue$area <- cpue$unit - 32
-cpue$obs <- exp(cpue$data)
+cpue$obs <- cpue$data
 ## 2412 rows = 67 years x 4 seasons x 9 areas
 
 ## Average over years and seasons
@@ -28,7 +28,7 @@ rep
 ################################################################################
 
 pdf("cpue_from_rep.pdf")
-xyplot(log(obs)~I(year+season/4-1/8)|as.character(area), cpue,
+xyplot(obs~I(year+season/4-1/8)|as.character(area), cpue,
        ylim=c(0,NA), layout=c(3,3), as.table=TRUE, scales="free",
        xlab="Year", ylab="CPUE", main="rep")
 dev.off()
