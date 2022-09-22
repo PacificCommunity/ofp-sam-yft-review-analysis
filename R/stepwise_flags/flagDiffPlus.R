@@ -24,6 +24,7 @@ flagDiffPlus <- function(par1, par2, flaglist)
 
   # Compare flags
   diffs <- flagDiff(par1, par2)
+  rownames(diffs) <- NULL
 
   # Look up flag meaning
   diffs$meaning <- NA_character_
