@@ -4,7 +4,7 @@ find_biggest_par <- function(folder, pattern="^[0-9][0-9]\\.par$", full=TRUE,
   parfile <- dir(folder, pattern=pattern, full=full)
   parfile <- max(parfile)
   if(!quiet)
-    print(basename(parfile))
+    cat(basename(parfile), fill=TRUE)
   parfile
 }
 
@@ -14,6 +14,6 @@ find_biggest_rep <- function(folder, pattern="^plot-[0-9][0-9]\\.par.rep$",
   parfile <- dir(folder, pattern=pattern, full=full)
   parfile <- max(parfile)
   if(!quiet)
-    print(basename(parfile))
+    cat(basename(parfile), fill=TRUE)
   parfile
 }
