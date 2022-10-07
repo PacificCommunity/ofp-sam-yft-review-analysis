@@ -11,8 +11,8 @@ cpue$obs[cpue$obs < 0] <- NA  # replace -1 with NA
 ## 2412 rows = 67 years x 4 seasons x 9 areas
 
 ## Tabulate average CPUE by region
-mean_obs <- aggregate(obs~area, cpue, mean)
-names(mean_obs)[2] <- "mean_obs"
+mean_cpue <- aggregate(obs~area, cpue, mean)
+names(mean_cpue)[2] <- "mean_cpue"
 
 ## Plot CPUE like Fig 16 in assmt report
 dir.create("pdf", showWarnings=FALSE)
