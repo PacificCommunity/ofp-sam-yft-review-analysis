@@ -36,7 +36,7 @@ stdplot(year, biomass, div=1e6, col=colors, lwd=lwd, yaxs="i",
         ylim=lim(biomass$dat/1e6, 1.05), ylab="Spawning biomass (million t)")
 stdplot(year, unfished, div=1e6, col=colors, lwd=lwd, yaxs="i",
         ylim=lim(unfished$dat/1e6, 1.05), ylab="Unfished biomass (million t)",
-        main="2020 assessment")
+        main="Original 2020 assessment results\n(plots of combined regions)")
 stdplot(year, depletion, col=colors, lwd=lwd, ylim=c(0,1.04), ylab="SB / SBF=0",
         yaxs="i")
 lines(flr2taf(SBSBF0(Diag20)))
