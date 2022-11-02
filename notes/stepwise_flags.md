@@ -1,99 +1,46 @@
-> library(FLR4MFCL)
-> yft_dir <- "//penguin//assessments/yft/2020_review/analysis/stepwise"
-> yft_diffs <- diffFlagsStepwise(yft_dir)
-> yft_diffs
+# Stepwise flag changes
 
-$`09_IdxNoeff vs. 10_SelUngroup`
-   flagtype flag  par1  par2                          meaning
-1         1    1 15000 10000        function evaluation limit
-2        -1   23    23     0     time step for q-devs [4.5.5]
-3        -2   23    23     0     time step for q-devs [4.5.5]
-4        -2   24     1     2 grouping for selectivity [4.5.6]
-5        -3   23    23     0     time step for q-devs [4.5.5]
-6        -3   24     2     3 grouping for selectivity [4.5.6]
-7        -4   23    23     0     time step for q-devs [4.5.5]
-8        -4   24     3     4 grouping for selectivity [4.5.6]
-9        -5   23    23     0     time step for q-devs [4.5.5]
-10       -5   24     4     8 grouping for selectivity [4.5.6]
-11       -6   23    23     0     time step for q-devs [4.5.5]
-12       -6   24     5     9 grouping for selectivity [4.5.6]
-13       -7   16     1     0        selectivity shape [4.5.6]
-14       -7   23    23     0     time step for q-devs [4.5.5]
-15       -7   24     6    10 grouping for selectivity [4.5.6]
-16       -7   49    20    40       length sample size [4.5.3]
-17       -8   23    23     0     time step for q-devs [4.5.5]
-18       -8   24     7    11 grouping for selectivity [4.5.6]
-19       -8   49    20    40       length sample size [4.5.3]
-20       -9   23    23     0     time step for q-devs [4.5.5]
-21       -9   24     3     5 grouping for selectivity [4.5.6]
-22      -10   23    23     0     time step for q-devs [4.5.5]
-23      -10   24     8    12 grouping for selectivity [4.5.6]
-24      -11   23    23     0     time step for q-devs [4.5.5]
-25      -11   24     3     7 grouping for selectivity [4.5.6]
-26      -12   23    23     0     time step for q-devs [4.5.5]
-27      -12   24     3     6 grouping for selectivity [4.5.6]
-28      -13   23    23     0     time step for q-devs [4.5.5]
-29      -13   24     9    13 grouping for selectivity [4.5.6]
-30      -14   23    23     0     time step for q-devs [4.5.5]
-31      -14   24    10    16 grouping for selectivity [4.5.6]
-32      -15   23    23     0     time step for q-devs [4.5.5]
-33      -15   24     9    14 grouping for selectivity [4.5.6]
-34      -16   23    23     0     time step for q-devs [4.5.5]
-35      -16   24    10    17 grouping for selectivity [4.5.6]
-36      -17   23    23     0     time step for q-devs [4.5.5]
-37      -17   24    11    19 grouping for selectivity [4.5.6]
-38      -18   23    23     0     time step for q-devs [4.5.5]
-39      -18   24    12    20 grouping for selectivity [4.5.6]
-40      -19   23    23     0     time step for q-devs [4.5.5]
-41      -19   24    13    21 grouping for selectivity [4.5.6]
-42      -20   23    23     0     time step for q-devs [4.5.5]
-43      -20   24    14    22 grouping for selectivity [4.5.6]
-44      -21   23    23     0     time step for q-devs [4.5.5]
-45      -21   24    15    23 grouping for selectivity [4.5.6]
-46      -22   23    23     0     time step for q-devs [4.5.5]
-47      -22   24    16    24 grouping for selectivity [4.5.6]
-48      -23   23    23     0     time step for q-devs [4.5.5]
-49      -23   24    11    25 grouping for selectivity [4.5.6]
-50      -24   23    23     0     time step for q-devs [4.5.5]
-51      -24   24     9    28 grouping for selectivity [4.5.6]
-52      -25   23    23     0     time step for q-devs [4.5.5]
-53      -25   24     9    15 grouping for selectivity [4.5.6]
-54      -26   23    23     0     time step for q-devs [4.5.5]
-55      -26   24    17    18 grouping for selectivity [4.5.6]
-56      -27   23    23     0     time step for q-devs [4.5.5]
-57      -27   24    18    12 grouping for selectivity [4.5.6]
-58      -28   16     2     0        selectivity shape [4.5.6]
-59      -28   23    23     0     time step for q-devs [4.5.5]
-60      -28   24    19    26 grouping for selectivity [4.5.6]
-61      -29   23    23     0     time step for q-devs [4.5.5]
-62      -29   24     3     7 grouping for selectivity [4.5.6]
-63      -29   49    20    40       length sample size [4.5.3]
-64      -30   23    23     0     time step for q-devs [4.5.5]
-65      -30   24     9    13 grouping for selectivity [4.5.6]
-66      -31   23    23     0     time step for q-devs [4.5.5]
-67      -31   24    10    16 grouping for selectivity [4.5.6]
-68      -32   23    23     0     time step for q-devs [4.5.5]
-69      -32   24    11    27 grouping for selectivity [4.5.6]
-70      -33   23    23     0     time step for q-devs [4.5.5]
-71      -33   24    20    29 grouping for selectivity [4.5.6]
-72      -34   23    23     0     time step for q-devs [4.5.5]
-73      -34   24    20    29 grouping for selectivity [4.5.6]
-74      -35   23    23     0     time step for q-devs [4.5.5]
-75      -35   24    20    29 grouping for selectivity [4.5.6]
-76      -36   23    23     0     time step for q-devs [4.5.5]
-77      -36   24    20    29 grouping for selectivity [4.5.6]
-78      -37   23    23     0     time step for q-devs [4.5.5]
-79      -37   24    20    29 grouping for selectivity [4.5.6]
-80      -38   23    23     0     time step for q-devs [4.5.5]
-81      -38   24    20    29 grouping for selectivity [4.5.6]
-82      -39   23    23     0     time step for q-devs [4.5.5]
-83      -39   24    20    29 grouping for selectivity [4.5.6]
-84      -40   23    23     0     time step for q-devs [4.5.5]
-85      -40   24    20    29 grouping for selectivity [4.5.6]
-86      -41   23    23     0     time step for q-devs [4.5.5]
-87      -41   24    20    29 grouping for selectivity [4.5.6]
+## Step 10: from 09_IdxNoeff to  10_SelUngroup
 
-$`10_SelUngroup vs. 11_JPTP`
+87 flags were changed, related to selectivity grouping, selectivity shape,
+length sample size, and catchability deviations
+
+*Selectivity grouping*
+
+Fisheries 4, 9, 11, 12, and 29 used to be one selectivity group, now split into
+four groups
+
+Fisheries 13, 15, 24, 25, and 30 used to be one selectivity group, now split
+into four groups
+
+Fisheries 14, 16, and 31 used to be one selectivity group, now split into two
+groups
+
+Fisheries 17, 23, and 32 used to be one selectivity group, now split into three
+groups
+
+Fisheries 10 and 27 used to be singleton selectivity groups, now grouped
+together
+
+*Selectivity shape*
+
+Fishery 7 used to have selectivity set as non-decreasing with age, now allowed
+to decrease with age
+
+Fishery 28 used to have selectivity set as zero for all ages under 25 quarters,
+now no longer constrained to be zero
+
+*Length sample size*
+
+Fisheries 7, 8, and 29 used to have a length sample size divisor of 20, now 40
+
+*Catchability deviations*
+
+Fisheries 1-41: allow catchability deviations to vary between quarters, rather
+than keeping them constant for 23+1 months after each change
+
+## Step 11: from 10_SelUngroup to 11_JPTP
+
     flagtype flag  par1  par2                                         meaning
 1          1    1 10000 15000                       function evaluation limit
 2          1   50    -3    -2                 maximum gradient target [4.5.1]
