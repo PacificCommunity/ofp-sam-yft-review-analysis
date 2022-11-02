@@ -5,7 +5,7 @@
 87 flags were changed, related to selectivity grouping, selectivity shape,
 length sample size, and catchability deviations
 
-*Selectivity grouping*
+**Selectivity grouping**
 
 Fisheries 4, 9, 11, 12, and 29 used to be one selectivity group, now split into
 four groups
@@ -22,42 +22,40 @@ groups
 Fisheries 10 and 27 used to be singleton selectivity groups, now grouped
 together
 
-*Selectivity shape*
+**Selectivity shape**
 
 Fishery 7 used to have selectivity set as non-decreasing with age, now allowed
 to decrease with age
 
-Fishery 28 used to have selectivity set as zero for all ages under 25 quarters,
+Fishery 28 used to have selectivity set as zero for all ages over 24 quarters,
 now no longer constrained to be zero
 
-*Length sample size*
+**Length sample size**
 
 Fisheries 7, 8, and 29 used to have a length sample size divisor of 20, now 40
 
-*Catchability deviations*
+**Catchability deviations**
 
 Fisheries 1-41: allow catchability deviations to vary between quarters, rather
 than keeping them constant for 23+1 months after each change
 
 ## Step 11: from 10_SelUngroup to 11_JPTP
 
+606 flags were changed, related to selectivity shape and tags
+
+**Selectivity shape**
+
+Fisheries 3, 6, 8, 11, 13, 15, 17, 18, 19, 20, 21, 22, 23, 24, 26
+
+Fisheries 4, 5, 7, 9, 10, 12, 14, 16, 25
+
     flagtype flag  par1  par2                                         meaning
-1          1    1 10000 15000                       function evaluation limit
-2          1   50    -3    -2                 maximum gradient target [4.5.1]
 3         -1   16     0     1                       selectivity shape [4.5.6]
-4         -2   75     0     2 age classes for zero selectivity-at-age [4.5.6]
-5         -4   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 6         -5   16     0     1                       selectivity shape [4.5.6]
-7         -5   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 8         -6   16     0     1                       selectivity shape [4.5.6]
-9         -6   75     0     2 age classes for zero selectivity-at-age [4.5.6]
-10        -7   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 11        -9   16     0     1                       selectivity shape [4.5.6]
-12        -9   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 13       -10   16     0     1                       selectivity shape [4.5.6]
-14       -11   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 15       -12   16     0     1                       selectivity shape [4.5.6]
-16       -12   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 17       -17   16     0     2                       selectivity shape [4.5.6]
 18       -20   16     0     2                       selectivity shape [4.5.6]
 19       -21   16     0     2                       selectivity shape [4.5.6]
@@ -66,8 +64,20 @@ than keeping them constant for 23+1 months after each change
 22       -24   16     0     2                       selectivity shape [4.5.6]
 23       -27   16     0     1                       selectivity shape [4.5.6]
 24       -28   16     0     2                       selectivity shape [4.5.6]
-25       -29   75     0     2 age classes for zero selectivity-at-age [4.5.6]
 26       -32   16     0     2                       selectivity shape [4.5.6]
+
+4         -2   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+5         -4   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+7         -5   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+9         -6   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+10        -7   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+12        -9   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+14       -11   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+16       -12   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+25       -29   75     0     2 age classes for zero selectivity-at-age [4.5.6]
+
+
+
 27    -10087    1    NA     2
 28    -10087    2    NA     0
 29    -10087    3    NA     0
