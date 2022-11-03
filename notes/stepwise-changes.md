@@ -2,7 +2,7 @@
 
 ## 09_IdxNoeff ... 10_SelUngroup
 
-**Flags**
+### Flags
 
 87 flags were changed, related to selectivity grouping, selectivity shape,
 length sample size, and catchability deviations
@@ -18,22 +18,26 @@ Selectivity shape       | Fishery 7                    | Non-decreasing with age
 Length sample size      | Fisheries 7, 8, 29           | Divisor = 20                             | Divisor = 40               | Fish flag 49
 Catchability deviations | Fisheries 1-41               | Constant for 24 months after each change | Can vary between quarters  | Fish flag 23
 
-**Data**
+### Data
 
 (No changes to data.)
 
-### 2 Tags (**JPTP**)
+## 10_SelUngroup ... 11_JPTP
 
-**Flags**
+### Flags
 
-- Forcing the mixing period of the tag recaptures to be 182 days for each tag
-  release had the largest effect on this combined step.
+606 flags were changed, related to selectivity shape and adding tag groups
 
-- Inclusion of tags without recapture locations in the purse seine fisheries.
+Model setting     | Applies to                               | Before                      | After                              | Flag
+----------------- | ---------------------------------------- | --------------------------- | ---------------------------------- | ------------
+Selectivity shape | Fisheries 1, 5, 6, 9, 10, 12, 27         | Can decrease with age       | Non-decreasing with age            | Fish flag 16
+"                 | Fisheries 17, 20, 21, 22, 23, 24, 28, 32 | Not constrained to be zero  | Zero for all ages over 25 quarters | Fish flag 16
+"                 | Fisheries 2, 4, 5, 6, 7, 9, 11, 12, 29   | Not constrained to be zero  | Zero for ages 1-2 quarters         | Fish flag 75
 
-- Addition of the Japanese tagging program data.
+### Tag file
 
-**Tag file**
+- Define mixing period of the tag recaptures to be 182 days for each tag
+  release.
 
 - Tag release groups are increased from 87 to 145 because JPTP program tags were
   added.
@@ -45,34 +49,28 @@ Catchability deviations | Fisheries 1-41               | Constant for 24 months 
 - Number of effective releases are higher for some length bins in all programs.
   This may be a change to usability correction for having additional recaptures.
 
-**Ini file**
+### Ini file
 
 - With more release groups, the ini file has more lines to assign reporting
   rates, priors, and penalties for those additional release groups.
 
-**Frq file**
+### Frq file
 
 - Number of release groups was updated.
 
-### 3 Maximum age (**Age10LW**)
+## 11_JPTP ... 12_Age10LW
 
-Note: a wrong version of Age10LW exists in several places, where fish flag 75 =
-1 is applied to set the selectivity of the youngest age to zero but that change
-should not occur until in Diag20, as reflected in other stepwise model runs and
-in the assessment report. The correct version of the Age10LW model run is on
-Penguin at `z:/yft/2020_review/analysis/stepwise/12_Age10LW` and can be
-identified from SBSBF0 = 0.46613 in the final year, not 0.51833.
+### Flags
 
-**Flags**
+41 flags were changed, related to selectivity shape
 
-- Increasing the maximum age in the model from 7 years to 10 years.
+Model setting     | Applies to      | Before                                 | After                                  | Flag
+----------------- | --------------- | -------------------------------------- | -------------------------------------- | -----------
+Selectivity shape | Fisheries 1-41  | Constant for all ages over 25 quarters | Constant for all ages over 37 quarters | Fish flag 3
 
-- Updating *a* and *b* with a new batch of length-weight data, particularly fish
-  of small sizes. [check with Simon]
+### Ini file
 
-**Ini file**
-
-- Number of age classes increased from 28 to 40.
+- Number of age classes increased from 28 to 40 quarters.
 
 - Maturity-at-age updated for all age classes and extended for the increased
   number of age classes.
@@ -84,52 +82,96 @@ identified from SBSBF0 = 0.46613 in the final year, not 0.51833.
 
 - Length-weight parameters updated.
 
-### 4 Growth (**CondAge**)
+## 12_Age10LW ... 13_CondAge
 
-**Flags**
+### Flags
+
+196 flags were changed, related to growth curve estimation, initial population, fishing mortality, catch likelihood, and selectivity shape
+
+Model setting           | Applies to                  | Before                                      | After                                        | Flag
+----------------------- | --------------------------- | ------------------------------------------- | -------------------------------------------- | ---------------
+Growth curve estimation | Parameters                  | Not estimated, apart from variance          | Not estimated                                | Parest flag 32
+"                       | Early ages                  | First 8 quarters are independent parameters | All ages follow growth curve                 | Parest flag 173
+"                       | Penalty                     | No penalty wt for length estimation         | Penalty wt of 1 for length estimation        | Parest flag 182
+"                       | Age-length data             | Model fit to observed data not activated    | Model fit to observed data activated         | Parest flag 240
+Initial population      | Scaling pop                 | Estimated                                   | Disabled                                     | Age flag 113
+Fishing mortality       | Max F                       | 0.7                                         | 5.0                                          | Age flag 116
+Catch likelihood        | Common wt                   | 100,000                                     | 10,000                                       | Age flag 144
+"                       | Specific wt                 | 0                                           | 100,000                                      | Fish flag 45
+Selectivity shape       | Fisheries 17, 23-24, 28, 32 | Constant for all ages over 37 quarters      | Constant for all ages over 12 quarters       | Fish flag 3
+"                       | Fisheries 20-22             | Constant for all ages over 37 quarters      | Constant for all ages over 24 quarters       | Fish flag 3
+"                       | Fishery 6                   | Logistic shape                              | Cubic spline, or length-specific selectivity | Fish flag 57
+"                       | Fishery 28                  | 4 spline nodes                              | 5 spline nodes                               | Fish flag 61
+
+### Age-length file
 
 - Addition of otolith data through conditional age-at-length.
 
-- Removal of deviates from the von Bertalanffy curve for the first 8 age
-  classes. In earlier steps, the mean lengths of the first 8 age classes were
-  estimated independently from length frequencies.
-
-- Default value for maximum F in the catch equations was changed from 0.7 to 5.0
-  [phase 1]l
-
-- 4 nodes for cubic spline for fishery 28 [phase 1].
-
-**Ini file**
+### Ini file
 
 - Updated maturity-at-age.
 
-- Natural mortality updated
+- Natural mortality updated.
 
 - Age parameters updated.
 
 - Length-weight parameters updated.
 
-### 5 Final (**Diag20**)
+## 13_CondAge ... 14_MatLength
 
-**Flags**
+### Flags
 
-(We have not yet compared the flag settings of Diag20 to previous stepwise model
-settings.)
+1 flag was changed, related to maturity
 
-**Ini file**
+Model setting | Applies to                  | Before        | After                           | Flag
+------------- | --------------------------- | ------------- | ------------------------------- | ------------
+Maturity      | Convert mat @ length to age | Not converted | Converted using weighted spline | Age flag 188
 
-- Version number change.
+### Data
 
-- Reporting rate grouping flags changed.
+(No changes to data.)
 
-- Maturity-at-age updated for all age classes and extended for the increased
-  number of age classes.
+## 14_MatLength ... 15_NoSpnFrac
 
-- Natural mortality is slightly decreased from 0.25 to 0.23.
+### Flags
 
-- Age parameters updated for all age classes and extended for the increased
-  number of age classes.
+(No flags were changed in this step.)
 
-- VB parameters updated.
+### Ini file
 
-- Length-weight parameters updated.
+- Updated maturity at length.
+
+## 15_NoSpnFrac ... 16_Size60
+
+### Flags
+
+83 flags were changed, related to length sample size and weight sample size
+
+Model setting      | Applies to                              | Before       | After         | Flag
+------------------ | --------------------------------------- | ------------ | ------------- | ------------
+Length sample size | Fisheries 1-2, 4, 7-9, 11-12, 29, 33-41 | Divisor = 40 | Divisor = 120 | Fish flag 49
+Weight sample size | Fisheries 1-2, 4, 7-9, 11-12, 29, 33-41 | Divisor = 40 | Divisor = 120 | Fish flag 50
+Length sample size | Fisheries 3, 5-6, 10, 13-28, 30-32      | Divisor = 20 | Divisor = 60  | Fish flag 49
+Weight sample size | Fisheries 3, 5-6, 10, 13-28, 30-32      | Divisor = 20 | Divisor = 60  | Fish flag 50
+
+### Ini file
+
+- Updated tag reporting group flags.
+
+- Updated maturity at age and maturity and length.
+
+- Updated von Bertalanffy parameters.
+
+## 16_Size60 ... 17_Diag20
+
+### Flags
+
+12 flags were changed, related to selectivity shape
+
+Model setting     | Applies to                           | Before                     | After                  | Flag
+----------------- | ------------------------------------ | -------------------------- | ---------------------- | ------------
+Selectivity shape | Fisheries 13-16, 19-22, 25-26, 30-31 | Not constrained to be zero | Zero for age 1 quarter | Fish flag 75
+
+### Data
+
+(No changes to data.)
