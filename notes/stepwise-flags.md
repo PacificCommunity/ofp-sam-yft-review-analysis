@@ -8,11 +8,11 @@ length sample size, and catchability deviations
 Model setting              | Apply to                     | Before                                   | After
 -------------------------- | ---------------------------- | ---------------------------------------- | --------------------------
 Selectivity grouping       | Fisheries 4, 9, 11, 12, 29   | Grouped                                  | Split into four groups
--                          | Fisheries 13, 15, 24, 25, 30 | Grouped                                  | Split into four groups
--                          | Fisheries 17, 23, 32         | Grouped                                  | Split into three groups
--                          | Fisheries 10, 27             | Ungrouped                                | Grouped
+"                          | Fisheries 13, 15, 24, 25, 30 | Grouped                                  | Split into four groups
+"                          | Fisheries 17, 23, 32         | Grouped                                  | Split into three groups
+"                          | Fisheries 10, 27             | Ungrouped                                | Grouped
 Selectivity shape          | Fishery 7                    | Non-decreasing with age                  | Can decrease with age
--                          | Fishery 28                   | Zero for all ages over 24 quarters       | Not constrained to be zero
+"                          | Fishery 28                   | Zero for all ages over 24 quarters       | Not constrained to be zero
 Length sample size divisor | Fisheries 7, 8, 29           | 20                                       | 40
 Catchability deviations    | Fisheries 1-41               | Constant for 24 months after each change | Can vary between quarters
 
@@ -23,8 +23,8 @@ Catchability deviations    | Fisheries 1-41               | Constant for 24 mont
 Model setting      | Apply to                                 | Before                      | After
 ------------------ | ---------------------------------------- | --------------------------- | ----------------------------------
 Selectivity shape  | Fisheries 1, 5, 6, 9, 10, 12, 27         | Can decrease with age       | Non-decreasing with age
--                  | Fisheries 17, 20, 21, 22, 23, 24, 28, 32 | Not constrained to be zero  | Zero for all ages over 25 quarters
--                  | Fisheries 2, 4, 5, 6, 7, 9, 11, 12, 29   | Not constrained to be zero  | Zero for ages 1-2 quarters
+.                  | Fisheries 17, 20, 21, 22, 23, 24, 28, 32 | Not constrained to be zero  | Zero for all ages over 25 quarters
+.                  | Fisheries 2, 4, 5, 6, 7, 9, 11, 12, 29   | Not constrained to be zero  | Zero for ages 1-2 quarters
 
 ## Step 12: from 11_JPTP to 12_Age10LW
 
