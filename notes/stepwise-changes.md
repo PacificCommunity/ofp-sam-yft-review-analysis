@@ -1,15 +1,22 @@
-# Stepwise Model Runs from 2020
+# Stepwise Changes in the 2020 Assessment Model Development
 
-The changes introduced in the 2020 assessment that had the greatest effect on
-depletion were:
-
-### 1 Selectivity (**SelUngroup**)
+## 09_IdxNoeff ... 10_SelUngroup
 
 **Flags**
 
-- Separation of selectivity patterns among regions.
+87 flags were changed, related to selectivity grouping, selectivity shape,
+length sample size, and catchability deviations
 
-- Assigning non-decreasing penalty to one fishery per region.
+Model setting           | Applies to                   | Before                                   | After                      | Flag
+----------------------- | ---------------------------- | ---------------------------------------- | -------------------------- | ------------
+Selectivity grouping    | Fisheries 4, 9, 11, 12, 29   | Grouped                                  | Split into four groups     | Fish flag 24
+"                       | Fisheries 13, 15, 24, 25, 30 | Grouped                                  | Split into four groups     | Fish flag 24
+"                       | Fisheries 17, 23, 32         | Grouped                                  | Split into three groups    | Fish flag 24
+"                       | Fisheries 10, 27             | Ungrouped                                | Grouped                    | Fish flag 24
+Selectivity shape       | Fishery 7                    | Non-decreasing with age                  | Can decrease with age      | Fish flag 16
+"                       | Fishery 28                   | Zero for all ages over 24 quarters       | Not constrained to be zero | Fish flag 16
+Length sample size      | Fisheries 7, 8, 29           | Divisor = 20                             | Divisor = 40               | Fish flag 49
+Catchability deviations | Fisheries 1-41               | Constant for 24 months after each change | Can vary between quarters  | Fish flag 23
 
 **Data**
 
