@@ -5,7 +5,7 @@
 ### Flags
 
 87 flags were changed, related to selectivity grouping, selectivity shape,
-length sample size, and catchability deviations
+length sample size, and catchability deviations.
 
 Model setting           | Applies to                   | Before                                   | After                      | Flag
 ----------------------- | ---------------------------- | ---------------------------------------- | -------------------------- | ------------
@@ -26,7 +26,7 @@ Catchability deviations | Fisheries 1-41               | Constant for 24 months 
 
 ### Flags
 
-606 flags were changed, related to selectivity shape and adding tag groups
+606 flags were changed, related to selectivity shape and adding tag groups.
 
 Model setting     | Applies to                               | Before                      | After                              | Flag
 ----------------- | ---------------------------------------- | --------------------------- | ---------------------------------- | ------------
@@ -62,7 +62,7 @@ Selectivity shape | Fisheries 1, 5, 6, 9, 10, 12, 27         | Can decrease with
 
 ### Flags
 
-41 flags were changed, related to selectivity shape
+41 flags were changed, related to selectivity shape.
 
 Model setting     | Applies to      | Before                                 | After                                  | Flag
 ----------------- | --------------- | -------------------------------------- | -------------------------------------- | -----------
@@ -86,7 +86,7 @@ Selectivity shape | Fisheries 1-41  | Constant for all ages over 25 quarters | C
 
 ### Flags
 
-196 flags were changed, related to growth curve estimation, initial population, fishing mortality, catch likelihood, and selectivity shape
+196 flags were changed, related to growth curve estimation, initial population, fishing mortality, catch likelihood, and selectivity shape.
 
 Model setting           | Applies to                  | Before                                      | After                                        | Flag
 ----------------------- | --------------------------- | ------------------------------------------- | -------------------------------------------- | ---------------
@@ -121,7 +121,7 @@ Selectivity shape       | Fisheries 17, 23-24, 28, 32 | Constant for all ages ov
 
 ### Flags
 
-1 flag was changed, related to maturity
+1 flag was changed, related to maturity.
 
 Model setting | Applies to                  | Before        | After                           | Flag
 ------------- | --------------------------- | ------------- | ------------------------------- | ------------
@@ -145,7 +145,7 @@ Maturity      | Convert mat @ length to age | Not converted | Converted using we
 
 ### Flags
 
-83 flags were changed, related to length sample size and weight sample size
+83 flags were changed, related to length sample size and weight sample size.
 
 Model setting      | Applies to                              | Before       | After         | Flag
 ------------------ | --------------------------------------- | ------------ | ------------- | ------------
@@ -166,7 +166,7 @@ Weight sample size | Fisheries 3, 5-6, 10, 13-28, 30-32      | Divisor = 20 | Di
 
 ### Flags
 
-12 flags were changed, related to selectivity shape
+12 flags were changed, related to selectivity shape.
 
 Model setting     | Applies to                           | Before                     | After                  | Flag
 ----------------- | ------------------------------------ | -------------------------- | ---------------------- | ------------
