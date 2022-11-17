@@ -24,6 +24,17 @@ unfished <- aggregate(data~year+domain, addDomain(unfished), sum)
 depletion <- biomass
 depletion$data <- biomass$data / unfished$data
 
+# Current biomass
+ssb4 <- biomass[biomass$year==2018, -1]
+ssb4 <- data.frame(North=ssb4$data[ssb4$domain=="North"],
+                   South=ssb4$data[ssb4$domain=="South"],
+                   Central=ssb4$data[ssb4$domain=="Central"],
+                   IndoPhil=ssb4$data[ssb4$domain=="IndoPhil"])
+ssb4 <- ssb4 / 1000
+ssb2 <- ssb4[c("North", "South")]
+ssb4.prop <- prop.table(ssb4)
+ssb2.prop <- prop.table(ssb2)
+
 # Plot
 year <- sort(unique(biomass$year))
 domain <- sort(unique(biomass$domain))
@@ -44,3 +55,9 @@ legend("bottomleft", c(domain,"(All)"), lwd=c(lwd,lwd,lwd,lwd,1),
        col=c(colors,"black"), box.lty=0, bg="white", inset=c(0,0.09))
 box()
 dev.off()
+
+# Write tables
+write.taf(ssb2)
+write.taf(ssb2.prop)
+write.taf(ssb4)
+write.taf(ssb4.prop)
