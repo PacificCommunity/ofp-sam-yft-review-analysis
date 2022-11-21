@@ -12,13 +12,14 @@ biomass <- read.taf("data/biomass.csv")
 cpue <- read.taf("data/cpue.csv")
 
 ## Calculate average by area
-cpue <- aggregate(cpue~area, cpue, mean)
-biomass <- aggregate(biomass~area, biomass, mean)
+cpue.avg <- aggregate(cpue~area, cpue, mean)
+biomass.avg <- aggregate(biomass~area, biomass, mean)
 
 ## Proportion of total
-prop <- merge(cpue, biomass)
+prop <- merge(cpue.avg, biomass.avg)
 prop$cpue <- prop.table(prop$cpue)
 prop$biomass <- prop.table(prop$biomass)
 
 ## Write results
+write.taf(cpue.avg, dir="model")
 write.taf(prop, dir="model")
