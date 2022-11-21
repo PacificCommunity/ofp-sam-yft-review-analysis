@@ -4,7 +4,7 @@
 ## After:  cpue_cor.csv, cpue_cor_matrix.csv (model)
 
 library(TAF)
-library(FLR4MFCL)  # corFilter, mat2MFCLCor
+suppressMessages(library(FLR4MFCL))  # corFilter, mat2MFCLCor
 
 mkdir("model")
 

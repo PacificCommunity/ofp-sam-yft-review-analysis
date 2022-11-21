@@ -1,17 +1,28 @@
 ## Prepare plots and tables for report
 
 ## Before: prop.csv (output)
-## After:  cpue_avg.png, cpue_bio_prop.png (report)
+## After:  cpue_avg.png, cpue_bio_prop.png, cpue_cor.png, cpue_r2.png,
+##         cpue_region.png (report)
 
 library(TAF)
 
 mkdir("report")
 
 ## Read results
-prop <- read.taf("output/prop.csv")
 cpue.avg <- read.taf("output/cpue_avg.csv")
+cpue.cor <- read.taf("output/cpue_cor.csv")
+cpue.r2 <- read.taf("output/cpue_r2.csv")
+cpue.region <- read.taf("output/cpue_region.csv")
+prop <- read.taf("output/prop.csv")
 
-## Plot CPUE
+## Plot region-to-region comparison of CPUE
+areas <- sort(unique(cpue.region$area))
+par(mfrow=c(length(areas), length(areas)), plt=c(0,1,0,1))
+for(i in seq_along(areas))
+  for(j in seq_along(areas))
+    plot2series(i, J)
+
+## Plot average CPUE
 taf.png("cpue_avg")
 barplot(cpue~area, cpue.avg)
 dev.off()
@@ -25,4 +36,19 @@ abline(h=c(0.05,0.10,0.15), col="gray")
 barplot(cbind(cpue,biomass)~area, prop, beside=TRUE, col=col, add=TRUE)
 legend("topleft", c("CPUE","Biomass"), fill=col, bty="n", inset=0.02)
 box()
+dev.off()
+
+## Plot correlations
+taf.png("cpue_cor", res=100)
+labels <- paste(substring(cpue.cor$RegionA, 7, 7),
+                substring(cpue.cor$RegionB, 7, 7), sep="-")
+barplot(rev(cpue.cor$Corr), names=rev(labels), horiz=TRUE, las=1,
+        xlab="Correlation")
+dev.off()
+
+## Plot coefficient of determination (R squared)
+taf.png("cpue_r2", res=100)
+labels <- paste(substring(cpue.r2$RegionA, 7, 7),
+                substring(cpue.r2$RegionB, 7, 7), sep="-")
+barplot(rev(cpue.r2$R2), names=rev(labels), horiz=TRUE, las=1, xlab="R2")
 dev.off()
