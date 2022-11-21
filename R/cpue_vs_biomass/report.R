@@ -1,14 +1,20 @@
 ## Prepare plots and tables for report
 
 ## Before: prop.csv (output)
-## After:  cpue_bio_prop.png (report)
+## After:  cpue_avg.png, cpue_bio_prop.png (report)
 
 library(TAF)
 
 mkdir("report")
 
-## Read proportions
+## Read results
 prop <- read.taf("output/prop.csv")
+cpue.avg <- read.taf("output/cpue_avg.csv")
+
+## Plot CPUE
+taf.png("cpue_avg")
+barplot(cpue~area, cpue.avg)
+dev.off()
 
 ## Plot proportions
 taf.png("cpue_bio_prop")
