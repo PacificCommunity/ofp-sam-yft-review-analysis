@@ -7,8 +7,8 @@ mkdir("csv")
 mkdir("pdf")
 
 # Read diagnostic model
-Diag20 <- read.MFCLRep(file.path("z:/yft/2020_review/analysis/stepwise",
-                                 "17_Diag20/plot-14.par.rep"))
+Diag20 <- read.MFCLRep(file.path("//penguin/assessments/yft/2020_review",
+                                 "analysis/stepwise/17_Diag20/plot-14.par.rep"))
 
 # Extract spawning biomass and unfished biomass
 columns <- c("year", "area", "data")
