@@ -1,16 +1,17 @@
-## Run analysis, write model results
+## Calculate CPUE correlation between regions
 
-## Before: biomass.csv, cpue.csv (data)
-## After:  prop.csv (model)
+## Before: cpue.csv (data)
+## After:  cpue_cor.csv, cpue_cor_matrix.csv (model)
 
 library(TAF)
+library(FLR4MFCL)  # corFilter, mat2MFCLCor
 
 mkdir("model")
 
 ## Read data
 cpue <- read.taf("data/cpue.csv")
 
-## Calculate average by area
+## Calculate CPUE correlation between regions
 calc.cor <- function(reg1, reg2, data=cpue)
 {
   cpue1 <- data$cpue[data$area==reg1]
@@ -18,10 +19,15 @@ calc.cor <- function(reg1, reg2, data=cpue)
   na.rm <- !is.na(cpue1) & !is.na(cpue2)
   cor(cpue1[na.rm], cpue2[na.rm])
 }
-cpue.cor <- round(outer(1:9, 1:9, Vectorize(calc.cor)), 2)
+cpue.cor.matrix <- round(outer(1:9, 1:9, Vectorize(calc.cor)), 2)
+dimnames(cpue.cor.matrix) <- list(paste0("Region", 1:9), paste0("Region", 1:9))
 
-library(FLR4MFCL)
-cpue.cor.df <- mat2MFCLCor(cpue.cor)
-corFilter(cpue.cor.df, 0.8)
+## Format as data frame
+cpue.cor <- mat2MFCLCor(cpue.cor.matrix)
+names(cpue.cor) <- c("RegionA", "RegionB", "Corr")
+cpue.cor <- cpue.cor[order(-cpue.cor$Corr),]
+rownames(cpue.cor) <- NULL
 
 ## Write results
+write.taf(cpue.cor, dir="model")
+write.taf(cpue.cor.matrix, dir="model")
