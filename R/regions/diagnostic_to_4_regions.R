@@ -3,6 +3,9 @@ library(TAF)
 
 source("utilities.R")
 
+mkdir("csv")
+mkdir("pdf")
+
 # Read diagnostic model
 Diag20 <- read.MFCLRep(file.path("z:/yft/2020_review/analysis/stepwise",
                                  "17_Diag20/plot-14.par.rep"))
@@ -40,7 +43,6 @@ year <- sort(unique(biomass$year))
 domain <- sort(unique(biomass$domain))
 colors <- palette()[c(2,7,4,5)]
 lwd <- 2
-mkdir("pdf")
 pdf("pdf/diagnostic_to_4_regions.pdf", width=10, height=5)
 par(mfrow=c(1,3))
 stdplot(year, biomass, div=1e6, col=colors, lwd=lwd, yaxs="i",
@@ -57,7 +59,7 @@ box()
 dev.off()
 
 # Write tables
-write.taf(ssb2)
-write.taf(ssb2.prop)
-write.taf(ssb4)
-write.taf(ssb4.prop)
+write.taf(ssb2, dir="csv")
+write.taf(ssb2.prop, dir="csv")
+write.taf(ssb4, dir="csv")
+write.taf(ssb4.prop, dir="csv")
