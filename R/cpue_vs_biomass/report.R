@@ -1,26 +1,28 @@
 ## Prepare plots and tables for report
 
 ## Before: prop.csv (output)
-## After:  cpue_avg.png, cpue_bio_prop.png, cpue_cor.png, cpue_r2.png,
+## After:  cpue_avg.png, cpue_bio_prop.png, cpue_cor.png, cpue_pairs.png,
 ##         cpue_region.png (report)
 
 library(TAF)
+source("utilities.R")
 
 mkdir("report")
 
 ## Read results
 cpue.avg <- read.taf("output/cpue_avg.csv")
 cpue.cor <- read.taf("output/cpue_cor.csv")
-cpue.r2 <- read.taf("output/cpue_r2.csv")
 cpue.region <- read.taf("output/cpue_region.csv")
 prop <- read.taf("output/prop.csv")
 
 ## Plot region-to-region comparison of CPUE
 areas <- sort(unique(cpue.region$area))
+taf.png("cpue_pairs", height=1600, width=1600)
 par(mfrow=c(length(areas), length(areas)), plt=c(0,1,0,1))
 for(i in seq_along(areas))
   for(j in seq_along(areas))
-    plot2series(i, J)
+    plot2series(i, j, cpue.region)
+dev.off()
 
 ## Plot average CPUE
 taf.png("cpue_avg")
