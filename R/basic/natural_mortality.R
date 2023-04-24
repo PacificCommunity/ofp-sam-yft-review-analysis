@@ -1,5 +1,7 @@
 library(FLR4MFCL)
 
+dir.create("png", showWarnings=FALSE)
+
 geomean <- function(x) exp(mean(log(x)))
 
 folder <- "//penguin/assessments/yft/2020_review/analysis/review_runs/arni_john"
@@ -7,11 +9,13 @@ folder <- "//penguin/assessments/yft/2020_review/analysis/review_runs/arni_john"
 rep.diag <- read.MFCLRep(file.path(folder, "ZZ_Diag20/plot-14.par.rep"))
 rep.mest <- read.MFCLRep(file.path(folder, "Y_Diag2020-Mest/plot-14.par.rep"))
 
+png("png/natmort.png", 1800, 1800, res=300)
 plot(NA, xlim=c(0,41), ylim=c(0,0.55),
-     xaxs="i", yaxs="i", xlab="Age (qtr)", ylab="M")
+     xaxs="i", yaxs="i", xlab="Age (qtr)", ylab="Natural Mortality", las=1)
 abline(h=seq(0.1,0.5,0.1), col="lightgray")
 lines(m_at_age(rep.diag), lwd=2)
-lines(m_at_age(rep.mest), lwd=2, col="red")
+# lines(m_at_age(rep.mest), lwd=2, col="red")
+dev.off()
 
 geomean(m_at_age(rep.diag))  # 0.232
 geomean(m_at_age(rep.mest))  # 0.202
